@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-
 @Service
 @Transactional
 public class UserService {
@@ -27,6 +26,4 @@ public class UserService {
         Iterable <User> result = userRespository.findAll();
         return result;
     }
-
-
 }
