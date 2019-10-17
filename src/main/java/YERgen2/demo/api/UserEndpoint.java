@@ -19,7 +19,7 @@ public class UserEndpoint {
     private UserService userService;
 
     @GetMapping(value = "user/{id}", produces = "application/json")
-    public Optional<User> getUsers(@PathVariable long id) {
+    public Optional<User> getUser(@PathVariable long id) {
         return userService.findById(id);
     }
 

@@ -11,6 +11,6 @@ public class Team {
     long id;
 
     @OneToMany
-    List<ParticipantAccount> teamMembers;
+    List<Participant> teamMembers;
 
 }
