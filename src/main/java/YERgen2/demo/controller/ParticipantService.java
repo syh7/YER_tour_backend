@@ -25,4 +25,8 @@ public class ParticipantService {
         Iterable <Participant> result = participantRepository.findAll();
         return result;
     }
+
+    public void deleteById(Long id) {
+        participantRepository.deleteById(id);
+    }
 }
