@@ -14,15 +14,12 @@ public class Participant extends Account {
     public String getFirstName(){
         return firstName;
     }
-
     public String getLastName(){
         return lastName;
     }
-
     public int getPlayerLevel(){
         return playerLevel;
     }
-
     public String getDateOfBirth(){
         return dateOfBirth;
     }
@@ -38,9 +35,6 @@ public class Participant extends Account {
     }
     public void setDateOfBirth(String dateOfBirth){
         this.dateOfBirth = dateOfBirth;
-    }
-    public void setId(long id){
-        this.id = id;
     }
 
 }
