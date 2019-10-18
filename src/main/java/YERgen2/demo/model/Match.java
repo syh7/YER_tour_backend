@@ -14,7 +14,7 @@ public class Match {
     private List<Team> teams;
     private String stage;
     private String result;
-    private String discipline;
+    private Discipline discipline;
     private String startTime;
     private String endTime;
     private String location;
@@ -28,7 +28,7 @@ public class Match {
     public String getStartTime() {
         return startTime;
     }
-    public String getDiscipline() {
+    public Discipline getDiscipline() {
         return discipline;
     }
     public String getResult() {
@@ -50,7 +50,7 @@ public class Match {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
-    public void setDiscipline(String discipline) {
+    public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
     public void setResult(String result) {
