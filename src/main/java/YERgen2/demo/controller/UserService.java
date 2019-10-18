@@ -23,7 +23,6 @@ public class UserService {
     }
 
     public Iterable <User> findAll(){
-        Iterable <User> result = userRespository.findAll();
-        return result;
+        return userRespository.findAll();
     }
 }

@@ -10,6 +10,7 @@ import java.util.Optional;
 @Service
 @Transactional
 public class ParticipantService {
+    
     @Autowired
     private ParticipantRepository participantRepository;
 
@@ -22,11 +23,11 @@ public class ParticipantService {
     }
 
     public Iterable <Participant> findAll(){
-        Iterable <Participant> result = participantRepository.findAll();
-        return result;
+        return participantRepository.findAll();
     }
 
     public void deleteById(Long id) {
         participantRepository.deleteById(id);
     }
+
 }

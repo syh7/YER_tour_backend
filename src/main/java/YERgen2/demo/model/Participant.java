@@ -1,9 +1,10 @@
 package YERgen2.demo.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-
 @Entity
+@DiscriminatorValue("2")
 public class Participant extends Account {
 
     private String firstName;
@@ -14,15 +15,12 @@ public class Participant extends Account {
     public String getFirstName(){
         return firstName;
     }
-
     public String getLastName(){
         return lastName;
     }
-
     public int getPlayerLevel(){
         return playerLevel;
     }
-
     public String getDateOfBirth(){
         return dateOfBirth;
     }
@@ -38,9 +36,6 @@ public class Participant extends Account {
     }
     public void setDateOfBirth(String dateOfBirth){
         this.dateOfBirth = dateOfBirth;
-    }
-    public void setId(long id){
-        this.id = id;
     }
 
 }
