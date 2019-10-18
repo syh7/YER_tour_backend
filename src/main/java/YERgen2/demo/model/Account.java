@@ -1,12 +1,12 @@
 package YERgen2.demo.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="dtype",
+        discriminatorType = DiscriminatorType.INTEGER)
 public class Account {
 
     @Id

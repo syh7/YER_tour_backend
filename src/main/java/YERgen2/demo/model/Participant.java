@@ -1,9 +1,10 @@
 package YERgen2.demo.model;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
-
 @Entity
+@DiscriminatorValue("2")
 public class Participant extends Account {
 
     private String firstName;
