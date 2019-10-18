@@ -31,8 +31,8 @@ public class ParticipantEndpoint {
                 .orElseThrow(() -> new ParticipantNotFoundException(id));
     }
 
-    @PutMapping("/employees/{id}")
-    Participant replaceEmployee(@RequestBody Participant newParticipant, @PathVariable Long id) {
+    @PutMapping("/participants/{id}")
+    Participant replaceParticipant(@RequestBody Participant newParticipant, @PathVariable Long id) {
 
         return participantService.findById(id)
                 .map(participant -> {
