@@ -25,7 +25,7 @@ public class Account {
     public long getId(){
         return id;
     }
-    
+
     public void setEmail(String email) {
         this.email = email;
     }
