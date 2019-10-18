@@ -33,7 +33,6 @@ public class ParticipantEndpoint {
 
     @PutMapping("/participants/{id}")
     Participant replaceParticipant(@RequestBody Participant newParticipant, @PathVariable Long id) {
-
         return participantService.findById(id)
                 .map(participant -> {
                     participant.setFirstName(newParticipant.getFirstName());

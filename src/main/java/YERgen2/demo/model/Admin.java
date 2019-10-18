@@ -15,8 +15,8 @@ public class Admin extends Account {
     public List<Tournament> getTournament() {
         return tournament;
     }
-
     public void setTournament(List<Tournament> tournament) {
         this.tournament = tournament;
     }
+
 }

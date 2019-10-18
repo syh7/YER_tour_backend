@@ -11,6 +11,15 @@ public class Team {
     long id;
 
     @OneToMany
-    List<Participant> teamMembers;
+    private List<Participant> teamMembers;
+
+
+    public List<Participant> getTeamMembers() {
+        return teamMembers;
+    }
+
+    public void setTeamMembers(List<Participant> teamMembers) {
+        this.teamMembers = teamMembers;
+    }
 
 }

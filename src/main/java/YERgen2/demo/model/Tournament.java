@@ -12,7 +12,28 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
 
-    String judge;
-    String referee;
+    private String judge;
+    private String referee;
+    private String location;
+
+    public void setJudge(String judge) {
+        this.judge = judge;
+    }
+    public void setReferee(String referee) {
+        this.referee = referee;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getJudge() {
+        return judge;
+    }
+    public String getReferee() {
+        return referee;
+    }
+    public String getLocation() {
+        return location;
+    }
 
 }
