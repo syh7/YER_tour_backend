@@ -1,12 +1,12 @@
 package YERgen2.demo.api;
 
+import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.controller.ParticipantService;
 import YERgen2.demo.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping
@@ -26,8 +26,9 @@ public class ParticipantEndpoint {
     }
 
     @GetMapping(value = "participants/{id}", produces = "application/json")
-    public Optional<Participant> getParticipant(@PathVariable long id) {
-        return participantService.findById(id);
+    public Participant getParticipant(@PathVariable long id) {
+        return participantService.findById(id)
+                .orElseThrow(() -> new ParticipantNotFoundException(id));
     }
 
     @PutMapping("/employees/{id}")
