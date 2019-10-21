@@ -20,6 +20,8 @@ public class Tournament {
     @OneToMany
     private Set<Match> matches;
     @OneToMany
+    private Set<Enrolment> enrolments;
+    @OneToMany
     private Set<Team> teams;
     private int maxDisciplines;
 
@@ -43,6 +45,9 @@ public class Tournament {
     }
     public void setEnrolDate(LocalDate enrolDate) {
         this.enrolDate = enrolDate;
+    }
+    public Set<Enrolment> getEnrolments() {
+        return enrolments;
     }
     public void setMatches(Set<Match> matches) {
         this.matches = matches;
@@ -78,6 +83,9 @@ public class Tournament {
     public Set<Match> getMatches() {
         return matches;
     }
+    public void setEnrolments(Set<Enrolment> enrolments) {
+        this.enrolments = enrolments;
+    }
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
@@ -88,4 +96,6 @@ public class Tournament {
     public boolean addTeam(Team team){
         return this.teams.add(team);
     }
+
+
 }
