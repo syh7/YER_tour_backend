@@ -2,6 +2,7 @@ package YERgen2.demo.api;
 
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.controller.TournamentService;
+import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Team;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,8 @@ public class TournamentEndpoint {
     @Autowired
     private TournamentService tournamentService;
 
+    /////TOURNAMENTS
+
     @PostMapping("/tournaments")
     public Tournament newTournament(@RequestBody Tournament newAdmin) {
         return tournamentService.save(newAdmin);
@@ -25,6 +28,8 @@ public class TournamentEndpoint {
     public List<Tournament> getAllTournaments(){
         return (List<Tournament>) tournamentService.findAll();
     }
+
+    /////TOURNAMENTS/ID
 
     @GetMapping(value = "tournaments/{id}", produces = "application/json")
     public Tournament getTournament(@PathVariable long id) {
@@ -43,6 +48,7 @@ public class TournamentEndpoint {
                     tournament.setReferee(newTournament.getReferee());
                     tournament.setLocation(newTournament.getLocation());
                     tournament.setMatches(newTournament.getMatches());
+                    tournament.setEnrolments(newTournament.getEnrolments());
                     tournament.setTeams(newTournament.getTeams());
                     tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
                     return tournamentService.save(tournament);
@@ -58,9 +64,11 @@ public class TournamentEndpoint {
         tournamentService.deleteById(id);
     }
 
-    @PostMapping("tournaments/{id}/enroll")
-    public boolean enrollTeam(@RequestBody Team team, @PathVariable Long id){
-        return tournamentService.enrollTeam(id, team);
+    /////TOURNAMENTS/ID/ENROLL
+
+    @PostMapping("/tournaments/{id}/enroll")
+    public boolean enrollParticipant(@RequestBody Enrolment enrolment, @PathVariable Long id){
+        return tournamentService.enrol(id, enrolment);
     }
 
 }

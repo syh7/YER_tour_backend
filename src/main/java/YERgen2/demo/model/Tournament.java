@@ -23,7 +23,7 @@ public class Tournament {
     private Set<Enrolment> enrolments;
     @OneToMany
     private Set<Team> teams;
-    private int maxDisciplines;
+    private int[] maxDisciplines;
 
     public long getId() {
         return id;
@@ -55,7 +55,7 @@ public class Tournament {
     public Set<Team> getTeams() {
         return teams;
     }
-    public void setMaxDisciplines(int maxDisciplines) {
+    public void setMaxDisciplines(int[] maxDisciplines) {
         this.maxDisciplines = maxDisciplines;
     }
 
@@ -89,12 +89,12 @@ public class Tournament {
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
-    public int getMaxDisciplines() {
+    public int[] getMaxDisciplines() {
         return maxDisciplines;
     }
 
-    public boolean addTeam(Team team){
-        return this.teams.add(team);
+    public boolean enrol(Enrolment enrolment){
+        return this.enrolments.add(enrolment);
     }
 
 

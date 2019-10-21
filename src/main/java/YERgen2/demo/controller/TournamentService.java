@@ -1,6 +1,6 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.model.Team;
+import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,10 +34,10 @@ public class TournamentService {
         tournamentRepository.deleteById(id);
     }
 
-    public boolean enrollTeam(Long id, Team team){
+    public boolean enrol(Long id, Enrolment enrolment){
         if(findById(id).isPresent()){
             Tournament tournament = findById(id).get();
-            return tournament.addTeam(team);
+            return tournament.enrol(enrolment);
         } else {
             return false;
         }
