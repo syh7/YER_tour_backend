@@ -2,6 +2,7 @@ package YERgen2.demo.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import java.time.LocalDate;
 
 @Entity
 @DiscriminatorValue("2")
@@ -10,7 +11,7 @@ public class Participant extends Account {
     private String firstName;
     private String lastName;
     private int playerLevel;
-    private String dateOfBirth;
+    private LocalDate dateOfBirth;
 
     public String getFirstName(){
         return firstName;
@@ -21,7 +22,7 @@ public class Participant extends Account {
     public int getPlayerLevel(){
         return playerLevel;
     }
-    public String getDateOfBirth(){
+    public LocalDate getDateOfBirth(){
         return dateOfBirth;
     }
 
@@ -34,14 +35,15 @@ public class Participant extends Account {
     public void setPlayerLevel(int playerLevel){
         this.playerLevel = playerLevel;
     }
-    public void setDateOfBirth(String dateOfBirth){
+    public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
 
     @Override
     public String toString(){
-        String str = "ID: " + id + "\n";
+        String str = "ID: " + getId() + "\n";
         str += "Name: " + firstName + " " + lastName + "\n";
+        str += "Born on: " + dateOfBirth.toString() + "\n";
         str += "Playerlevel: " + playerLevel + "\n";
         str += "Email: " + getEmail();
         str += "Password: " + getPassword();

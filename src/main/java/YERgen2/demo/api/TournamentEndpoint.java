@@ -36,7 +36,7 @@ public class TournamentEndpoint {
         return tournamentService.findById(id)
                 .map(tournament -> {
                     tournament.setName(newTournament.getName());
-                    tournament.setJudge(newTournament.getJudge());
+                    tournament.setDate(newTournament.getDate());
                     tournament.setReferee(newTournament.getReferee());
                     tournament.setLocation(newTournament.getLocation());
                     tournament.setMatches(newTournament.getMatches());

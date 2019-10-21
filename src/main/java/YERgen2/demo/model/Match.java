@@ -1,6 +1,7 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
+import java.time.LocalTime;
 import java.util.Set;
 
 @Entity
@@ -15,9 +16,10 @@ public class Match {
     private Stage stage;
     private String result;
     private Discipline discipline;
-    private String startTime;
-    private String endTime;
+    private LocalTime startTime;
+    private LocalTime endTime;
     private String location;
+    private String judge;
 
     public void setId(long id) {
         this.id = id;
@@ -25,10 +27,10 @@ public class Match {
     public String getLocation() {
         return location;
     }
-    public String getEndTime() {
+    public LocalTime getEndTime() {
         return endTime;
     }
-    public String getStartTime() {
+    public LocalTime getStartTime() {
         return startTime;
     }
     public Discipline getDiscipline() {
@@ -43,6 +45,9 @@ public class Match {
     public Set<Team> getTeams() {
         return teams;
     }
+    public String getJudge() {
+        return judge;
+    }
 
     public long getId() {
         return id;
@@ -50,10 +55,10 @@ public class Match {
     public void setLocation(String location) {
         this.location = location;
     }
-    public void setEndTime(String endTime) {
+    public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
     }
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalTime startTime) {
         this.startTime = startTime;
     }
     public void setDiscipline(Discipline discipline) {
@@ -65,7 +70,11 @@ public class Match {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
+    public void setJudge(String judge) {
+        this.judge = judge;
+    }
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
+
 }
