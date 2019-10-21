@@ -17,6 +17,8 @@ public class Tournament {
     private LocalDate date;
     @OneToMany
     private Set<Match> matches;
+    @OneToMany
+    private Set<Team> teams;
 
     public long getId() {
         return id;
@@ -35,6 +37,9 @@ public class Tournament {
     }
     public void setMatches(Set<Match> matches) {
         this.matches = matches;
+    }
+    public Set<Team> getTeams() {
+        return teams;
     }
 
     public void setId(long id) {
@@ -55,6 +60,15 @@ public class Tournament {
     public Set<Match> getMatches() {
         return matches;
     }
+    public void setTeams(Set<Team> teams) {
+        this.teams = teams;
+    }
+
+    public boolean addTeam(Team team){
+        return this.teams.add(team);
+    }
+
+
 
 
 }

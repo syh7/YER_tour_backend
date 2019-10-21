@@ -2,6 +2,7 @@ package YERgen2.demo.api;
 
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.controller.TournamentService;
+import YERgen2.demo.model.Team;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +52,11 @@ public class TournamentEndpoint {
     @DeleteMapping("/tournaments/{id}")
     public void deleteTournament(@PathVariable Long id) {
         tournamentService.deleteById(id);
+    }
+
+    @PostMapping("tournaments/{id}/enroll")
+    public boolean enrollTeam(@RequestBody Team team, @PathVariable Long id){
+        return tournamentService.enrollTeam(id, team);
     }
 
 }
