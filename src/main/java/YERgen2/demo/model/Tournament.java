@@ -8,7 +8,7 @@ public class Tournament {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
     private String name;
     private String judge;

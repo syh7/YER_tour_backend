@@ -8,7 +8,7 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
     @OneToMany
     private Set<Participant> teamMembers;

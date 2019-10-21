@@ -8,7 +8,7 @@ public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
     @OneToMany
     private Set<Team> teams;
