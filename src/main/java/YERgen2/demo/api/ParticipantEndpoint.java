@@ -16,7 +16,7 @@ public class ParticipantEndpoint {
     private ParticipantService participantService;
 
     @PostMapping("/participants")
-    Participant newParticipant(@RequestBody Participant newParticipant) {
+    public Participant newParticipant(@RequestBody Participant newParticipant) {
         return participantService.save(newParticipant);
     }
 
@@ -31,9 +31,8 @@ public class ParticipantEndpoint {
                 .orElseThrow(() -> new ParticipantNotFoundException(id));
     }
 
-    @PutMapping("/employees/{id}")
-    Participant replaceEmployee(@RequestBody Participant newParticipant, @PathVariable Long id) {
-
+    @PutMapping("/participants/{id}")
+    public Participant replaceParticipant(@RequestBody Participant newParticipant, @PathVariable Long id) {
         return participantService.findById(id)
                 .map(participant -> {
                     participant.setFirstName(newParticipant.getFirstName());
@@ -51,7 +50,7 @@ public class ParticipantEndpoint {
     }
 
     @DeleteMapping("/participants/{id}")
-    void deleteParticipant(@PathVariable Long id) {
+    public void deleteParticipant(@PathVariable Long id) {
         participantService.deleteById(id);
     }
 

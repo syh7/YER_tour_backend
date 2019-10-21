@@ -1,6 +1,5 @@
-package YERgen2.demo.controller;
+package YERgen2.demo.Exceptions;
 
-import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -8,12 +7,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-class ParticipantNotFoundAdvice {
+public class MatchNotFoundAdvice {
 
     @ResponseBody
-    @ExceptionHandler(ParticipantNotFoundException.class)
+    @ExceptionHandler(MatchNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String participantNotFoundHandler(ParticipantNotFoundException ex) {
+    String matchNotFoundHandler(MatchNotFoundException ex) {
         return ex.getMessage();
     }
 

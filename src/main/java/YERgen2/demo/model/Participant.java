@@ -38,4 +38,14 @@ public class Participant extends Account {
         this.dateOfBirth = dateOfBirth;
     }
 
+    @Override
+    public String toString(){
+        String str = "ID: " + id + "\n";
+        str += "Name: " + firstName + " " + lastName + "\n";
+        str += "Playerlevel: " + playerLevel + "\n";
+        str += "Email: " + getEmail();
+        str += "Password: " + getPassword();
+        return str;
+    }
+
 }
