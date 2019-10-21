@@ -33,6 +33,7 @@ public class MatchEndpoint {
     public Match replaceMatch(@RequestBody Match newMatch, @PathVariable Long id) {
         return matchService.findById(id)
                 .map(match -> {
+                    match.setJudge(newMatch.getJudge());
                     match.setStage(newMatch.getStage());
                     match.setTeams(newMatch.getTeams());
                     match.setLocation(newMatch.getLocation());

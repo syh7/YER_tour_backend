@@ -35,12 +35,13 @@ public class ParticipantEndpoint {
     public Participant replaceParticipant(@RequestBody Participant newParticipant, @PathVariable Long id) {
         return participantService.findById(id)
                 .map(participant -> {
+                    participant.setEmail(newParticipant.getEmail());
+                    participant.setPassword(newParticipant.getPassword());
                     participant.setFirstName(newParticipant.getFirstName());
                     participant.setLastName(newParticipant.getLastName());
                     participant.setDateOfBirth(newParticipant.getDateOfBirth());
                     participant.setPlayerLevel(newParticipant.getPlayerLevel());
-                    participant.setEmail(newParticipant.getEmail());
-                    participant.setPassword(newParticipant.getPassword());
+                    participant.setLeagueNumber(newParticipant.getLeagueNumber());
                     return participantService.save(participant);
                 })
                 .orElseGet(() -> {
