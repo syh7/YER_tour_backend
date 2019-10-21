@@ -38,6 +38,7 @@ public class AdminEndpoint {
                     admin.setEmail(newAdmin.getEmail());
                     admin.setPassword(newAdmin.getPassword());
                     admin.setTournament(newAdmin.getTournament());
+                    admin.setName(newAdmin.getName());
                     return adminService.save(admin);
                 })
                 .orElseGet(() -> {
