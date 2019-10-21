@@ -40,7 +40,7 @@ public class Participant extends Account {
 
     @Override
     public String toString(){
-        String str = "ID: " + id + "\n";
+        String str = "ID: " + getId() + "\n";
         str += "Name: " + firstName + " " + lastName + "\n";
         str += "Playerlevel: " + playerLevel + "\n";
         str += "Email: " + getEmail();
