@@ -6,7 +6,7 @@ import YERgen2.demo.model.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -21,8 +21,8 @@ public class AdminEndpoint {
     }
 
     @GetMapping(value="/admins")
-    public Set<Admin> getAllAdmins(){
-        return (Set<Admin>) adminService.findAll();
+    public List<Admin> getAllAdmins(){
+        return (List<Admin>) adminService.findAll();
     }
 
     @GetMapping(value = "admins/{id}", produces = "application/json")

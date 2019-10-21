@@ -6,7 +6,7 @@ import YERgen2.demo.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.util.List;
 
 @RestController
 @RequestMapping
@@ -21,8 +21,8 @@ public class ParticipantEndpoint {
     }
 
     @GetMapping(value="/participants")
-    public Set<Participant> getAllParticipants(){
-        return (Set<Participant>) participantService.findAll();
+    public List<Participant> getAllParticipants(){
+        return (List<Participant>) participantService.findAll();
     }
 
     @GetMapping(value = "participants/{id}", produces = "application/json")
