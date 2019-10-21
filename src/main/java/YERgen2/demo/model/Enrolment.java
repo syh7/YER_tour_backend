@@ -1,9 +1,6 @@
 package YERgen2.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Enrolment {
@@ -12,6 +9,7 @@ public class Enrolment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @OneToOne
     private Participant participant;
     private long partnerLeagueNumber;
     private int playerLevel;
