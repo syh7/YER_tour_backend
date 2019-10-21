@@ -1,6 +1,7 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,14 +12,14 @@ public class Team {
     private long id;
 
     @OneToMany
-    private Set<Participant> teamMembers;
+    private List<Participant> teamMembers;
     private int playerLevel;
     private Discipline discipline;
 
     public long getId(){
         return id;
     }
-    public Set<Participant> getTeamMembers() {
+    public List<Participant> getTeamMembers() {
         return teamMembers;
     }
     public int getPlayerLevel() {
@@ -31,7 +32,7 @@ public class Team {
     public void setId(long id){
         this.id = id;
     }
-    public void setTeamMembers(Set<Participant> teamMembers) {
+    public void setTeamMembers(List<Participant> teamMembers) {
         this.teamMembers = teamMembers;
     }
     public void setPlayerLevel(int playerLevel) {

@@ -24,8 +24,8 @@ public class TournamentEndpoint {
     }
 
     @GetMapping(value="/tournaments")
-    public List<Tournament> getAllTournaments(){
-        return (List<Tournament>) tournamentService.findAll();
+    public Iterable<Tournament> getAllTournaments(){
+        return tournamentService.findAll();
     }
 
     /////TOURNAMENTS/ID

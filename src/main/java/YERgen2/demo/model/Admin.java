@@ -3,6 +3,7 @@ package YERgen2.demo.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,19 +12,19 @@ public class Admin extends Account {
 
     private String name;
     @OneToMany
-    private Set<Tournament> tournament;
+    private List<Tournament> tournament;
 
     public String getName() {
         return name;
     }
-    public Set<Tournament> getTournament() {
+    public List<Tournament> getTournament() {
         return tournament;
     }
 
     public void setName(String name) {
         this.name = name;
     }
-    public void setTournament(Set<Tournament> tournament) {
+    public void setTournament(List<Tournament> tournament) {
         this.tournament = tournament;
     }
 
