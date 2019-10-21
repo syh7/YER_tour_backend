@@ -8,14 +8,21 @@ public class Tournament {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
+    private String name;
     private String judge;
     private String referee;
     private String location;
     @OneToMany
     private Set<Match> matches;
 
+    public long getId() {
+        return id;
+    }
+    public String getName() {
+        return name;
+    }
     public void setJudge(String judge) {
         this.judge = judge;
     }
@@ -29,6 +36,12 @@ public class Tournament {
         this.matches = matches;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     public String getJudge() {
         return judge;
     }

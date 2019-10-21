@@ -8,13 +8,16 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id;
+    private long id;
 
     @OneToMany
     private Set<Participant> teamMembers;
     private int playerLevel;
     private Discipline discipline;
 
+    public long getId(){
+        return id;
+    }
     public Set<Participant> getTeamMembers() {
         return teamMembers;
     }
@@ -25,6 +28,9 @@ public class Team {
         return discipline;
     }
 
+    public void setId(long id){
+        this.id = id;
+    }
     public void setTeamMembers(Set<Participant> teamMembers) {
         this.teamMembers = teamMembers;
     }
