@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,7 +28,7 @@ public class TournamentService {
         return tournamentRepository.findById(id);
     }
 
-    public Iterable <Tournament> findAll(){
+    public Iterable<Tournament> findAll(){
         return tournamentRepository.findAll();
     }
 
@@ -42,4 +44,20 @@ public class TournamentService {
             return false;
         }
     }
+
+    public Iterable<Enrolment> getEnrolment(long participantId, long tournamentId){
+        if(findById(tournamentId).isPresent()){
+            Tournament tournament = findById(tournamentId).get();
+            List<Enrolment> list = new ArrayList<Enrolment>();
+            for(Enrolment enrol : tournament.getEnrolments()){
+                if(enrol.getParticipant().getId() == participantId){
+                    list.add(enrol);
+                }
+            }
+            return list;
+        } else {
+            return null;
+        }
+    }
+
 }

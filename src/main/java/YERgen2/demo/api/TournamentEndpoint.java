@@ -37,7 +37,7 @@ public class TournamentEndpoint {
     }
 
     @PutMapping("/tournaments/{id}")
-    public Tournament replaceTournament(@RequestBody Tournament newTournament, @PathVariable Long id) {
+    public Tournament replaceTournament(@RequestBody Tournament newTournament, @PathVariable long id) {
         return tournamentService.findById(id)
                 .map(tournament -> {
                     tournament.setName(newTournament.getName());
@@ -59,15 +59,20 @@ public class TournamentEndpoint {
     }
 
     @DeleteMapping("/tournaments/{id}")
-    public void deleteTournament(@PathVariable Long id) {
+    public void deleteTournament(@PathVariable long id) {
         tournamentService.deleteById(id);
     }
 
     /////TOURNAMENTS/ID/ENROLL
 
     @PostMapping("/tournaments/{id}/enroll")
-    public boolean enrollParticipant(@RequestBody Enrolment enrolment, @PathVariable Long id){
+    public boolean enrollParticipant(@RequestBody Enrolment enrolment, @PathVariable long id){
         return tournamentService.enrol(id, enrolment);
+    }
+
+    @GetMapping("/tournaments/{id}/enroll")
+    public List<Enrolment> getEnrolments(@RequestBody long participantId, @PathVariable long tournamentId){
+        return (List<Enrolment>) tournamentService.getEnrolment(participantId, tournamentId);
     }
 
 }
