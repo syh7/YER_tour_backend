@@ -14,11 +14,14 @@ public class Tournament {
     private String name;
     private String referee;
     private String location;
-    private LocalDate date;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private LocalDate enrolDate;
     @OneToMany
     private Set<Match> matches;
     @OneToMany
     private Set<Team> teams;
+    private int maxDisciplines;
 
     public long getId() {
         return id;
@@ -32,14 +35,23 @@ public class Tournament {
     public void setLocation(String location) {
         this.location = location;
     }
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
+    }
+    public void setEnrolDate(LocalDate enrolDate) {
+        this.enrolDate = enrolDate;
     }
     public void setMatches(Set<Match> matches) {
         this.matches = matches;
     }
     public Set<Team> getTeams() {
         return teams;
+    }
+    public void setMaxDisciplines(int maxDisciplines) {
+        this.maxDisciplines = maxDisciplines;
     }
 
     public void setId(long id) {
@@ -54,8 +66,14 @@ public class Tournament {
     public String getLocation() {
         return location;
     }
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+    public LocalDate getEnrolDate() {
+        return enrolDate;
     }
     public Set<Match> getMatches() {
         return matches;
@@ -63,12 +81,11 @@ public class Tournament {
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
+    public int getMaxDisciplines() {
+        return maxDisciplines;
+    }
 
     public boolean addTeam(Team team){
         return this.teams.add(team);
     }
-
-
-
-
 }

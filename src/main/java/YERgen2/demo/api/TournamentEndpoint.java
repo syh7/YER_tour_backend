@@ -37,10 +37,14 @@ public class TournamentEndpoint {
         return tournamentService.findById(id)
                 .map(tournament -> {
                     tournament.setName(newTournament.getName());
-                    tournament.setDate(newTournament.getDate());
+                    tournament.setStartDate(newTournament.getStartDate());
+                    tournament.setEndDate(newTournament.getEndDate());
+                    tournament.setEnrolDate(newTournament.getEnrolDate());
                     tournament.setReferee(newTournament.getReferee());
                     tournament.setLocation(newTournament.getLocation());
                     tournament.setMatches(newTournament.getMatches());
+                    tournament.setTeams(newTournament.getTeams());
+                    tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
                     return tournamentService.save(tournament);
                 })
                 .orElseGet(() -> {
