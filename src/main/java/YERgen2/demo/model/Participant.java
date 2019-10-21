@@ -11,6 +11,7 @@ public class Participant extends Account {
     private String firstName;
     private String lastName;
     private int playerLevel;
+    private int leagueNumber;
     private LocalDate dateOfBirth;
 
     public String getFirstName(){
@@ -21,6 +22,9 @@ public class Participant extends Account {
     }
     public int getPlayerLevel(){
         return playerLevel;
+    }
+    public int getLeagueNumber() {
+        return leagueNumber;
     }
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
@@ -34,6 +38,9 @@ public class Participant extends Account {
     }
     public void setPlayerLevel(int playerLevel){
         this.playerLevel = playerLevel;
+    }
+    public void setLeagueNumber(int leagueNumber) {
+        this.leagueNumber = leagueNumber;
     }
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
@@ -49,5 +56,4 @@ public class Participant extends Account {
         str += "Password: " + getPassword();
         return str;
     }
-
 }
