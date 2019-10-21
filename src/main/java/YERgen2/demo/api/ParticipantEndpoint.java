@@ -6,7 +6,7 @@ import YERgen2.demo.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping
@@ -16,13 +16,13 @@ public class ParticipantEndpoint {
     private ParticipantService participantService;
 
     @PostMapping("/participants")
-    Participant newParticipant(@RequestBody Participant newParticipant) {
+    public Participant newParticipant(@RequestBody Participant newParticipant) {
         return participantService.save(newParticipant);
     }
 
     @GetMapping(value="/participants")
-    public List<Participant> getAllParticipants(){
-        return (List<Participant>) participantService.findAll();
+    public Set<Participant> getAllParticipants(){
+        return (Set<Participant>) participantService.findAll();
     }
 
     @GetMapping(value = "participants/{id}", produces = "application/json")
@@ -32,7 +32,7 @@ public class ParticipantEndpoint {
     }
 
     @PutMapping("/participants/{id}")
-    Participant replaceParticipant(@RequestBody Participant newParticipant, @PathVariable Long id) {
+    public Participant replaceParticipant(@RequestBody Participant newParticipant, @PathVariable Long id) {
         return participantService.findById(id)
                 .map(participant -> {
                     participant.setFirstName(newParticipant.getFirstName());
@@ -50,7 +50,7 @@ public class ParticipantEndpoint {
     }
 
     @DeleteMapping("/participants/{id}")
-    void deleteParticipant(@PathVariable Long id) {
+    public void deleteParticipant(@PathVariable Long id) {
         participantService.deleteById(id);
     }
 

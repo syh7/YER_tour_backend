@@ -1,7 +1,7 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Match {
@@ -11,7 +11,7 @@ public class Match {
     long id;
 
     @OneToMany
-    private List<Team> teams;
+    private Set<Team> teams;
     private String stage;
     private String result;
     private Discipline discipline;
@@ -37,7 +37,7 @@ public class Match {
     public String getStage() {
         return stage;
     }
-    public List<Team> getTeams() {
+    public Set<Team> getTeams() {
         return teams;
     }
 
@@ -59,7 +59,7 @@ public class Match {
     public void setStage(String stage) {
         this.stage = stage;
     }
-    public void setTeams(List<Team> teams) {
+    public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
 }

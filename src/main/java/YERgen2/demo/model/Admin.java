@@ -3,19 +3,19 @@ package YERgen2.demo.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @DiscriminatorValue("1")
 public class Admin extends Account {
 
     @OneToMany
-    private List<Tournament> tournament;
+    private Set<Tournament> tournament;
 
-    public List<Tournament> getTournament() {
+    public Set<Tournament> getTournament() {
         return tournament;
     }
-    public void setTournament(List<Tournament> tournament) {
+    public void setTournament(Set<Tournament> tournament) {
         this.tournament = tournament;
     }
 
