@@ -36,6 +36,10 @@ public class TournamentService {
         tournamentRepository.deleteById(id);
     }
 
+    public Iterable<Tournament> findByName(String name){
+        return tournamentRepository.findByName(name);
+    }
+
     public boolean enrol(Long id, Enrolment enrolment){
         if(findById(id).isPresent()){
             Tournament tournament = findById(id).get();
@@ -48,7 +52,7 @@ public class TournamentService {
     public Iterable<Enrolment> getEnrolment(long participantId, long tournamentId){
         if(findById(tournamentId).isPresent()){
             Tournament tournament = findById(tournamentId).get();
-            List<Enrolment> list = new ArrayList<Enrolment>();
+            List<Enrolment> list = new ArrayList<>();
             for(Enrolment enrol : tournament.getEnrolments()){
                 if(enrol.getParticipant().getId() == participantId){
                     list.add(enrol);
@@ -60,4 +64,11 @@ public class TournamentService {
         }
     }
 
+    public Iterable<Enrolment> getAllEnrolment(long id) {
+        if(findById(id).isPresent()) {
+            return findById(id).get().getEnrolments();
+        } else {
+            return null;
+        }
+    }
 }
