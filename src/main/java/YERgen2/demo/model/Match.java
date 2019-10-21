@@ -12,15 +12,15 @@ public class Match {
 
     @OneToMany
     private Set<Team> teams;
-    private String stage;
+    private Stage stage;
     private String result;
     private Discipline discipline;
     private String startTime;
     private String endTime;
     private String location;
 
-    public long getId() {
-        return id;
+    public void setId(long id) {
+        this.id = id;
     }
     public String getLocation() {
         return location;
@@ -37,13 +37,16 @@ public class Match {
     public String getResult() {
         return result;
     }
-    public String getStage() {
+    public Stage getStage() {
         return stage;
     }
     public Set<Team> getTeams() {
         return teams;
     }
 
+    public long getId() {
+        return id;
+    }
     public void setLocation(String location) {
         this.location = location;
     }
@@ -59,16 +62,10 @@ public class Match {
     public void setResult(String result) {
         this.result = result;
     }
-    public void setStage(String stage) {
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
-    }
-
-
-
-    public void setId(long id) {
-        this.id = id;
     }
 }
