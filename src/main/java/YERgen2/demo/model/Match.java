@@ -2,7 +2,6 @@ package YERgen2.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,7 +12,7 @@ public class Match {
     private long id;
 
     @OneToMany
-    private List<Team> teams;
+    private Set<Team> teams;
     private Stage stage;
     private String result;
     private Discipline discipline;
@@ -43,7 +42,7 @@ public class Match {
     public Stage getStage() {
         return stage;
     }
-    public List<Team> getTeams() {
+    public Set<Team> getTeams() {
         return teams;
     }
     public String getJudge() {
@@ -74,7 +73,7 @@ public class Match {
     public void setJudge(String judge) {
         this.judge = judge;
     }
-    public void setTeams(List<Team> teams) {
+    public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
 

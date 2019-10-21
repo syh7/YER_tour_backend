@@ -2,7 +2,6 @@ package YERgen2.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,11 +18,11 @@ public class Tournament {
     private LocalDate endDate;
     private LocalDate enrolDate;
     @OneToMany
-    private List<Match> matches;
+    private Set<Match> matches;
     @OneToMany
-    private List<Enrolment> enrolments;
+    private Set<Enrolment> enrolments;
     @OneToMany
-    private List<Team> teams;
+    private Set<Team> teams;
     private int[] maxDisciplines;
 
     public long getId() {
@@ -47,13 +46,13 @@ public class Tournament {
     public void setEnrolDate(LocalDate enrolDate) {
         this.enrolDate = enrolDate;
     }
-    public List<Enrolment> getEnrolments() {
+    public Set<Enrolment> getEnrolments() {
         return enrolments;
     }
-    public void setMatches(List<Match> matches) {
+    public void setMatches(Set<Match> matches) {
         this.matches = matches;
     }
-    public List<Team> getTeams() {
+    public Set<Team> getTeams() {
         return teams;
     }
     public void setMaxDisciplines(int[] maxDisciplines) {
@@ -81,13 +80,13 @@ public class Tournament {
     public LocalDate getEnrolDate() {
         return enrolDate;
     }
-    public List<Match> getMatches() {
+    public Set<Match> getMatches() {
         return matches;
     }
-    public void setEnrolments(List<Enrolment> enrolments) {
+    public void setEnrolments(Set<Enrolment> enrolments) {
         this.enrolments = enrolments;
     }
-    public void setTeams(List<Team> teams) {
+    public void setTeams(Set<Team> teams) {
         this.teams = teams;
     }
     public int[] getMaxDisciplines() {
