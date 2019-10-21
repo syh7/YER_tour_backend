@@ -19,6 +19,9 @@ public class Match {
     private String endTime;
     private String location;
 
+    public long getId() {
+        return id;
+    }
     public String getLocation() {
         return location;
     }
@@ -61,5 +64,11 @@ public class Match {
     }
     public void setTeams(Set<Team> teams) {
         this.teams = teams;
+    }
+
+
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
