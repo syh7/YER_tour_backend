@@ -25,14 +25,26 @@ public class Participant extends Account {
     @ManyToMany
     private List<Team> team;
 
-    public Participant(){
-    }
-
-    public Participant(String firstName, String lastName, int playerLevel, LocalDate dateOfBirth) {
+    public Participant(){}
+    public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
+                       @NotNull String lastName, @NotNull int playerLevel, @NotNull LocalDate dateOfBirth) {
+        super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.playerLevel = playerLevel;
         this.dateOfBirth = dateOfBirth;
+    }
+    public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
+                       @NotNull String lastName, @NotNull int playerLevel, int leagueNumber,
+                       @NotNull LocalDate dateOfBirth, List<Enrolment> enrolment, List<Team> team) {
+        super(email, password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.playerLevel = playerLevel;
+        this.leagueNumber = leagueNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.enrolment = enrolment;
+        this.team = team;
     }
 
     public String getFirstName(){

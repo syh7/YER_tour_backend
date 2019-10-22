@@ -11,6 +11,12 @@ public class Admin extends Account {
     @NotNull
     private String name;
 
+    public Admin(){}
+    public Admin(@NotNull String name, String email, String password) {
+        super(email, password);
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

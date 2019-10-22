@@ -22,6 +22,12 @@ public class Account {
     @JsonIgnore
     private String password;
 
+    Account() {}
+    Account(@NotNull String email, @NotNull String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public String getEmail() {
         return email;
     }

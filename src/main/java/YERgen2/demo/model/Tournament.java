@@ -26,11 +26,15 @@ public class Tournament {
     @ManyToOne
     private Admin admin;
 
-    public Tournament(){
-
+    public Tournament(){}
+    public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.admin = admin;
     }
-
-    public Tournament(String name, String referee, String location, LocalDate startDate, LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] categories, Admin admin) {
+    public Tournament(String name, String referee, String location, LocalDate startDate, LocalDate endDate,
+                      LocalDate enrolDate, int maxDisciplines, int[] categories, Admin admin) {
         this.name = name;
         this.referee = referee;
         this.location = location;
