@@ -6,4 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface EnrolmentRepository extends CrudRepository<Enrolment, Long> {
+
+    Iterable<Enrolment> findByTournamentId(Long tournamentId);
+    
 }
