@@ -13,6 +13,7 @@ public class Tournament {
 
     @NotNull
     private String name;
+    private String description;
     private String referee;
     private String location;
     @NotNull
@@ -33,9 +34,10 @@ public class Tournament {
         this.endDate = endDate;
         this.admin = admin;
     }
-    public Tournament(@NotNull String name, String referee, String location, @NotNull LocalDate startDate, @NotNull LocalDate endDate,
-                      LocalDate enrolDate, int maxDisciplines, int[] categories, @NotNull Admin admin) {
+    public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
+                      @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] categories, @NotNull Admin admin) {
         this.name = name;
+        this.description = description;
         this.referee = referee;
         this.location = location;
         this.startDate = startDate;
@@ -51,6 +53,9 @@ public class Tournament {
     }
     public String getName() {
         return name;
+    }
+    public String getDescription() {
+        return description;
     }
     public String getReferee() {
         return referee;
@@ -83,6 +88,9 @@ public class Tournament {
     public void setName(String name) {
         this.name = name;
     }
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public void setReferee(String referee) {
         this.referee = referee;
     }
@@ -107,5 +115,4 @@ public class Tournament {
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-
 }

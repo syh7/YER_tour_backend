@@ -51,11 +51,12 @@ public class TournamentEndpoint {
         try{
             Tournament tournament = tournamentService.findById(id);
             tournament.setName(newTournament.getName());
+            tournament.setDescription(newTournament.getDescription());
+            tournament.setReferee(newTournament.getReferee());
+            tournament.setLocation(newTournament.getLocation());
             tournament.setStartDate(newTournament.getStartDate());
             tournament.setEndDate(newTournament.getEndDate());
             tournament.setEnrolDate(newTournament.getEnrolDate());
-            tournament.setReferee(newTournament.getReferee());
-            tournament.setLocation(newTournament.getLocation());
             tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
             tournament.setCategories(newTournament.getCategories());
             tournament.setAdmin(newTournament.getAdmin());
