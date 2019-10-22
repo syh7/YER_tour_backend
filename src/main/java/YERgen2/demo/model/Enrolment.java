@@ -1,7 +1,7 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
-//import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Enrolment {
@@ -10,16 +10,34 @@ public class Enrolment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    //@NotNull
+    private long partnerLeagueNumber;
+    @NotNull
     private int playerLevel;
-    //@NotNull
+    @NotNull
     private Discipline discipline;
-    //@NotNull
+    @NotNull
     @ManyToOne
     private Tournament tournament;
 
+    public Enrolment() {}
+    public Enrolment(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+        this.playerLevel = playerLevel;
+        this.discipline = discipline;
+        this.tournament = tournament;
+    }
+    public Enrolment(long id, long partnerLeagueNumber, @NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+        this.id = id;
+        this.partnerLeagueNumber = partnerLeagueNumber;
+        this.playerLevel = playerLevel;
+        this.discipline = discipline;
+        this.tournament = tournament;
+    }
+
     public long getId() {
         return id;
+    }
+    public long getPartnerLeagueNumber() {
+        return partnerLeagueNumber;
     }
     public int getPlayerLevel() {
         return playerLevel;
@@ -33,6 +51,9 @@ public class Enrolment {
 
     public void setId(long id) {
         this.id = id;
+    }
+    public void setPartnerLeagueNumber(long partnerLeagueNumber) {
+        this.partnerLeagueNumber = partnerLeagueNumber;
     }
     public void setPlayerLevel(int playerLevel) {
         this.playerLevel = playerLevel;

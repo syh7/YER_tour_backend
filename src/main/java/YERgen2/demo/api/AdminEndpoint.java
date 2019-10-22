@@ -27,27 +27,25 @@ public class AdminEndpoint {
 
     @GetMapping(value = "admins/{id}", produces = "application/json")
     public Admin getAdmin(@PathVariable long id) {
-        return adminService.findById(id)
-                .orElseThrow(() -> new AdminNotFoundException(id));
+        return adminService.findById(id);
     }
 
     @PutMapping("/admins/{id}")
-    public Admin replaceAdmin(@RequestBody Admin newAdmin, @PathVariable Long id) {
-        return adminService.findById(id)
-                .map(admin -> {
-                    admin.setEmail(newAdmin.getEmail());
-                    admin.setPassword(newAdmin.getPassword());
-                    admin.setName(newAdmin.getName());
-                    return adminService.save(admin);
-                })
-                .orElseGet(() -> {
-                    newAdmin.setId(id);
-                    return adminService.save(newAdmin);
-                });
+    public Admin replaceAdmin(@RequestBody Admin newAdmin, @PathVariable long id) {
+        try {
+            Admin admin = adminService.findById(id);
+            admin.setEmail(newAdmin.getEmail());
+            admin.setPassword(newAdmin.getPassword());
+            admin.setName(newAdmin.getName());
+            return adminService.save(admin);
+        } catch(AdminNotFoundException ex){
+            newAdmin.setId(id);
+            return adminService.save(newAdmin);
+        }
     }
 
     @DeleteMapping("/admins/{id}")
-    public void deleteAdmin(@PathVariable Long id) {
+    public void deleteAdmin(@PathVariable long id) {
         adminService.deleteById(id);
     }
 

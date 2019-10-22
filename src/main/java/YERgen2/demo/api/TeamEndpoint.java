@@ -25,28 +25,26 @@ public class TeamEndpoint {
 
     @GetMapping(value = "teams/{id}", produces = "application/json")
     public Team getTeam(@PathVariable long id) {
-        return teamService.findById(id)
-                .orElseThrow(() -> new TeamNotFoundException(id));
+        return teamService.findById(id);
     }
 
     @PutMapping("/teams/{id}")
-    public Team replaceTeam(@RequestBody Team newTeam, @PathVariable Long id) {
-        return teamService.findById(id)
-                .map(team -> {
-                    team.setDiscipline(newTeam.getDiscipline());
-                    team.setPlayerLevel(newTeam.getPlayerLevel());
-                    team.setGame(newTeam.getGame());
-                    team.setTournament(newTeam.getTournament());
-                    return teamService.save(team);
-                })
-                .orElseGet(() -> {
-                    newTeam.setId(id);
-                    return teamService.save(newTeam);
-                });
+    public Team replaceTeam(@RequestBody Team newTeam, @PathVariable long id) {
+        try{
+            Team team = teamService.findById(id);
+            team.setDiscipline(newTeam.getDiscipline());
+            team.setPlayerLevel(newTeam.getPlayerLevel());
+            team.setGame(newTeam.getGame());
+            team.setTournament(newTeam.getTournament());
+            return teamService.save(team);
+        } catch(TeamNotFoundException ex){
+            newTeam.setId(id);
+            return teamService.save(newTeam);
+        }
     }
 
     @DeleteMapping("/teams/{id}")
-    public void deleteTeam(@PathVariable Long id) {
+    public void deleteTeam(@PathVariable long id) {
         teamService.deleteById(id);
     }
 

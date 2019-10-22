@@ -24,6 +24,25 @@ public class Game {
     @ManyToOne
     private Tournament tournament;
 
+    public Game() {}
+    public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+        this.stage = stage;
+        this.discipline = discipline;
+        this.tournament = tournament;
+    }
+    public Game(long id, @NotNull Stage stage, int[] result, @NotNull Discipline discipline, LocalTime startTime,
+                LocalTime endTime, String location, String judge, @NotNull Tournament tournament) {
+        this.id = id;
+        this.stage = stage;
+        this.result = result;
+        this.discipline = discipline;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.location = location;
+        this.judge = judge;
+        this.tournament = tournament;
+    }
+
     public void setId(long id) {
         this.id = id;
     }

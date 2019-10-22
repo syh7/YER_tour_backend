@@ -20,6 +20,13 @@ public class Team {
     @ManyToOne
     private Tournament tournament;
 
+    public Team() {}
+    public Team(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+        this.playerLevel = playerLevel;
+        this.discipline = discipline;
+        this.tournament = tournament;
+    }
+
     public long getId(){
         return id;
     }

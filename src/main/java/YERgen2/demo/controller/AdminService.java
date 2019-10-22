@@ -1,11 +1,10 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.Exceptions.AdminNotFoundException;
 import YERgen2.demo.model.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,8 +21,9 @@ public class AdminService {
         return adminRepository.save(participant);
     }
 
-    public Optional<Admin> findById(Long id){
-        return adminRepository.findById(id);
+    public Admin findById(Long id){
+        return adminRepository.findById(id)
+                .orElseThrow(() -> new AdminNotFoundException(id));
     }
 
     public Iterable <Admin> findAll(){
