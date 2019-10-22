@@ -1,10 +1,12 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.Exceptions.AlreadyEnrolledException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
+import YERgen2.demo.repositories.EnrolmentRepository;
+import YERgen2.demo.repositories.ParticipantRepository;
+import YERgen2.demo.repositories.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

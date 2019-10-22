@@ -1,6 +1,7 @@
 package YERgen2.demo.controller;
 
 import YERgen2.demo.model.*;
+import YERgen2.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;

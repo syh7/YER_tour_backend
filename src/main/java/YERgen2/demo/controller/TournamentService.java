@@ -2,6 +2,7 @@ package YERgen2.demo.controller;
 
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.model.Tournament;
+import YERgen2.demo.repositories.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

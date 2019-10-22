@@ -2,6 +2,7 @@ package YERgen2.demo.controller;
 
 import YERgen2.demo.Exceptions.GameNotFoundException;
 import YERgen2.demo.model.Game;
+import YERgen2.demo.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class GameService {
