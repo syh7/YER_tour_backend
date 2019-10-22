@@ -23,6 +23,20 @@ public class GameService {
                 .orElseThrow(() -> new GameNotFoundException(id));
     }
 
+    public Game updateGame(long id, Game newGame){
+        return gameRepository.findById(id).map(game -> {
+            game.setJudge(newGame.getJudge());
+            game.setStage(newGame.getStage());
+            game.setLocation(newGame.getLocation());
+            game.setDiscipline(newGame.getDiscipline());
+            game.setStartTime(newGame.getStartTime());
+            game.setEndTime(newGame.getEndTime());
+            game.setResult(newGame.getResult());
+            game.setTournament(newGame.getTournament());
+            return gameRepository.save(game);
+        }).orElseThrow(() -> new GameNotFoundException(newGame.getId()));
+    }
+
     public Iterable <Game> findAll(){
         return gameRepository.findAll();
     }

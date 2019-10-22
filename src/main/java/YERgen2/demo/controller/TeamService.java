@@ -27,6 +27,16 @@ public class TeamService {
                 .orElseThrow(() -> new TeamNotFoundException(id));
     }
 
+    public Team updateTeam(long id, Team newTeam){
+        return teamRepository.findById(id).map(team -> {
+            team.setDiscipline(newTeam.getDiscipline());
+            team.setPlayerLevel(newTeam.getPlayerLevel());
+            team.setGame(newTeam.getGame());
+            team.setTournament(newTeam.getTournament());
+            return teamRepository.save(team);
+        }).orElseThrow(() -> new TeamNotFoundException(id));
+    }
+
     public Iterable <Team> findAll(){
         return teamRepository.findAll();
     }

@@ -31,17 +31,8 @@ public class AdminEndpoint {
     }
 
     @PutMapping("/admins/{id}")
-    public Admin replaceAdmin(@RequestBody Admin newAdmin, @PathVariable long id) {
-        try {
-            Admin admin = adminService.findById(id);
-            admin.setEmail(newAdmin.getEmail());
-            admin.setPassword(newAdmin.getPassword());
-            admin.setName(newAdmin.getName());
-            return adminService.save(admin);
-        } catch(AdminNotFoundException ex){
-            newAdmin.setId(id);
-            return adminService.save(newAdmin);
-        }
+    public Admin updateAdmin(@RequestBody Admin newAdmin, @PathVariable long id) {
+        return adminService.updateAdmin(id, newAdmin);
     }
 
     @DeleteMapping("/admins/{id}")

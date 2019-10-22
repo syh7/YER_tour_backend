@@ -34,4 +34,13 @@ public class AdminService {
     public void deleteById(Long id) {
         adminRepository.deleteById(id);
     }
+
+    public Admin updateAdmin(long id, Admin newAdmin) {
+        return adminRepository.findById(id).map(admin -> {
+            admin.setEmail(newAdmin.getEmail());
+            admin.setPassword(newAdmin.getPassword());
+            admin.setName(newAdmin.getName());
+            return adminRepository.save(admin);
+        }).orElseThrow(() -> new AdminNotFoundException(newAdmin.getId()));
+    }
 }

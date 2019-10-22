@@ -22,12 +22,28 @@ public class TournamentService {
         return tournamentRepository.save(tournament);
     }
 
-    public Tournament findById(Long id){
+    public Tournament findById(long id){
         return tournamentRepository.findById(id)
                 .orElseThrow(() -> new TournamentNotFoundException(id));
     }
 
-    public boolean existsById(Long id){
+    public Tournament updateTournament(long id, Tournament newTournament){
+        return tournamentRepository.findById(id).map(tournament -> {
+            tournament.setName(newTournament.getName());
+            tournament.setDescription(newTournament.getDescription());
+            tournament.setReferee(newTournament.getReferee());
+            tournament.setLocation(newTournament.getLocation());
+            tournament.setStartDate(newTournament.getStartDate());
+            tournament.setEndDate(newTournament.getEndDate());
+            tournament.setEnrolDate(newTournament.getEnrolDate());
+            tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
+            tournament.setCategories(newTournament.getCategories());
+            tournament.setAdmin(newTournament.getAdmin());
+            return tournamentRepository.save(tournament);
+        }).orElseThrow(() -> new TournamentNotFoundException(id));
+    }
+
+    public boolean existsById(long id){
         return tournamentRepository.existsById(id);
     }
 
@@ -35,7 +51,7 @@ public class TournamentService {
         return tournamentRepository.findAll();
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(long id) {
         tournamentRepository.deleteById(id);
     }
 

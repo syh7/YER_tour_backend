@@ -31,23 +31,8 @@ public class ParticipantEndpoint {
     }
 
     @PutMapping("/participants/{id}")
-    public Participant replaceParticipant(@RequestBody Participant newParticipant, @PathVariable long id) {
-        try{
-            Participant participant = participantService.findById(id);
-            participant.setEmail(newParticipant.getEmail());
-            participant.setPassword(newParticipant.getPassword());
-            participant.setFirstName(newParticipant.getFirstName());
-            participant.setLastName(newParticipant.getLastName());
-            participant.setDateOfBirth(newParticipant.getDateOfBirth());
-            participant.setPlayerLevel(newParticipant.getPlayerLevel());
-            participant.setLeagueNumber(newParticipant.getLeagueNumber());
-            participant.setEnrolment(newParticipant.getEnrolment());
-            participant.setTeam(newParticipant.getTeam());
-            return participantService.save(participant);
-        } catch (ParticipantNotFoundException ex){
-            newParticipant.setId(id);
-            return participantService.save(newParticipant);
-        }
+    public Participant updateParticipant(@RequestBody Participant newParticipant, @PathVariable long id) {
+        return participantService.updateParticipant(id, newParticipant);
     }
 
     @DeleteMapping("/participants/{id}")

@@ -48,24 +48,8 @@ public class TournamentEndpoint {
     }
 
     @PutMapping("/tournaments/{id}")
-    public Tournament replaceTournament(@RequestBody Tournament newTournament, @PathVariable long id) {
-        try{
-            Tournament tournament = tournamentService.findById(id);
-            tournament.setName(newTournament.getName());
-            tournament.setDescription(newTournament.getDescription());
-            tournament.setReferee(newTournament.getReferee());
-            tournament.setLocation(newTournament.getLocation());
-            tournament.setStartDate(newTournament.getStartDate());
-            tournament.setEndDate(newTournament.getEndDate());
-            tournament.setEnrolDate(newTournament.getEnrolDate());
-            tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
-            tournament.setCategories(newTournament.getCategories());
-            tournament.setAdmin(newTournament.getAdmin());
-            return tournamentService.save(tournament);
-        } catch (TournamentNotFoundException ex){
-            newTournament.setId(id);
-            return tournamentService.save(newTournament);
-        }
+    public Tournament updateTournament(@RequestBody Tournament newTournament, @PathVariable long id) {
+        return tournamentService.updateTournament(id, newTournament);
     }
 
     @DeleteMapping("/tournaments/{id}")

@@ -27,6 +27,21 @@ public class ParticipantService {
                 .orElseThrow(() -> new ParticipantNotFoundException(id));
     }
 
+    public Participant updateParticipant(long id, Participant newParticipant){
+        return participantRepository.findById(id).map(participant -> {
+            participant.setEmail(newParticipant.getEmail());
+            participant.setPassword(newParticipant.getPassword());
+            participant.setFirstName(newParticipant.getFirstName());
+            participant.setLastName(newParticipant.getLastName());
+            participant.setDateOfBirth(newParticipant.getDateOfBirth());
+            participant.setPlayerLevel(newParticipant.getPlayerLevel());
+            participant.setLeagueNumber(newParticipant.getLeagueNumber());
+            participant.setEnrolment(newParticipant.getEnrolment());
+            participant.setTeam(newParticipant.getTeam());
+            return participantRepository.save(participant);
+        }).orElseThrow( ()-> new ParticipantNotFoundException(id));
+    }
+
     public Iterable <Participant> findAll(){
         return participantRepository.findAll();
     }
