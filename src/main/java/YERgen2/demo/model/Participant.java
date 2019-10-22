@@ -3,8 +3,10 @@ package YERgen2.demo.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -20,8 +22,8 @@ public class Participant extends Account {
     private int leagueNumber;
     @NotNull
     private LocalDate dateOfBirth;
-    @ManyToMany
-    private List<Enrolment> enrolment;
+    @OneToMany
+    private List<Enrolment> enrolments;
     @ManyToMany
     private List<Team> team;
 
@@ -33,17 +35,18 @@ public class Participant extends Account {
         this.lastName = lastName;
         this.playerLevel = playerLevel;
         this.dateOfBirth = dateOfBirth;
+        this.enrolments = new ArrayList<>();
     }
     public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
                        @NotNull String lastName, @NotNull int playerLevel, int leagueNumber,
-                       @NotNull LocalDate dateOfBirth, List<Enrolment> enrolment, List<Team> team) {
+                       @NotNull LocalDate dateOfBirth, List<Enrolment> enrolments, List<Team> team) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.playerLevel = playerLevel;
         this.leagueNumber = leagueNumber;
         this.dateOfBirth = dateOfBirth;
-        this.enrolment = enrolment;
+        this.enrolments = enrolments;
         this.team = team;
     }
 
@@ -63,7 +66,7 @@ public class Participant extends Account {
         return dateOfBirth;
     }
     public List<Enrolment> getEnrolment() {
-        return enrolment;
+        return enrolments;
     }
     public List<Team> getTeam() {
         return team;
@@ -84,8 +87,8 @@ public class Participant extends Account {
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
-    public void setEnrolment(List<Enrolment> enrolment) {
-        this.enrolment = enrolment;
+    public void setEnrolment(List<Enrolment> enrolments) {
+        this.enrolments = enrolments;
     }
     public void setTeam(List<Team> team) {
         this.team = team;
@@ -100,6 +103,14 @@ public class Participant extends Account {
         str += "Email: " + getEmail();
         str += "Password: " + getPassword();
         return str;
+    }
+
+    public boolean addEnrolment(Enrolment enrolment){
+        return this.enrolments.add(enrolment);
+    }
+
+    public boolean deleteEnrolment(Enrolment enrolment){
+        return this.enrolments.remove(enrolment);
     }
 
 }

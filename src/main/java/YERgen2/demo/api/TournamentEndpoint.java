@@ -4,6 +4,7 @@ import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.controller.EnrolmentService;
 import YERgen2.demo.controller.TournamentService;
 import YERgen2.demo.model.Enrolment;
+import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -75,8 +76,8 @@ public class TournamentEndpoint {
     /////TOURNAMENTS/ID/ENROLL
 
     @PostMapping("/tournaments/{id}/enroll")
-    public Enrolment enrol(@PathVariable long id, @RequestBody Enrolment enrolment){
-        return enrolmentService.save(id, enrolment);
+    public Enrolment enrol(@PathVariable long id, @RequestBody Enrolment enrolment, @RequestBody Participant participant){
+        return enrolmentService.save(id, enrolment, participant);
     }
 
 }

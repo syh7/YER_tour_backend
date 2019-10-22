@@ -1,8 +1,6 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.model.Admin;
-import YERgen2.demo.model.Participant;
-import YERgen2.demo.model.Tournament;
+import YERgen2.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -28,6 +26,9 @@ public class DemoData {
     @Autowired
     private GameRepository gameRepository;
 
+    @Autowired
+    private EnrolmentService enrolmentService;
+
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
 
@@ -50,5 +51,11 @@ public class DemoData {
                 LocalDate.of(2019, 10, 1), admin2);
         tournamentRepository.save(tournament1);
         tournamentRepository.save(tournament2);
+
+        Enrolment enrolment1 = new Enrolment(9, Discipline.MENSINGLES, tournament1);
+        enrolmentService.save(enrolment1);
+
+        part1.addEnrolment(enrolment1);
+        participantRepository.save(part1);
     }
 }
