@@ -1,7 +1,10 @@
 package YERgen2.demo.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -13,7 +16,9 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
     private String email;
+    @JsonIgnore
     private String password;
 
     public String getEmail() {

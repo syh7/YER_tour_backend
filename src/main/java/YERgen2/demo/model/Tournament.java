@@ -1,6 +1,7 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
@@ -10,14 +11,18 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @NotNull
     private String name;
     private String referee;
     private String location;
+    @NotNull
     private LocalDate startDate;
+    @NotNull
     private LocalDate endDate;
     private LocalDate enrolDate;
     private int[] maxDisciplines;
     private int[] categories;
+    @NotNull
     @ManyToOne
     private Admin admin;
 
