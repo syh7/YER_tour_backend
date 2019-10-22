@@ -2,24 +2,23 @@ package YERgen2.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.Set;
 
 @Entity
-public class Match {
+public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToMany
-    private Set<Team> teams;
     private Stage stage;
-    private String result;
+    private int[] result;
     private Discipline discipline;
     private LocalTime startTime;
     private LocalTime endTime;
     private String location;
     private String judge;
+    @ManyToOne
+    private Tournament tournament;
 
     public void setId(long id) {
         this.id = id;
@@ -36,17 +35,17 @@ public class Match {
     public Discipline getDiscipline() {
         return discipline;
     }
-    public String getResult() {
+    public int[] getResult() {
         return result;
     }
     public Stage getStage() {
         return stage;
     }
-    public Set<Team> getTeams() {
-        return teams;
-    }
     public String getJudge() {
         return judge;
+    }
+    public Tournament getTournament() {
+        return tournament;
     }
 
     public long getId() {
@@ -64,7 +63,7 @@ public class Match {
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
-    public void setResult(String result) {
+    public void setResult(int[] result) {
         this.result = result;
     }
     public void setStage(Stage stage) {
@@ -73,8 +72,8 @@ public class Match {
     public void setJudge(String judge) {
         this.judge = judge;
     }
-    public void setTeams(Set<Team> teams) {
-        this.teams = teams;
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 
 }

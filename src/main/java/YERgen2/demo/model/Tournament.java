@@ -2,7 +2,6 @@ package YERgen2.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Entity
 public class Tournament {
@@ -17,13 +16,10 @@ public class Tournament {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate enrolDate;
-    @OneToMany
-    private Set<Match> matches;
-    @OneToMany
-    private Set<Enrolment> enrolments;
-    @OneToMany
-    private Set<Team> teams;
     private int[] maxDisciplines;
+    private int[] categories;
+    @ManyToOne
+    private Admin admin;
 
     public long getId() {
         return id;
@@ -46,17 +42,14 @@ public class Tournament {
     public void setEnrolDate(LocalDate enrolDate) {
         this.enrolDate = enrolDate;
     }
-    public Set<Enrolment> getEnrolments() {
-        return enrolments;
-    }
-    public void setMatches(Set<Match> matches) {
-        this.matches = matches;
-    }
-    public Set<Team> getTeams() {
-        return teams;
-    }
     public void setMaxDisciplines(int[] maxDisciplines) {
         this.maxDisciplines = maxDisciplines;
+    }
+    public void setCategories(int[] categories) {
+        this.categories = categories;
+    }
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
     }
 
     public void setId(long id) {
@@ -80,22 +73,14 @@ public class Tournament {
     public LocalDate getEnrolDate() {
         return enrolDate;
     }
-    public Set<Match> getMatches() {
-        return matches;
-    }
-    public void setEnrolments(Set<Enrolment> enrolments) {
-        this.enrolments = enrolments;
-    }
-    public void setTeams(Set<Team> teams) {
-        this.teams = teams;
-    }
     public int[] getMaxDisciplines() {
         return maxDisciplines;
     }
-
-    public boolean enrol(Enrolment enrolment){
-        return this.enrolments.add(enrolment);
+    public int[] getCategories() {
+        return categories;
     }
-
+    public Admin getAdmin() {
+        return admin;
+    }
 
 }

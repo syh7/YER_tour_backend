@@ -2,7 +2,6 @@ package YERgen2.demo.api;
 
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.controller.TournamentService;
-import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +22,19 @@ public class TournamentEndpoint {
         return tournamentService.save(newAdmin);
     }
 
+    //tournaments/?mode=name&search=name
     @GetMapping(value="/tournaments")
-    public List<Tournament> getAllTournaments(){
-        return (List<Tournament>) tournamentService.findAll();
+    public List<Tournament> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
+        if(mode.equals("name")) {
+            return (List<Tournament>) tournamentService.findByName(search);
+        } else {
+            return (List<Tournament>) tournamentService.findAll();
+        }
     }
 
     /////TOURNAMENTS/ID
 
-    @GetMapping(value = "tournaments/{id}", produces = "application/json")
+    @GetMapping(value = "/tournaments/{id}", produces = "application/json")
     public Tournament getTournament(@PathVariable long id) {
         return tournamentService.findById(id)
                 .orElseThrow(() -> new TournamentNotFoundException(id));
@@ -46,10 +50,9 @@ public class TournamentEndpoint {
                     tournament.setEnrolDate(newTournament.getEnrolDate());
                     tournament.setReferee(newTournament.getReferee());
                     tournament.setLocation(newTournament.getLocation());
-                    tournament.setMatches(newTournament.getMatches());
-                    tournament.setEnrolments(newTournament.getEnrolments());
-                    tournament.setTeams(newTournament.getTeams());
                     tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
+                    tournament.setCategories(newTournament.getCategories());
+                    tournament.setAdmin(newTournament.getAdmin());
                     return tournamentService.save(tournament);
                 })
                 .orElseGet(() -> {
@@ -61,18 +64,6 @@ public class TournamentEndpoint {
     @DeleteMapping("/tournaments/{id}")
     public void deleteTournament(@PathVariable long id) {
         tournamentService.deleteById(id);
-    }
-
-    /////TOURNAMENTS/ID/ENROLL
-
-    @PostMapping("/tournaments/{id}/enroll")
-    public boolean enrollParticipant(@RequestBody Enrolment enrolment, @PathVariable long id){
-        return tournamentService.enrol(id, enrolment);
-    }
-
-    @GetMapping("/tournaments/{id}/enroll")
-    public List<Enrolment> getEnrolments(@RequestBody long participantId, @PathVariable long tournamentId){
-        return (List<Enrolment>) tournamentService.getEnrolment(participantId, tournamentId);
     }
 
 }

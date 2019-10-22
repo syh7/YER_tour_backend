@@ -1,6 +1,5 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.Exceptions.TeamNotFoundException;
 import YERgen2.demo.controller.TeamService;
 import YERgen2.demo.model.Team;
@@ -36,7 +35,8 @@ public class TeamEndpoint {
                 .map(team -> {
                     team.setDiscipline(newTeam.getDiscipline());
                     team.setPlayerLevel(newTeam.getPlayerLevel());
-                    team.setTeamMembers(newTeam.getTeamMembers());
+                    team.setGame(newTeam.getGame());
+                    team.setTournament(newTeam.getTournament());
                     return teamService.save(team);
                 })
                 .orElseGet(() -> {
