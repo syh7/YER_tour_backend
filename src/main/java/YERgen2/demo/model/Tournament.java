@@ -18,6 +18,8 @@ public class Tournament {
     private LocalDate enrolDate;
     private int[] maxDisciplines;
     private int[] categories;
+    @ManyToOne
+    private Admin admin;
 
     public long getId() {
         return id;
@@ -46,6 +48,9 @@ public class Tournament {
     public void setCategories(int[] categories) {
         this.categories = categories;
     }
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -73,6 +78,9 @@ public class Tournament {
     }
     public int[] getCategories() {
         return categories;
+    }
+    public Admin getAdmin() {
+        return admin;
     }
 
 }

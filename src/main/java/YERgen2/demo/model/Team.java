@@ -13,7 +13,7 @@ public class Team {
     private Discipline discipline;
     @ManyToOne
     private Match match;
-    @OneToOne
+    @ManyToOne
     private Tournament tournament;
 
     public long getId(){

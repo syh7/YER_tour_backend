@@ -52,6 +52,7 @@ public class TournamentEndpoint {
                     tournament.setLocation(newTournament.getLocation());
                     tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
                     tournament.setCategories(newTournament.getCategories());
+                    tournament.setAdmin(newTournament.getAdmin());
                     return tournamentService.save(tournament);
                 })
                 .orElseGet(() -> {
