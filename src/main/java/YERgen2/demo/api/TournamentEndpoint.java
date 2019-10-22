@@ -2,7 +2,6 @@ package YERgen2.demo.api;
 
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.controller.TournamentService;
-import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class TournamentEndpoint {
 
     /////TOURNAMENTS/ID
 
-    @GetMapping(value = "tournaments/{id}", produces = "application/json")
+    @GetMapping(value = "/tournaments/{id}", produces = "application/json")
     public Tournament getTournament(@PathVariable long id) {
         return tournamentService.findById(id)
                 .orElseThrow(() -> new TournamentNotFoundException(id));
@@ -51,9 +50,6 @@ public class TournamentEndpoint {
                     tournament.setEnrolDate(newTournament.getEnrolDate());
                     tournament.setReferee(newTournament.getReferee());
                     tournament.setLocation(newTournament.getLocation());
-                    tournament.setMatches(newTournament.getMatches());
-                    tournament.setEnrolments(newTournament.getEnrolments());
-                    tournament.setTeams(newTournament.getTeams());
                     tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
                     tournament.setCategories(newTournament.getCategories());
                     return tournamentService.save(tournament);
@@ -67,25 +63,6 @@ public class TournamentEndpoint {
     @DeleteMapping("/tournaments/{id}")
     public void deleteTournament(@PathVariable long id) {
         tournamentService.deleteById(id);
-    }
-
-    /////TOURNAMENTS/ID/ENROLL
-
-    @PostMapping("/tournaments/{id}/enrol")
-    public boolean enrolParticipant(@RequestBody Enrolment enrolment, @PathVariable long id){
-        return tournamentService.enrol(id, enrolment);
-    }
-
-    @GetMapping("/tournaments/{id}/enrol")
-    public List<Enrolment> getEnrolments(@RequestParam(value = "pId") long pId, @PathVariable long id){
-        return (List<Enrolment>) tournamentService.getEnrolment(pId, id);
-    }
-
-    /////TOURNAMENTS/ID/ENROLMENTS
-
-    @GetMapping("/tournaments/{id}/enrolments")
-    public List<Enrolment> getAllEnrolments(@PathVariable long id){
-        return (List<Enrolment>) tournamentService.getAllEnrolment(id);
     }
 
 }

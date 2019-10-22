@@ -1,8 +1,6 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Team {
@@ -11,16 +9,15 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToMany
-    private List<Participant> teamMembers;
     private int playerLevel;
     private Discipline discipline;
+    @ManyToOne
+    private Match match;
+    @OneToOne
+    private Tournament tournament;
 
     public long getId(){
         return id;
-    }
-    public List<Participant> getTeamMembers() {
-        return teamMembers;
     }
     public int getPlayerLevel() {
         return playerLevel;
@@ -28,12 +25,15 @@ public class Team {
     public Discipline getDiscipline() {
         return discipline;
     }
+    public Match getMatch() {
+        return match;
+    }
+    public Tournament getTournament() {
+        return tournament;
+    }
 
     public void setId(long id){
         this.id = id;
-    }
-    public void setTeamMembers(List<Participant> teamMembers) {
-        this.teamMembers = teamMembers;
     }
     public void setPlayerLevel(int playerLevel) {
         this.playerLevel = playerLevel;
@@ -41,4 +41,11 @@ public class Team {
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
 }

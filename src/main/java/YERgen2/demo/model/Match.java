@@ -2,8 +2,6 @@ package YERgen2.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Match {
@@ -12,8 +10,6 @@ public class Match {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToMany
-    private List<Team> teams;
     private Stage stage;
     private String result;
     private Discipline discipline;
@@ -21,6 +17,8 @@ public class Match {
     private LocalTime endTime;
     private String location;
     private String judge;
+    @ManyToOne
+    private Tournament tournament;
 
     public void setId(long id) {
         this.id = id;
@@ -43,11 +41,11 @@ public class Match {
     public Stage getStage() {
         return stage;
     }
-    public List<Team> getTeams() {
-        return teams;
-    }
     public String getJudge() {
         return judge;
+    }
+    public Tournament getTournament() {
+        return tournament;
     }
 
     public long getId() {
@@ -74,8 +72,8 @@ public class Match {
     public void setJudge(String judge) {
         this.judge = judge;
     }
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 
 }

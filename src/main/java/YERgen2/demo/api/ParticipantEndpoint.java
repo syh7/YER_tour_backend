@@ -42,6 +42,8 @@ public class ParticipantEndpoint {
                     participant.setDateOfBirth(newParticipant.getDateOfBirth());
                     participant.setPlayerLevel(newParticipant.getPlayerLevel());
                     participant.setLeagueNumber(newParticipant.getLeagueNumber());
+                    participant.setEnrolment(newParticipant.getEnrolment());
+                    participant.setTeam(newParticipant.getTeam());
                     return participantService.save(participant);
                 })
                 .orElseGet(() -> {

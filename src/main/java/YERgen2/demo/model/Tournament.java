@@ -2,8 +2,6 @@ package YERgen2.demo.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 public class Tournament {
@@ -18,12 +16,6 @@ public class Tournament {
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate enrolDate;
-    @OneToMany
-    private List<Match> matches;
-    @OneToMany
-    private List<Enrolment> enrolments;
-    @OneToMany
-    private List<Team> teams;
     private int[] maxDisciplines;
     private int[] categories;
 
@@ -47,15 +39,6 @@ public class Tournament {
     }
     public void setEnrolDate(LocalDate enrolDate) {
         this.enrolDate = enrolDate;
-    }
-    public List<Enrolment> getEnrolments() {
-        return enrolments;
-    }
-    public void setMatches(List<Match> matches) {
-        this.matches = matches;
-    }
-    public List<Team> getTeams() {
-        return teams;
     }
     public void setMaxDisciplines(int[] maxDisciplines) {
         this.maxDisciplines = maxDisciplines;
@@ -85,46 +68,11 @@ public class Tournament {
     public LocalDate getEnrolDate() {
         return enrolDate;
     }
-    public List<Match> getMatches() {
-        return matches;
-    }
-    public void setEnrolments(List<Enrolment> enrolments) {
-        this.enrolments = enrolments;
-    }
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
-    }
     public int[] getMaxDisciplines() {
         return maxDisciplines;
     }
     public int[] getCategories() {
         return categories;
     }
-
-    public boolean enrol(Enrolment enrolment){
-        return this.enrolments.add(enrolment);
-    }
-
-    public boolean isEnroled(long participantId){
-        for(Enrolment enrolment : enrolments){
-            if(enrolment.getParticipant().getId() == participantId){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isEnroledInDiscipline(long participantId, Discipline discipline){
-        for(Enrolment enrolment : enrolments){
-            if(enrolment.getParticipant().getId() == participantId && enrolment.getDiscipline() == discipline){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
-
 
 }

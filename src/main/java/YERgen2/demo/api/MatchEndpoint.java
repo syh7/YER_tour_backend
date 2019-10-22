@@ -35,12 +35,12 @@ public class MatchEndpoint {
                 .map(match -> {
                     match.setJudge(newMatch.getJudge());
                     match.setStage(newMatch.getStage());
-                    match.setTeams(newMatch.getTeams());
                     match.setLocation(newMatch.getLocation());
                     match.setDiscipline(newMatch.getDiscipline());
                     match.setStartTime(newMatch.getStartTime());
                     match.setEndTime(newMatch.getEndTime());
                     match.setResult(newMatch.getResult());
+                    match.setTournament(newMatch.getTournament());
                     return matchService.save(match);
                 })
                 .orElseGet(() -> {

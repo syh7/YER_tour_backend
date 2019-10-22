@@ -2,6 +2,7 @@ package YERgen2.demo.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
 @Entity
@@ -13,6 +14,10 @@ public class Participant extends Account {
     private int playerLevel;
     private int leagueNumber;
     private LocalDate dateOfBirth;
+    @ManyToOne
+    private Team team;
+    @ManyToOne
+    private Enrolment enrolment;
 
     public String getFirstName(){
         return firstName;
@@ -28,6 +33,12 @@ public class Participant extends Account {
     }
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
+    }
+    public Enrolment getEnrolment() {
+        return enrolment;
+    }
+    public Team getTeam() {
+        return team;
     }
 
     public void setFirstName(String firstName){
@@ -45,6 +56,12 @@ public class Participant extends Account {
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
+    public void setEnrolment(Enrolment enrolment) {
+        this.enrolment = enrolment;
+    }
+    public void setTeam(Team team) {
+        this.team = team;
+    }
 
     @Override
     public String toString(){
@@ -56,4 +73,5 @@ public class Participant extends Account {
         str += "Password: " + getPassword();
         return str;
     }
+
 }
