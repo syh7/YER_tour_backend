@@ -25,6 +25,15 @@ public class Participant extends Account {
     @ManyToMany
     private List<Team> team;
 
+    public Participant(){
+    }
+
+    public Participant(String firstName, String lastName, int playerLevel, LocalDate dateOfBirth) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.playerLevel = playerLevel;
+        this.dateOfBirth = dateOfBirth;
+    }
 
     public String getFirstName(){
         return firstName;

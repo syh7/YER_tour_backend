@@ -26,6 +26,22 @@ public class Tournament {
     @ManyToOne
     private Admin admin;
 
+    public Tournament(){
+
+    }
+
+    public Tournament(String name, String referee, String location, LocalDate startDate, LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] categories, Admin admin) {
+        this.name = name;
+        this.referee = referee;
+        this.location = location;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.enrolDate = enrolDate;
+        this.maxDisciplines = maxDisciplines;
+        this.categories = categories;
+        this.admin = admin;
+    }
+
     public long getId() {
         return id;
     }
