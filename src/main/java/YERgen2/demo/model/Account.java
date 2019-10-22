@@ -19,8 +19,16 @@ public class Account {
     @NotNull
     private String email;
     @NotNull
-    @JsonIgnore
+    //@JsonIgnore
     private String password;
+
+    public Account() {
+    }
+
+    public Account(@NotNull String email, @NotNull String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;

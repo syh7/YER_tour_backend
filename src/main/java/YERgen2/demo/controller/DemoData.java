@@ -23,7 +23,7 @@ public class DemoData {
 
         Tournament tournament = new Tournament("BesteToernooi", "Sjaak", "Nijmegen",
                 LocalDate.of(2019, 10, 1), LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 9, 6), 2, new int[] {2,5,8}, adminRepository.save(new Admin()));
+                LocalDate.of(2019, 9, 6), 2, new int[] {2,5,8}, adminRepository.save(new Admin("","","")));
         tournamentRepository.save(tournament);
     }
 }
