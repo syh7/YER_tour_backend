@@ -42,4 +42,8 @@ public class TournamentService {
         return tournamentRepository.findByName(name);
     }
 
+    public Iterable<Tournament> findByNameContaining(String name){
+        return tournamentRepository.findByNameContaining(name);
+    }
+
 }
