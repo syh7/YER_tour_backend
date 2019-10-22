@@ -46,9 +46,9 @@ public class DemoData {
         participantRepository.save(part1);
         participantRepository.save(part2);
 
-        Tournament tournament1 = new Tournament("BesteToernooi", LocalDate.of(2019, 10, 1),
+        Tournament tournament1 = new Tournament("Stuban Toernooi", LocalDate.of(2019, 10, 1),
                 LocalDate.of(2019, 10, 1), admin1);
-        Tournament tournament2 = new Tournament("BesteToernooi", LocalDate.of(2019, 10, 1),
+        Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),
                 LocalDate.of(2019, 10, 1), admin2);
         tournamentRepository.save(tournament1);
         tournamentRepository.save(tournament2);
