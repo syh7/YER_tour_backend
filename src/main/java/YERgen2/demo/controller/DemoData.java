@@ -33,8 +33,8 @@ public class DemoData {
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
 
-        Admin admin1 = new Admin("Freek", "freek@test.com", "wachtwoord123");
-        Admin admin2 = new Admin("Jan", "jan@test.com", "wachtwoord123");
+        Admin admin1 = new Admin("Stuban", "toernooi@stuban.com", "wachtwoord123");
+        Admin admin2 = new Admin("Helios", "toernooi@helios.com", "wachtwoord123");
         adminRepository.save(admin1);
         adminRepository.save(admin2);
 
