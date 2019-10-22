@@ -15,7 +15,7 @@ public class Admin extends Account {
         this.name = name;
     }
 
-    public Admin(@NotNull String email, @NotNull String password, @NotNull String name) {
+    public Admin(@NotNull String name, @NotNull String email, @NotNull String password) {
         super(email, password);
         this.name = name;
     }
