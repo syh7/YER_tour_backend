@@ -22,7 +22,7 @@ public class TournamentEndpoint {
         return tournamentService.save(newAdmin);
     }
 
-    //tournaments/?mode=name&name=name
+    //tournaments/?mode=name&search=name
     @GetMapping(value="/tournaments")
     public List<Tournament> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
         if(mode.equals("name")) {
