@@ -1,11 +1,10 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.Exceptions.TeamNotFoundException;
 import YERgen2.demo.model.Team;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -22,8 +21,9 @@ public class TeamService {
         return teamRepository.save(participant);
     }
 
-    public Optional<Team> findById(Long id){
-        return teamRepository.findById(id);
+    public Team findById(Long id){
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new TeamNotFoundException(id));
     }
 
     public Iterable <Team> findAll(){

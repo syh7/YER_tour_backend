@@ -4,6 +4,7 @@ import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.controller.EnrolmentService;
 import YERgen2.demo.controller.TournamentService;
 import YERgen2.demo.model.Enrolment;
+import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -51,11 +52,12 @@ public class TournamentEndpoint {
         try{
             Tournament tournament = tournamentService.findById(id);
             tournament.setName(newTournament.getName());
+            tournament.setDescription(newTournament.getDescription());
+            tournament.setReferee(newTournament.getReferee());
+            tournament.setLocation(newTournament.getLocation());
             tournament.setStartDate(newTournament.getStartDate());
             tournament.setEndDate(newTournament.getEndDate());
             tournament.setEnrolDate(newTournament.getEnrolDate());
-            tournament.setReferee(newTournament.getReferee());
-            tournament.setLocation(newTournament.getLocation());
             tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
             tournament.setCategories(newTournament.getCategories());
             tournament.setAdmin(newTournament.getAdmin());
@@ -74,8 +76,8 @@ public class TournamentEndpoint {
     /////TOURNAMENTS/ID/ENROLL
 
     @PostMapping("/tournaments/{id}/enroll")
-    public Enrolment enrol(@PathVariable long id, @RequestBody Enrolment enrolment){
-        return enrolmentService.save(id, enrolment);
+    public Enrolment enrol(@PathVariable long id, @RequestBody Enrolment enrolment, @RequestBody Participant participant){
+        return enrolmentService.save(id, enrolment, participant);
     }
 
 }
