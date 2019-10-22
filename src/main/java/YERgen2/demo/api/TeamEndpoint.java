@@ -35,7 +35,7 @@ public class TeamEndpoint {
                 .map(team -> {
                     team.setDiscipline(newTeam.getDiscipline());
                     team.setPlayerLevel(newTeam.getPlayerLevel());
-                    team.setMatch(newTeam.getMatch());
+                    team.setGame(newTeam.getGame());
                     team.setTournament(newTeam.getTournament());
                     return teamService.save(team);
                 })

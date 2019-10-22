@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Entity
-public class Match {
+public class Game {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

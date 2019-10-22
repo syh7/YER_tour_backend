@@ -12,7 +12,7 @@ public class Team {
     private int playerLevel;
     private Discipline discipline;
     @ManyToOne
-    private Match match;
+    private Game game;
     @ManyToOne
     private Tournament tournament;
 
@@ -25,8 +25,8 @@ public class Team {
     public Discipline getDiscipline() {
         return discipline;
     }
-    public Match getMatch() {
-        return match;
+    public Game getGame() {
+        return game;
     }
     public Tournament getTournament() {
         return tournament;
@@ -41,8 +41,8 @@ public class Team {
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
-    public void setMatch(Match match) {
-        this.match = match;
+    public void setGame(Game game) {
+        this.game = game;
     }
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
