@@ -11,7 +11,7 @@ public class Match {
     private long id;
 
     private Stage stage;
-    private String result;
+    private int[] result;
     private Discipline discipline;
     private LocalTime startTime;
     private LocalTime endTime;
@@ -35,7 +35,7 @@ public class Match {
     public Discipline getDiscipline() {
         return discipline;
     }
-    public String getResult() {
+    public int[] getResult() {
         return result;
     }
     public Stage getStage() {
@@ -63,7 +63,7 @@ public class Match {
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
-    public void setResult(String result) {
+    public void setResult(int[] result) {
         this.result = result;
     }
     public void setStage(Stage stage) {
