@@ -1,6 +1,7 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
+//import javax.validation.constraints.NotNull;
 
 @Entity
 public class Enrolment {
@@ -9,8 +10,11 @@ public class Enrolment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    //@NotNull
     private int playerLevel;
+    //@NotNull
     private Discipline discipline;
+    //@NotNull
     @ManyToOne
     private Tournament tournament;
 

@@ -3,6 +3,7 @@ package YERgen2.demo.model;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -10,10 +11,14 @@ import java.util.List;
 @DiscriminatorValue("2")
 public class Participant extends Account {
 
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
+    @NotNull
     private int playerLevel;
     private int leagueNumber;
+    @NotNull
     private LocalDate dateOfBirth;
     @ManyToMany
     private List<Enrolment> enrolment;
