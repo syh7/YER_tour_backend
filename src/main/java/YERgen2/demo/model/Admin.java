@@ -12,7 +12,7 @@ public class Admin extends Account {
     private String name;
 
     public Admin(){}
-    public Admin(@NotNull String name, String email, String password) {
+    public Admin(@NotNull String name, @NotNull String email, @NotNull String password) {
         super(email, password);
         this.name = name;
     }

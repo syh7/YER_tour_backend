@@ -33,8 +33,8 @@ public class Tournament {
         this.endDate = endDate;
         this.admin = admin;
     }
-    public Tournament(String name, String referee, String location, LocalDate startDate, LocalDate endDate,
-                      LocalDate enrolDate, int maxDisciplines, int[] categories, Admin admin) {
+    public Tournament(@NotNull String name, String referee, String location, @NotNull LocalDate startDate, @NotNull LocalDate endDate,
+                      LocalDate enrolDate, int maxDisciplines, int[] categories, @NotNull Admin admin) {
         this.name = name;
         this.referee = referee;
         this.location = location;
