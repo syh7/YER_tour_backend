@@ -1,8 +1,5 @@
 package YERgen2.demo.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -19,7 +16,6 @@ public class Account {
     @NotNull
     private String email;
     @NotNull
-    @JsonIgnore
     private String password;
 
     Account() {}
