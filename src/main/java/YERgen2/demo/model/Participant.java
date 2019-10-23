@@ -74,7 +74,7 @@ public class Participant extends Account {
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
     }
-    public List<Enrolment> getEnrolment() {
+    public List<Enrolment> getEnrolments() {
         return enrolments;
     }
     public List<Team> getTeams() {
@@ -99,7 +99,7 @@ public class Participant extends Account {
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
-    public void setEnrolment(List<Enrolment> enrolments) {
+    public void setEnrolments(List<Enrolment> enrolments) {
         this.enrolments = enrolments;
     }
     public void setTeams(List<Team> teams) {

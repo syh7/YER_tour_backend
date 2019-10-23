@@ -74,7 +74,7 @@ public class AccountService {
             participant.setDateOfBirth(newParticipant.getDateOfBirth());
             participant.setPlayerLevel(newParticipant.getPlayerLevel());
             participant.setLeagueNumber(newParticipant.getLeagueNumber());
-            participant.setEnrolment(newParticipant.getEnrolment());
+            participant.setEnrolments(newParticipant.getEnrolments());
             participant.setTeams(newParticipant.getTeams());
             return participantRepository.save(participant);
         }).orElseThrow( ()-> new ParticipantNotFoundException(id));
