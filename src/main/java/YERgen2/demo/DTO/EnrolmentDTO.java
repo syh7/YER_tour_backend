@@ -1,6 +1,7 @@
 package YERgen2.demo.DTO;
 
 import YERgen2.demo.model.Discipline;
+import YERgen2.demo.model.Enrolment;
 
 public class EnrolmentDTO  {
 
@@ -41,4 +42,14 @@ public class EnrolmentDTO  {
     public void setTournamentId(long tournamentId) {
         this.tournamentId = tournamentId;
     }
+
+    public EnrolmentDTO(){}
+    public EnrolmentDTO(Enrolment enrolment){
+        setId(enrolment.getId());
+        setPlayerLevel(enrolment.getPlayerLevel());
+        setPartnerLeagueNumber(enrolment.getPartnerLeagueNumber());
+        setDiscipline(enrolment.getDiscipline());
+        setTournamentId(enrolment.getTournament().getId());
+    }
+
 }

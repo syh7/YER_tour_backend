@@ -1,5 +1,7 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.EnrolmentDTO;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -30,6 +32,13 @@ public class Enrolment {
         this.partnerLeagueNumber = partnerLeagueNumber;
         this.playerLevel = playerLevel;
         this.discipline = discipline;
+        this.tournament = tournament;
+    }
+    public Enrolment(EnrolmentDTO enrolmentDTO, Tournament tournament){
+        this.id = enrolmentDTO.getId();
+        this.discipline = enrolmentDTO.getDiscipline();
+        this.playerLevel = enrolmentDTO.getPlayerLevel();
+        this.partnerLeagueNumber = enrolmentDTO.getPartnerLeagueNumber();
         this.tournament = tournament;
     }
 
