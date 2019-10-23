@@ -109,10 +109,6 @@ public class Participant extends Account {
         return str;
     }
 
-    public boolean addEnrolment(Enrolment enrolment){
-        return this.enrolments.add(enrolment);
-    }
-
     public int getNumberEnrolmentsInTournament(long tournamentId){
         int count = 0;
         for(Enrolment enrolment : enrolments){
@@ -121,6 +117,29 @@ public class Participant extends Account {
             }
         }
         return count;
+    }
+
+    public boolean addEnrolment(Enrolment enrolment){
+        return this.enrolments.add(enrolment);
+    }
+
+    public boolean updateEnrolment(Enrolment newEnrolment){
+        for(Enrolment enrolment : enrolments){
+            if(enrolment.getId() == newEnrolment.getId()){
+                enrolments.remove(enrolment);
+                return enrolments.add(newEnrolment);
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteEnrolmentById(long enrolmentId){
+        for(Enrolment enrolment : enrolments){
+            if(enrolment.getId() == enrolmentId){
+                return this.enrolments.remove(enrolment);
+            }
+        }
+        return false;
     }
 
     public boolean deleteEnrolment(Enrolment enrolment){

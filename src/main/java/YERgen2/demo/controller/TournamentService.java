@@ -1,5 +1,6 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.DTO.EnrolRequestWrapper;
 import YERgen2.demo.Exceptions.NotModifiedException;
 import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -115,8 +117,9 @@ public class TournamentService {
         }
     }
 
-    public Participant enrolParticipantInTournament(long tournamentId, Participant participant, List<Enrolment> enrolments) {
-        for(Enrolment enrolment : enrolments){
+    public Participant enrolParticipantInTournament(long tournamentId, EnrolRequestWrapper enrolRequestWrapper) {
+        Participant participant = enrolRequestWrapper.getParticipant();
+        for(Enrolment enrolment : enrolRequestWrapper.getEnrolments()){
             enrolment = enrolmentRepository.save(enrolment);
             participant.addEnrolment(enrolment);
             participantRepository.save(participant);
@@ -139,4 +142,14 @@ public class TournamentService {
         }
     }
 
+    public List<Enrolment> updateEnrolments(long id, EnrolRequestWrapper enrolRequestWrapper) {
+        List<Enrolment> enrolments = new ArrayList<>();
+        Participant participant = enrolRequestWrapper.getParticipant();
+        for(Enrolment enrolment : enrolRequestWrapper.getEnrolments()){
+            if(participant.updateEnrolment(enrolment)){
+                enrolments.add(enrolment);
+            }
+        }
+        return enrolments;
+    }
 }
