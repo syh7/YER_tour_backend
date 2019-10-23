@@ -118,7 +118,8 @@ public class TournamentService {
     }
 
     public Participant enrolParticipantInTournament(long tournamentId, EnrolRequestWrapper enrolRequestWrapper) {
-        Participant participant = enrolRequestWrapper.getParticipant();
+        Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
+                .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
         for(Enrolment enrolment : enrolRequestWrapper.getEnrolments()){
             enrolment = enrolmentRepository.save(enrolment);
             participant.addEnrolment(enrolment);
@@ -144,7 +145,8 @@ public class TournamentService {
 
     public List<Enrolment> updateEnrolments(long id, EnrolRequestWrapper enrolRequestWrapper) {
         List<Enrolment> enrolments = new ArrayList<>();
-        Participant participant = enrolRequestWrapper.getParticipant();
+        Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
+                .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
         for(Enrolment enrolment : enrolRequestWrapper.getEnrolments()){
             if(participant.updateEnrolment(enrolment)){
                 enrolments.add(enrolment);

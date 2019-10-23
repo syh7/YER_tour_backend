@@ -7,18 +7,18 @@ import java.util.List;
 
 public class EnrolRequestWrapper {
 
-    private Participant participant;
+    private long participantId;
     private List<Enrolment> enrolments;
 
-    public void setParticipant(Participant participant) {
-        this.participant = participant;
+    public void setParticipantId(long participantId) {
+        this.participantId = participantId;
     }
     public void setEnrolments(List<Enrolment> enrolments) {
         this.enrolments = enrolments;
     }
 
-    public Participant getParticipant(){
-        return participant;
+    public long getParticipantId(){
+        return participantId;
     }
     public List<Enrolment> getEnrolments(){
         return enrolments;
@@ -26,7 +26,7 @@ public class EnrolRequestWrapper {
 
     public String toString(){
         String str = "";
-        str += "participant: " + participant.getId() + "\nEnrolments: [";
+        str += "participant: " + participantId + "\nEnrolments: [";
         for(Enrolment enrolment : enrolments){
             str += enrolment.getId() + " ";
         }
