@@ -90,8 +90,18 @@ public class TournamentService {
         return tournamentRepository.findByNameContaining(name);
     }
 
-    public Iterable<Enrolment> findEnrolmentByTournamentId(long tournamentId){
-        return enrolmentRepository.findByTournamentId(tournamentId);
+    public Iterable<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){
+        List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
+        enrolmentRepository.findByTournamentId(tournamentId).forEach(enrolment -> {
+            EnrolmentDTO enrolmentDTO = new EnrolmentDTO();
+            enrolmentDTO.setId(enrolment.getId());
+            enrolmentDTO.setPlayerLevel(enrolment.getPlayerLevel());
+            enrolmentDTO.setPartnerLeagueNumber(enrolment.getPartnerLeagueNumber());
+            enrolmentDTO.setDiscipline(enrolment.getDiscipline());
+            enrolmentDTO.setTournamentId(enrolment.getTournament().getId());
+            enrolmentDTOs.add(enrolmentDTO);
+        });
+        return enrolmentDTOs;
     }
 
     /*
@@ -151,8 +161,8 @@ public class TournamentService {
         }
     }
 
-    public List<Enrolment> updateEnrolments(long id, EnrolRequestWrapper enrolRequestWrapper) {
-        List<Enrolment> enrolments = new ArrayList<>();
+    public List<EnrolmentDTO> updateEnrolments(long id, EnrolRequestWrapper enrolRequestWrapper) {
+        List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
         Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
                 .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
 
@@ -165,10 +175,10 @@ public class TournamentService {
             enrolment.setTournament(tournamentRepository.findById(enrolmentDTO.getTournamentId())
                     .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
             if(participant.updateEnrolment(enrolment)){
-                enrolments.add(enrolment);
+                enrolmentDTOs.add(enrolmentDTO);
             }
         });
 
-        return enrolments;
+        return enrolmentDTOs;
     }
 }
