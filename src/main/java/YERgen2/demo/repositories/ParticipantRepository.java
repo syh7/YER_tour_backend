@@ -1,4 +1,4 @@
-package YERgen2.demo.controller;
+package YERgen2.demo.repositories;
 
 import YERgen2.demo.model.Participant;
 import org.springframework.data.repository.CrudRepository;

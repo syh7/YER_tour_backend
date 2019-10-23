@@ -30,17 +30,7 @@ public class TeamEndpoint {
 
     @PutMapping("/teams/{id}")
     public Team replaceTeam(@RequestBody Team newTeam, @PathVariable long id) {
-        try{
-            Team team = teamService.findById(id);
-            team.setDiscipline(newTeam.getDiscipline());
-            team.setPlayerLevel(newTeam.getPlayerLevel());
-            team.setGame(newTeam.getGame());
-            team.setTournament(newTeam.getTournament());
-            return teamService.save(team);
-        } catch(TeamNotFoundException ex){
-            newTeam.setId(id);
-            return teamService.save(newTeam);
-        }
+        return teamService.updateTeam(id, newTeam);
     }
 
     @DeleteMapping("/teams/{id}")
