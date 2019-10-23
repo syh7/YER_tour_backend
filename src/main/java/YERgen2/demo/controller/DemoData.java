@@ -18,9 +18,6 @@ public class DemoData {
     @Autowired
     private AccountService accountService;
 
-    @Autowired
-    private EnrolmentService enrolmentService;
-
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
 
