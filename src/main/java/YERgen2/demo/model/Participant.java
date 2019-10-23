@@ -1,5 +1,7 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.ParticipantDTO;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -55,6 +57,17 @@ public class Participant extends Account {
         this.playerLevel = playerLevel;
         this.leagueNumber = leagueNumber;
         this.dateOfBirth = dateOfBirth;
+        this.enrolments = enrolments;
+        this.teams = teams;
+    }
+    public Participant(ParticipantDTO participantDTO, List<Enrolment> enrolments, List<Team> teams){
+        super(participantDTO.getEmail(), participantDTO.getPassword());
+        this.firstName = participantDTO.getFirstName();
+        this.lastName = participantDTO.getLastName();
+        this.isMale = participantDTO.isMale();
+        this.playerLevel = participantDTO.getPlayerLevel();
+        this.leagueNumber = participantDTO.getLeagueNumber();
+        this.dateOfBirth = participantDTO.getDateOfBirth();
         this.enrolments = enrolments;
         this.teams = teams;
     }
