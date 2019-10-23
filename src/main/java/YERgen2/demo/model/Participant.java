@@ -109,6 +109,16 @@ public class Participant extends Account {
         return this.enrolments.add(enrolment);
     }
 
+    public int getNumberEnrolmentsInTournament(long tournamentId){
+        int count = 0;
+        for(Enrolment enrolment : enrolments){
+            if(enrolment.getTournament().getId() == tournamentId){
+                count++;
+            }
+        }
+        return count;
+    }
+
     public boolean deleteEnrolment(Enrolment enrolment){
         return this.enrolments.remove(enrolment);
     }

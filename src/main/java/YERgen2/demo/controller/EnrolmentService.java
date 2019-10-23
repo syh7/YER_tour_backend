@@ -1,6 +1,6 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.Exceptions.AlreadyEnrolledException;
+import YERgen2.demo.Exceptions.NotModifiedException;
 import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
@@ -62,7 +62,7 @@ public class EnrolmentService {
         if(participant.addEnrolment(enrolment)) {
             return enrolmentRepository.save(enrolment);
         } else {
-            throw new AlreadyEnrolledException(participant.getId(), enrolment.getId());
+            throw new NotModifiedException("Participant " + participant.getId() + " already enrolled in unchanged enrolment " + enrolment.getId());
         }
     }
 

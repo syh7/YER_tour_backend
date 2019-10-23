@@ -29,6 +29,13 @@ public class Tournament {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        //filler data
+        this.description = "description";
+        this.referee = "referee";
+        this.location = "location";
+        this.enrolDate = LocalDate.now();
+        this.maxDisciplines = 1;
+        this.categories = new int[]{1, 2, 3};
     }
     public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
                       @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] categories) {

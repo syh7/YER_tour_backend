@@ -1,9 +1,10 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.Exceptions.AlreadyEnrolledException;
+import YERgen2.demo.Exceptions.NotModifiedException;
 import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
+import YERgen2.demo.model.Discipline;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
@@ -88,16 +89,24 @@ public class TournamentService {
         return enrolmentRepository.findByTournamentId(tournamentId);
     }
 
-    public Enrolment enrolParticipantInTournament(long tournamentId, Enrolment enrolment, Participant participant){
-        if(!tournamentRepository.existsById(tournamentId)){
+    public boolean enrolParticipantInTournament(long tournamentId, Participant participant, Enrolment enrolment){
+        if(!tournamentRepository.findById(tournamentId).isPresent()){
             throw new TournamentNotFoundException(tournamentId);
         } else if(!participantRepository.existsById(participant.getId())){
             throw new ParticipantNotFoundException(participant.getId());
+        }else if(tournamentId != enrolment.getTournament().getId()){
+            throw new NotModifiedException("TournamentIDs don't match: " + tournamentId + " - " + enrolment.getTournament().getId());
         }
-        if(participant.addEnrolment(enrolment)) {
-            return enrolmentRepository.save(enrolment);
+        if(participant.getNumberEnrolmentsInTournament(tournamentId) < tournamentRepository.findById(tournamentId).get().getMaxDisciplines()) {
+            if(participant.addEnrolment(enrolment)) {
+                enrolmentRepository.save(enrolment);
+                participantRepository.save(participant);
+                return true;
+            } else {
+                throw new NotModifiedException("Participant " + participant.getId() + " already enrolled in unchanged enrolment " + enrolment.getId());
+            }
         } else {
-            throw new AlreadyEnrolledException(participant.getId(), enrolment.getId());
+            throw new NotModifiedException("Participant " + participant.getId() + " reached max enrolments in tournament " + tournamentId);
         }
     }
 
