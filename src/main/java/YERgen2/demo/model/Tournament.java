@@ -22,7 +22,7 @@ public class Tournament {
     private LocalDate endDate;
     private LocalDate enrolDate;
     private int maxDisciplines;
-    private int[] categories;
+    private int[] levels;
 
     public Tournament(){}
     public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate) {
@@ -35,10 +35,10 @@ public class Tournament {
         this.location = "location";
         this.enrolDate = LocalDate.now();
         this.maxDisciplines = 1;
-        this.categories = new int[]{1, 2, 3};
+        this.levels = new int[]{1, 2, 3};
     }
     public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
-                      @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] categories) {
+                      @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels) {
         this.name = name;
         this.description = description;
         this.referee = referee;
@@ -47,7 +47,7 @@ public class Tournament {
         this.endDate = endDate;
         this.enrolDate = enrolDate;
         this.maxDisciplines = maxDisciplines;
-        this.categories = categories;
+        this.levels = levels;
     }
 
     public long getId() {
@@ -77,8 +77,8 @@ public class Tournament {
     public int getMaxDisciplines() {
         return maxDisciplines;
     }
-    public int[] getCategories() {
-        return categories;
+    public int[] getLevels() {
+        return levels;
     }
 
     public void setId(long id) {
@@ -108,7 +108,7 @@ public class Tournament {
     public void setMaxDisciplines(int maxDisciplines) {
         this.maxDisciplines = maxDisciplines;
     }
-    public void setCategories(int[] categories) {
-        this.categories = categories;
+    public void setLevels(int[] levels) {
+        this.levels = levels;
     }
 }

@@ -1,34 +1,31 @@
 package YERgen2.demo.DTO;
 
-import YERgen2.demo.model.Enrolment;
-import YERgen2.demo.model.Participant;
-
 import java.util.List;
 
 public class EnrolRequestWrapper {
 
-    private Participant participant;
-    private List<Enrolment> enrolments;
+    private long participantId;
+    private List<EnrolmentDTO> enrolmentDTOs;
 
-    public void setParticipant(Participant participant) {
-        this.participant = participant;
+    public void setParticipantId(long participantId) {
+        this.participantId = participantId;
     }
-    public void setEnrolments(List<Enrolment> enrolments) {
-        this.enrolments = enrolments;
+    public void setEnrolments(List<EnrolmentDTO> enrolmentDTOs) {
+        this.enrolmentDTOs = enrolmentDTOs;
     }
 
-    public Participant getParticipant(){
-        return participant;
+    public long getParticipantId(){
+        return participantId;
     }
-    public List<Enrolment> getEnrolments(){
-        return enrolments;
+    public List<EnrolmentDTO> getEnrolmentDTOs(){
+        return enrolmentDTOs;
     }
 
     public String toString(){
         String str = "";
-        str += "participant: " + participant.getId() + "\nEnrolments: [";
-        for(Enrolment enrolment : enrolments){
-            str += enrolment.getId() + " ";
+        str += "participant: " + participantId + "\nEnrolments: [";
+        for(EnrolmentDTO enrolmentDTO : enrolmentDTOs){
+            str += enrolmentDTO.getId() + " ";
         }
         str += "]";
         return str;
