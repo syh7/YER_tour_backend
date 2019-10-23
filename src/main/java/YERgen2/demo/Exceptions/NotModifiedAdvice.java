@@ -7,13 +7,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GameNotFoundAdvice {
-
+public class NotModifiedAdvice {
     @ResponseBody
-    @ExceptionHandler(GameNotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    String gameNotFoundHandler(GameNotFoundException ex) {
+    @ExceptionHandler(NotModifiedException.class)
+    @ResponseStatus(HttpStatus.NOT_MODIFIED)
+    String notModifiedHandler(NotModifiedException ex) {
         return ex.getMessage();
     }
-
 }

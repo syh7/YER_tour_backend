@@ -25,9 +25,12 @@ public class Participant extends Account {
     @OneToMany
     private List<Enrolment> enrolments;
     @ManyToMany
-    private List<Team> team;
+    private List<Team> teams;
 
-    public Participant(){}
+    public Participant(){
+        this.teams = new ArrayList<>();
+        this.enrolments = new ArrayList<>();
+    }
     public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
                        @NotNull String lastName, @NotNull int playerLevel, @NotNull LocalDate dateOfBirth) {
         super(email, password);
@@ -35,11 +38,12 @@ public class Participant extends Account {
         this.lastName = lastName;
         this.playerLevel = playerLevel;
         this.dateOfBirth = dateOfBirth;
+        this.teams = new ArrayList<>();
         this.enrolments = new ArrayList<>();
     }
     public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
                        @NotNull String lastName, @NotNull int playerLevel, int leagueNumber,
-                       @NotNull LocalDate dateOfBirth, List<Enrolment> enrolments, List<Team> team) {
+                       @NotNull LocalDate dateOfBirth, List<Enrolment> enrolments, List<Team> teams) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -47,7 +51,7 @@ public class Participant extends Account {
         this.leagueNumber = leagueNumber;
         this.dateOfBirth = dateOfBirth;
         this.enrolments = enrolments;
-        this.team = team;
+        this.teams = teams;
     }
 
     public String getFirstName(){
@@ -68,8 +72,8 @@ public class Participant extends Account {
     public List<Enrolment> getEnrolment() {
         return enrolments;
     }
-    public List<Team> getTeam() {
-        return team;
+    public List<Team> getTeams() {
+        return teams;
     }
 
     public void setFirstName(String firstName){
@@ -90,8 +94,8 @@ public class Participant extends Account {
     public void setEnrolment(List<Enrolment> enrolments) {
         this.enrolments = enrolments;
     }
-    public void setTeam(List<Team> team) {
-        this.team = team;
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     @Override
@@ -107,6 +111,16 @@ public class Participant extends Account {
 
     public boolean addEnrolment(Enrolment enrolment){
         return this.enrolments.add(enrolment);
+    }
+
+    public int getNumberEnrolmentsInTournament(long tournamentId){
+        int count = 0;
+        for(Enrolment enrolment : enrolments){
+            if(enrolment.getTournament().getId() == tournamentId){
+                count++;
+            }
+        }
+        return count;
     }
 
     public boolean deleteEnrolment(Enrolment enrolment){
