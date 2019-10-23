@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class EnrolmentService {
@@ -53,7 +55,7 @@ public class EnrolmentService {
         return enrolmentRepository.findByTournamentId(tournamentId);
     }
 
-    public Enrolment save(long tournamentId, Enrolment enrolment, Participant participant){
+    public Enrolment save(long tournamentId, Participant participant, Enrolment enrolment){
         if(!tournamentRepository.existsById(tournamentId)){
             throw new TournamentNotFoundException(tournamentId);
         } else if(!participantRepository.existsById(participant.getId())){
@@ -65,6 +67,8 @@ public class EnrolmentService {
             throw new NotModifiedException("Participant " + participant.getId() + " already enrolled in unchanged enrolment " + enrolment.getId());
         }
     }
+
+
 
     public Enrolment updateEnrolment(long tournamentId, Enrolment newEnrolment){
         if(!tournamentRepository.existsById(tournamentId)){

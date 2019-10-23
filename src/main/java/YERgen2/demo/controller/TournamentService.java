@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class TournamentService {
@@ -89,12 +91,15 @@ public class TournamentService {
         return enrolmentRepository.findByTournamentId(tournamentId);
     }
 
+    /*
+        no check on discipline
+     */
     public boolean enrolParticipantInTournament(long tournamentId, Participant participant, Enrolment enrolment){
         if(!tournamentRepository.findById(tournamentId).isPresent()){
             throw new TournamentNotFoundException(tournamentId);
         } else if(!participantRepository.existsById(participant.getId())){
             throw new ParticipantNotFoundException(participant.getId());
-        }else if(tournamentId != enrolment.getTournament().getId()){
+        } else if(tournamentId != enrolment.getTournament().getId()){
             throw new NotModifiedException("TournamentIDs don't match: " + tournamentId + " - " + enrolment.getTournament().getId());
         }
         if(participant.getNumberEnrolmentsInTournament(tournamentId) < tournamentRepository.findById(tournamentId).get().getMaxDisciplines()) {
@@ -108,6 +113,16 @@ public class TournamentService {
         } else {
             throw new NotModifiedException("Participant " + participant.getId() + " reached max enrolments in tournament " + tournamentId);
         }
+    }
+
+    public Participant enrolParticipantInTournament(long tournamentId, Participant participant, List<Enrolment> enrolments) {
+        System.out.println(enrolments);
+        for(Enrolment enrolment : enrolments){
+            enrolment = enrolmentRepository.save(enrolment);
+            participant.addEnrolment(enrolment);
+            participantRepository.save(participant);
+        }
+        return participant;
     }
 
     public Enrolment updateEnrolment(long tournamentId, Enrolment newEnrolment){
