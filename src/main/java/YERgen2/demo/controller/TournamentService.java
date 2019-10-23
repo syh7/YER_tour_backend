@@ -1,6 +1,7 @@
 package YERgen2.demo.controller;
 
 import YERgen2.demo.DTO.EnrolRequestWrapper;
+import YERgen2.demo.DTO.EnrolmentDTO;
 import YERgen2.demo.Exceptions.NotModifiedException;
 import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
@@ -120,11 +121,18 @@ public class TournamentService {
     public Participant enrolParticipantInTournament(long tournamentId, EnrolRequestWrapper enrolRequestWrapper) {
         Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
                 .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
-        for(Enrolment enrolment : enrolRequestWrapper.getEnrolments()){
+        enrolRequestWrapper.getEnrolmentDTOs().forEach( enrolmentDTO -> {
+            Enrolment enrolment = new Enrolment();
+            enrolment.setId(enrolmentDTO.getId());
+            enrolment.setPlayerLevel(enrolmentDTO.getPlayerLevel());
+            enrolment.setPartnerLeagueNumber(enrolmentDTO.getPartnerLeagueNumber());
+            enrolment.setDiscipline(enrolmentDTO.getDiscipline());
+            enrolment.setTournament(tournamentRepository.findById(enrolmentDTO.getTournamentId())
+                .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
             enrolment = enrolmentRepository.save(enrolment);
             participant.addEnrolment(enrolment);
             participantRepository.save(participant);
-        }
+        });
         return participant;
     }
 
@@ -147,11 +155,20 @@ public class TournamentService {
         List<Enrolment> enrolments = new ArrayList<>();
         Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
                 .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
-        for(Enrolment enrolment : enrolRequestWrapper.getEnrolments()){
+
+        enrolRequestWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
+            Enrolment enrolment = new Enrolment();
+            enrolment.setId(enrolmentDTO.getId());
+            enrolment.setPlayerLevel(enrolmentDTO.getPlayerLevel());
+            enrolment.setPartnerLeagueNumber(enrolmentDTO.getPartnerLeagueNumber());
+            enrolment.setDiscipline(enrolmentDTO.getDiscipline());
+            enrolment.setTournament(tournamentRepository.findById(enrolmentDTO.getTournamentId())
+                    .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
             if(participant.updateEnrolment(enrolment)){
                 enrolments.add(enrolment);
             }
-        }
+        });
+
         return enrolments;
     }
 }
