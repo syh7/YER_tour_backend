@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 @Transactional
 public class EnrolmentService {
@@ -28,17 +26,19 @@ public class EnrolmentService {
     @Autowired
     private ParticipantRepository participantRepository;
 
-    EnrolmentService(EnrolmentRepository enrolmentRepository, TournamentRepository tournamentRepository){
+    EnrolmentService(EnrolmentRepository enrolmentRepository, TournamentRepository tournamentRepository, ParticipantRepository participantRepository){
         this.enrolmentRepository = enrolmentRepository;
         this.tournamentRepository = tournamentRepository;
+        this.participantRepository = participantRepository;
     }
 
     public Enrolment save(Enrolment enrolment){
         return enrolmentRepository.save(enrolment);
     }
 
-    public Optional<Enrolment> findById(long id){
-        return enrolmentRepository.findById(id);
+    public Enrolment findById(long id){
+        return enrolmentRepository.findById(id)
+                .orElseThrow(() -> new EnrolmentNotFoundException(id));
     }
 
     public Iterable<Enrolment> findAll(){

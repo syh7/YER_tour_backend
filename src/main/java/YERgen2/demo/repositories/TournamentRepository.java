@@ -9,7 +9,6 @@ import java.util.List;
 @Component
 public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
-    List<Tournament> findByName(String name);
     List<Tournament> findByNameContaining(String name);
 
 }

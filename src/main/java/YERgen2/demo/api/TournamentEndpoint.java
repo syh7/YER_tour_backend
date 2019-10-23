@@ -1,8 +1,7 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.Exceptions.TournamentNotFoundException;
 import YERgen2.demo.controller.EnrolmentService;
-import YERgen2.demo.controller.TournamentService;
+import YERgen2.demo.controller.OldTournamentService;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
@@ -16,7 +15,7 @@ import java.util.List;
 public class TournamentEndpoint {
 
     @Autowired
-    private TournamentService tournamentService;
+    private OldTournamentService oldTournamentService;
 
     @Autowired
     private EnrolmentService enrolmentService;
@@ -25,18 +24,16 @@ public class TournamentEndpoint {
 
     @PostMapping("/tournaments")
     public Tournament newTournament(@RequestBody Tournament newAdmin) {
-        return tournamentService.save(newAdmin);
+        return oldTournamentService.save(newAdmin);
     }
 
     //tournaments/?mode=foo&search=bar
     @GetMapping(value="/tournaments")
     public List<Tournament> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
-        if(mode.equals("exact")) {
-            return (List<Tournament>) tournamentService.findByName(search);
-        } else if(mode.equals("contains")){
-            return (List<Tournament>) tournamentService.findByNameContaining(search);
+        if(mode.equals("contains")){
+            return (List<Tournament>) oldTournamentService.findByNameContaining(search);
         } else {
-            return (List<Tournament>) tournamentService.findAll();
+            return (List<Tournament>) oldTournamentService.findAll();
         }
     }
 
@@ -44,17 +41,17 @@ public class TournamentEndpoint {
 
     @GetMapping(value = "/tournaments/{id}", produces = "application/json")
     public Tournament getTournament(@PathVariable long id) {
-        return tournamentService.findById(id);
+        return oldTournamentService.findById(id);
     }
 
     @PutMapping("/tournaments/{id}")
     public Tournament updateTournament(@RequestBody Tournament newTournament, @PathVariable long id) {
-        return tournamentService.updateTournament(id, newTournament);
+        return oldTournamentService.updateTournament(id, newTournament);
     }
 
     @DeleteMapping("/tournaments/{id}")
     public void deleteTournament(@PathVariable long id) {
-        tournamentService.deleteById(id);
+        oldTournamentService.deleteById(id);
     }
 
     /////TOURNAMENTS/ID/ENROLL
