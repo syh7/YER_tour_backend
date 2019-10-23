@@ -6,7 +6,6 @@ import YERgen2.demo.Exceptions.NotModifiedException;
 import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
-import YERgen2.demo.model.Discipline;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
@@ -63,7 +62,7 @@ public class TournamentService {
             tournament.setEndDate(newTournament.getEndDate());
             tournament.setEnrolDate(newTournament.getEnrolDate());
             tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
-            tournament.setCategories(newTournament.getCategories());
+            tournament.setLevels(newTournament.getLevels());
             return tournamentRepository.save(tournament);
         }).orElseThrow(() -> new TournamentNotFoundException(id));
     }

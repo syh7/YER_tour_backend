@@ -109,5 +109,5 @@ public class ParticipantDTO {
         }
         isMale = participant.isMale();
     }
-    
+
 }
