@@ -70,6 +70,7 @@ public class AccountService {
             participant.setPassword(newParticipant.getPassword());
             participant.setFirstName(newParticipant.getFirstName());
             participant.setLastName(newParticipant.getLastName());
+            participant.setMale(newParticipant.isMale());
             participant.setDateOfBirth(newParticipant.getDateOfBirth());
             participant.setPlayerLevel(newParticipant.getPlayerLevel());
             participant.setLeagueNumber(newParticipant.getLeagueNumber());

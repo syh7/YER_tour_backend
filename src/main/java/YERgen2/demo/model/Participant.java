@@ -18,6 +18,8 @@ public class Participant extends Account {
     @NotNull
     private String lastName;
     @NotNull
+    private boolean isMale;
+    @NotNull
     private int playerLevel;
     private int leagueNumber;
     @NotNull
@@ -32,21 +34,24 @@ public class Participant extends Account {
         this.enrolments = new ArrayList<>();
     }
     public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
-                       @NotNull String lastName, @NotNull int playerLevel, @NotNull LocalDate dateOfBirth) {
+                       @NotNull String lastName, @NotNull boolean isMale, @NotNull int playerLevel,
+                       @NotNull LocalDate dateOfBirth) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isMale = isMale;
         this.playerLevel = playerLevel;
         this.dateOfBirth = dateOfBirth;
         this.teams = new ArrayList<>();
         this.enrolments = new ArrayList<>();
     }
     public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
-                       @NotNull String lastName, @NotNull int playerLevel, int leagueNumber,
+                       @NotNull String lastName, @NotNull boolean isMale, @NotNull int playerLevel, int leagueNumber,
                        @NotNull LocalDate dateOfBirth, List<Enrolment> enrolments, List<Team> teams) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isMale = isMale;
         this.playerLevel = playerLevel;
         this.leagueNumber = leagueNumber;
         this.dateOfBirth = dateOfBirth;
@@ -75,6 +80,9 @@ public class Participant extends Account {
     public List<Team> getTeams() {
         return teams;
     }
+    public boolean isMale() {
+        return isMale;
+    }
 
     public void setFirstName(String firstName){
         this.firstName = firstName;
@@ -96,6 +104,9 @@ public class Participant extends Account {
     }
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+    public void setMale(boolean male) {
+        isMale = male;
     }
 
     @Override
