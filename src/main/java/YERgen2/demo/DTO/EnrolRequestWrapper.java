@@ -6,9 +6,23 @@ import YERgen2.demo.model.Participant;
 import java.util.List;
 
 public class EnrolRequestWrapper {
-    
-    public Participant participant;
-    public List<Enrolment> enrolments;
+
+    private Participant participant;
+    private List<Enrolment> enrolments;
+
+    public void setParticipant(Participant participant) {
+        this.participant = participant;
+    }
+    public void setEnrolments(List<Enrolment> enrolments) {
+        this.enrolments = enrolments;
+    }
+
+    public Participant getParticipant(){
+        return participant;
+    }
+    public List<Enrolment> getEnrolments(){
+        return enrolments;
+    }
 
     public String toString(){
         String str = "";
