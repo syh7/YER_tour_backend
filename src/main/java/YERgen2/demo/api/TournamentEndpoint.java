@@ -55,7 +55,6 @@ public class TournamentEndpoint {
 
     @PostMapping("/tournaments/{id}/enrol")
     public Participant enrol(@PathVariable long id, @RequestBody EnrolRequestWrapper enrolRequestWrapper){
-        System.out.println(enrolRequestWrapper);
         return tournamentService.enrolParticipantInTournament(id, enrolRequestWrapper.getParticipant(), enrolRequestWrapper.getEnrolments());
     }
 

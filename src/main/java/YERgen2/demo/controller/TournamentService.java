@@ -116,7 +116,6 @@ public class TournamentService {
     }
 
     public Participant enrolParticipantInTournament(long tournamentId, Participant participant, List<Enrolment> enrolments) {
-        System.out.println(enrolments);
         for(Enrolment enrolment : enrolments){
             enrolment = enrolmentRepository.save(enrolment);
             participant.addEnrolment(enrolment);
