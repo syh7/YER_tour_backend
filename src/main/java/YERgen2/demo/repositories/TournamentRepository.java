@@ -1,4 +1,4 @@
-package YERgen2.demo.controller;
+package YERgen2.demo.repositories;
 
 import YERgen2.demo.model.Tournament;
 import org.springframework.data.repository.CrudRepository;
@@ -9,7 +9,6 @@ import java.util.List;
 @Component
 public interface TournamentRepository extends CrudRepository<Tournament, Long> {
 
-    List<Tournament> findByName(String name);
     List<Tournament> findByNameContaining(String name);
 
 }

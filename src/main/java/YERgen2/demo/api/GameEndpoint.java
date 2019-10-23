@@ -29,22 +29,8 @@ public class GameEndpoint {
     }
 
     @PutMapping("/matches/{id}")
-    public Game replaceGame(@RequestBody Game newGame, @PathVariable long id) {
-        try{
-            Game game = gameService.findById(id);
-            game.setJudge(newGame.getJudge());
-            game.setStage(newGame.getStage());
-            game.setLocation(newGame.getLocation());
-            game.setDiscipline(newGame.getDiscipline());
-            game.setStartTime(newGame.getStartTime());
-            game.setEndTime(newGame.getEndTime());
-            game.setResult(newGame.getResult());
-            game.setTournament(newGame.getTournament());
-            return gameService.save(game);
-        } catch (GameNotFoundException ex){
-            newGame.setId(id);
-            return gameService.save(newGame);
-        }
+    public Game updateGame(@RequestBody Game newGame, @PathVariable long id) {
+        return gameService.updateGame(id, newGame);
     }
 
     @DeleteMapping("/matches/{id}")

@@ -1,6 +1,7 @@
 package YERgen2.demo.controller;
 
 import YERgen2.demo.model.*;
+import YERgen2.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -32,8 +33,8 @@ public class DemoData {
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
 
-        Admin admin1 = new Admin("Freek", "freek@test.com", "wachtwoord123");
-        Admin admin2 = new Admin("Jan", "jan@test.com", "wachtwoord123");
+        Admin admin1 = new Admin("Stuban", "toernooi@stuban.com", "wachtwoord123");
+        Admin admin2 = new Admin("Helios", "toernooi@helios.com", "wachtwoord123");
         adminRepository.save(admin1);
         adminRepository.save(admin2);
 
@@ -45,9 +46,9 @@ public class DemoData {
         participantRepository.save(part1);
         participantRepository.save(part2);
 
-        Tournament tournament1 = new Tournament("BesteToernooi", LocalDate.of(2019, 10, 1),
+        Tournament tournament1 = new Tournament("Stuban Toernooi", LocalDate.of(2019, 10, 1),
                 LocalDate.of(2019, 10, 1), admin1);
-        Tournament tournament2 = new Tournament("BesteToernooi", LocalDate.of(2019, 10, 1),
+        Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),
                 LocalDate.of(2019, 10, 1), admin2);
         tournamentRepository.save(tournament1);
         tournamentRepository.save(tournament2);
