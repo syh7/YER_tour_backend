@@ -53,8 +53,8 @@ public class TournamentEndpoint {
     /////TOURNAMENTS/ID/ENROLL
 
     @PostMapping("/tournaments/{id}/enroll")
-    public Enrolment enrol(@PathVariable long id, @RequestBody Enrolment enrolment, @RequestBody Participant participant){
-        return tournamentService.enrolParticipantInTournament(id, enrolment, participant);
+    public boolean enrol(@PathVariable long id, @RequestBody Participant participant, @RequestBody Enrolment enrolment){
+        return tournamentService.enrolParticipantInTournament(id, participant, enrolment);
     }
 
 }
