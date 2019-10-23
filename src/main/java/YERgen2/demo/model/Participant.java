@@ -110,12 +110,7 @@ public class Participant extends Account {
     }
 
     public boolean addEnrolment(Enrolment enrolment){
-        System.out.println(enrolment);
-        System.out.println(enrolments);
-        boolean b = this.enrolments.add(enrolment);
-        System.out.println(enrolment);
-        System.out.println(enrolments);
-        return b;
+        return this.enrolments.add(enrolment);
     }
 
     public int getNumberEnrolmentsInTournament(long tournamentId){
