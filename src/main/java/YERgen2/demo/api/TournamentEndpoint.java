@@ -1,6 +1,7 @@
 package YERgen2.demo.api;
 
 import YERgen2.demo.controller.TournamentService;
+import YERgen2.demo.DTO.EnrolRequestWrapper;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
@@ -52,9 +53,17 @@ public class TournamentEndpoint {
 
     /////TOURNAMENTS/ID/ENROLL
 
-    @PostMapping("/tournaments/{id}/enroll")
-    public Enrolment enrol(@PathVariable long id, @RequestBody Enrolment enrolment, @RequestBody Participant participant){
-        return tournamentService.enrolParticipantInTournament(id, enrolment, participant);
+    @PostMapping("/tournaments/{id}/enrol")
+    public Participant enrol(@PathVariable long id, @RequestBody EnrolRequestWrapper enrolRequestWrapper){
+        System.out.println(enrolRequestWrapper);
+        return tournamentService.enrolParticipantInTournament(id, enrolRequestWrapper.getParticipant(), enrolRequestWrapper.getEnrolments());
+    }
+
+    @GetMapping("/tournaments/{id}/enrol")
+    public List<Enrolment> getAllEnrolments(@PathVariable long id){
+        return (List<Enrolment>) tournamentService.findEnrolmentByTournamentId(id);
     }
 
 }
+
+

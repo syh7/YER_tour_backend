@@ -13,22 +13,10 @@ import java.time.LocalDate;
 
 public class DemoData {
 
-
     @Autowired
-    private AdminRepository adminRepository;
+    private TournamentService tournamentService;
     @Autowired
-    private ParticipantRepository participantRepository;
-    @Autowired
-    private TournamentRepository tournamentRepository;
-    @Autowired
-    private EnrolmentRepository enrolmentRepository;
-    @Autowired
-    private TeamRepository teamRepository;
-    @Autowired
-    private GameRepository gameRepository;
-
-    @Autowired
-    private EnrolmentService enrolmentService;
+    private AccountService accountService;
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
@@ -36,30 +24,28 @@ public class DemoData {
 
         Admin admin1 = new Admin("Stuban", "toernooi@stuban.com", "wachtwoord123");
         Admin admin2 = new Admin("Helios", "toernooi@helios.com", "wachtwoord123");
-        
-        adminRepository.save(admin1);
-        adminRepository.save(admin2);
+
+        accountService.saveAdmin(admin1);
+        accountService.saveAdmin(admin2);
 
         LocalDate birth = LocalDate.of(2019,10,1);
         Participant part1 = new Participant("gerard@test.com", "wachtwoord123", "Gerard",
                 "Janssen", 6, birth);
         Participant part2 = new Participant("jozef@test.com", "wachtwoord123", "Jozef",
                 "Janssen", 6, birth);
-        participantRepository.save(part1);
-        participantRepository.save(part2);
+        accountService.saveParticipant(part1);
+        accountService.saveParticipant(part2);
 
         Tournament tournament1 = new Tournament("Stuban Toernooi", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1), admin1);
+                LocalDate.of(2019, 10, 1));
         Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1), admin2);
-        tournamentRepository.save(tournament1);
-        tournamentRepository.save(tournament2);
+                LocalDate.of(2019, 10, 1));
+        tournamentService.saveTournament(tournament1);
+        accountService.addTournamentToAdmin(admin1.getId(), tournament1);
+        tournamentService.saveTournament(tournament2);
+        accountService.addTournamentToAdmin(admin2.getId(), tournament2);
 
         Enrolment enrolment1 = new Enrolment(9, Discipline.MENSINGLES, tournament1);
-        enrolmentService.save(enrolment1);
-
-        part1.addEnrolment(enrolment1);
-        participantRepository.save(part1);
-
+        tournamentService.enrolParticipantInTournament(tournament1.getId(), part1, enrolment1);
     }
 }
