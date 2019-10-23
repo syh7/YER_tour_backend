@@ -11,9 +11,11 @@ import YERgen2.demo.repositories.EnrolmentRepository;
 import YERgen2.demo.repositories.ParticipantRepository;
 import YERgen2.demo.repositories.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@RestController
+@Service
+@Transactional
 public class TournamentService {
 
     @Autowired
@@ -56,7 +58,6 @@ public class TournamentService {
             tournament.setEnrolDate(newTournament.getEnrolDate());
             tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
             tournament.setCategories(newTournament.getCategories());
-            tournament.setAdmin(newTournament.getAdmin());
             return tournamentRepository.save(tournament);
         }).orElseThrow(() -> new TournamentNotFoundException(id));
     }

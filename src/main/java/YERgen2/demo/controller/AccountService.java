@@ -4,12 +4,15 @@ import YERgen2.demo.Exceptions.AdminNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.model.Admin;
 import YERgen2.demo.model.Participant;
+import YERgen2.demo.model.Tournament;
 import YERgen2.demo.repositories.AdminRepository;
 import YERgen2.demo.repositories.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@RestController
+@Service
+@Transactional
 public class AccountService {
 
     @Autowired
@@ -57,10 +60,10 @@ public class AccountService {
             admin.setEmail(newAdmin.getEmail());
             admin.setPassword(newAdmin.getPassword());
             admin.setName(newAdmin.getName());
+            admin.setTournaments(newAdmin.getTournaments());
             return adminRepository.save(admin);
         }).orElseThrow(() -> new AdminNotFoundException(newAdmin.getId()));
     }
-
     public Participant updateParticipant(long id, Participant newParticipant){
         return participantRepository.findById(id).map(participant -> {
             participant.setEmail(newParticipant.getEmail());
@@ -74,6 +77,17 @@ public class AccountService {
             participant.setTeam(newParticipant.getTeam());
             return participantRepository.save(participant);
         }).orElseThrow( ()-> new ParticipantNotFoundException(id));
+    }
+
+    public boolean addTournamentToAdmin(long adminId, Tournament tournament){
+        Admin admin = adminRepository.findById(adminId)
+                .orElseThrow(() -> new AdminNotFoundException(adminId));
+        if(admin.addTournament(tournament)){
+            adminRepository.save(admin);
+            return true;
+        } else {
+            return false;
+        }
     }
     
 }
