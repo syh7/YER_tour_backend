@@ -13,7 +13,6 @@ import java.time.LocalDate;
 
 public class DemoData {
 
-
     @Autowired
     private AdminRepository adminRepository;
     @Autowired
@@ -26,6 +25,8 @@ public class DemoData {
     private TeamRepository teamRepository;
     @Autowired
     private GameRepository gameRepository;
+    @Autowired
+    private AccountService accountService;
 
     @Autowired
     private EnrolmentService enrolmentService;
@@ -47,11 +48,13 @@ public class DemoData {
         participantRepository.save(part2);
 
         Tournament tournament1 = new Tournament("Stuban Toernooi", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1), admin1);
+                LocalDate.of(2019, 10, 1));
         Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1), admin2);
+                LocalDate.of(2019, 10, 1));
         tournamentRepository.save(tournament1);
+        accountService.addTournamentToAdmin(admin1.getId(), tournament1);
         tournamentRepository.save(tournament2);
+        accountService.addTournamentToAdmin(admin2.getId(), tournament2);
 
         Enrolment enrolment1 = new Enrolment(9, Discipline.MENSINGLES, tournament1);
         enrolmentService.save(enrolment1);
