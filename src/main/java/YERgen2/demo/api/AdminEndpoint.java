@@ -1,8 +1,6 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.Exceptions.AdminNotFoundException;
 import YERgen2.demo.controller.AccountService;
-import YERgen2.demo.controller.AdminService;
 import YERgen2.demo.model.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

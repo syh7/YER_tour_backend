@@ -1,8 +1,6 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.controller.AccountService;
-import YERgen2.demo.controller.ParticipantService;
 import YERgen2.demo.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

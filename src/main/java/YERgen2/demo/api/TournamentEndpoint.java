@@ -1,7 +1,5 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.controller.EnrolmentService;
-import YERgen2.demo.controller.OldTournamentService;
 import YERgen2.demo.controller.TournamentService;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
