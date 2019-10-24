@@ -1,10 +1,11 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.DTO.EnrolRequestWrapper;
+import YERgen2.demo.DTO.EnrolmentDTO;
 import YERgen2.demo.Exceptions.NotModifiedException;
 import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.Exceptions.TournamentNotFoundException;
-import YERgen2.demo.model.Discipline;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,7 +62,7 @@ public class TournamentService {
             tournament.setEndDate(newTournament.getEndDate());
             tournament.setEnrolDate(newTournament.getEnrolDate());
             tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
-            tournament.setCategories(newTournament.getCategories());
+            tournament.setLevels(newTournament.getLevels());
             return tournamentRepository.save(tournament);
         }).orElseThrow(() -> new TournamentNotFoundException(id));
     }
@@ -87,8 +89,12 @@ public class TournamentService {
         return tournamentRepository.findByNameContaining(name);
     }
 
-    public Iterable<Enrolment> findEnrolmentByTournamentId(long tournamentId){
-        return enrolmentRepository.findByTournamentId(tournamentId);
+    public Iterable<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){
+        List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
+        enrolmentRepository.findByTournamentId(tournamentId).forEach(enrolment -> {
+            enrolmentDTOs.add(new EnrolmentDTO(enrolment));
+        });
+        return enrolmentDTOs;
     }
 
     /*
@@ -115,13 +121,16 @@ public class TournamentService {
         }
     }
 
-    public Participant enrolParticipantInTournament(long tournamentId, Participant participant, List<Enrolment> enrolments) {
-        System.out.println(enrolments);
-        for(Enrolment enrolment : enrolments){
+    public Participant enrolParticipantInTournament(long tournamentId, EnrolRequestWrapper enrolRequestWrapper) {
+        Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
+                .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
+        enrolRequestWrapper.getEnrolmentDTOs().forEach( enrolmentDTO -> {
+            Enrolment enrolment = new Enrolment(enrolmentDTO, tournamentRepository.findById(enrolmentDTO.getTournamentId())
+                    .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
             enrolment = enrolmentRepository.save(enrolment);
             participant.addEnrolment(enrolment);
             participantRepository.save(participant);
-        }
+        });
         return participant;
     }
 
@@ -140,4 +149,17 @@ public class TournamentService {
         }
     }
 
+    public List<EnrolmentDTO> updateEnrolments(long id, EnrolRequestWrapper enrolRequestWrapper) {
+        List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
+        Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
+                .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
+        enrolRequestWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
+            Enrolment enrolment = new Enrolment(enrolmentDTO, tournamentRepository.findById(enrolmentDTO.getTournamentId())
+                    .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
+            if(participant.updateEnrolment(enrolment)){
+                enrolmentDTOs.add(enrolmentDTO);
+            }
+        });
+        return enrolmentDTOs;
+    }
 }

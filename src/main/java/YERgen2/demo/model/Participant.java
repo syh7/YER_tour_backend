@@ -1,5 +1,7 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.ParticipantDTO;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -18,6 +20,8 @@ public class Participant extends Account {
     @NotNull
     private String lastName;
     @NotNull
+    private boolean isMale;
+    @NotNull
     private int playerLevel;
     private int leagueNumber;
     @NotNull
@@ -32,24 +36,38 @@ public class Participant extends Account {
         this.enrolments = new ArrayList<>();
     }
     public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
-                       @NotNull String lastName, @NotNull int playerLevel, @NotNull LocalDate dateOfBirth) {
+                       @NotNull String lastName, @NotNull boolean isMale, @NotNull int playerLevel,
+                       @NotNull LocalDate dateOfBirth) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isMale = isMale;
         this.playerLevel = playerLevel;
         this.dateOfBirth = dateOfBirth;
         this.teams = new ArrayList<>();
         this.enrolments = new ArrayList<>();
     }
     public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
-                       @NotNull String lastName, @NotNull int playerLevel, int leagueNumber,
+                       @NotNull String lastName, @NotNull boolean isMale, @NotNull int playerLevel, int leagueNumber,
                        @NotNull LocalDate dateOfBirth, List<Enrolment> enrolments, List<Team> teams) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
+        this.isMale = isMale;
         this.playerLevel = playerLevel;
         this.leagueNumber = leagueNumber;
         this.dateOfBirth = dateOfBirth;
+        this.enrolments = enrolments;
+        this.teams = teams;
+    }
+    public Participant(ParticipantDTO participantDTO, List<Enrolment> enrolments, List<Team> teams){
+        super(participantDTO.getEmail(), participantDTO.getPassword());
+        this.firstName = participantDTO.getFirstName();
+        this.lastName = participantDTO.getLastName();
+        this.isMale = participantDTO.isMale();
+        this.playerLevel = participantDTO.getPlayerLevel();
+        this.leagueNumber = participantDTO.getLeagueNumber();
+        this.dateOfBirth = participantDTO.getDateOfBirth();
         this.enrolments = enrolments;
         this.teams = teams;
     }
@@ -69,11 +87,14 @@ public class Participant extends Account {
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
     }
-    public List<Enrolment> getEnrolment() {
+    public List<Enrolment> getEnrolments() {
         return enrolments;
     }
     public List<Team> getTeams() {
         return teams;
+    }
+    public boolean isMale() {
+        return isMale;
     }
 
     public void setFirstName(String firstName){
@@ -91,11 +112,14 @@ public class Participant extends Account {
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
-    public void setEnrolment(List<Enrolment> enrolments) {
+    public void setEnrolments(List<Enrolment> enrolments) {
         this.enrolments = enrolments;
     }
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+    public void setMale(boolean male) {
+        isMale = male;
     }
 
     @Override
@@ -109,10 +133,6 @@ public class Participant extends Account {
         return str;
     }
 
-    public boolean addEnrolment(Enrolment enrolment){
-        return this.enrolments.add(enrolment);
-    }
-
     public int getNumberEnrolmentsInTournament(long tournamentId){
         int count = 0;
         for(Enrolment enrolment : enrolments){
@@ -121,6 +141,29 @@ public class Participant extends Account {
             }
         }
         return count;
+    }
+
+    public boolean addEnrolment(Enrolment enrolment){
+        return this.enrolments.add(enrolment);
+    }
+
+    public boolean updateEnrolment(Enrolment newEnrolment){
+        for(Enrolment enrolment : enrolments){
+            if(enrolment.getId() == newEnrolment.getId()){
+                enrolments.remove(enrolment);
+                return enrolments.add(newEnrolment);
+            }
+        }
+        return false;
+    }
+
+    public boolean deleteEnrolmentById(long enrolmentId){
+        for(Enrolment enrolment : enrolments){
+            if(enrolment.getId() == enrolmentId){
+                return this.enrolments.remove(enrolment);
+            }
+        }
+        return false;
     }
 
     public boolean deleteEnrolment(Enrolment enrolment){

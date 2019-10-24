@@ -70,10 +70,11 @@ public class AccountService {
             participant.setPassword(newParticipant.getPassword());
             participant.setFirstName(newParticipant.getFirstName());
             participant.setLastName(newParticipant.getLastName());
+            participant.setMale(newParticipant.isMale());
             participant.setDateOfBirth(newParticipant.getDateOfBirth());
             participant.setPlayerLevel(newParticipant.getPlayerLevel());
             participant.setLeagueNumber(newParticipant.getLeagueNumber());
-            participant.setEnrolment(newParticipant.getEnrolment());
+            participant.setEnrolments(newParticipant.getEnrolments());
             participant.setTeams(newParticipant.getTeams());
             return participantRepository.save(participant);
         }).orElseThrow( ()-> new ParticipantNotFoundException(id));

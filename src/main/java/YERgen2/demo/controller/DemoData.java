@@ -30,9 +30,9 @@ public class DemoData {
 
         LocalDate birth = LocalDate.of(2019,10,1);
         Participant part1 = new Participant("gerard@test.com", "wachtwoord123", "Gerard",
-                "Janssen", 6, birth);
+                "Janssen", true, 6, birth);
         Participant part2 = new Participant("jozef@test.com", "wachtwoord123", "Jozef",
-                "Janssen", 6, birth);
+                "Janssen", true, 6, birth);
         accountService.saveParticipant(part1);
         accountService.saveParticipant(part2);
 
