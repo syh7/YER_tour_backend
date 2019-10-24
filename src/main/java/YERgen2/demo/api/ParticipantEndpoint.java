@@ -35,7 +35,7 @@ public class ParticipantEndpoint {
         return accountService.updateParticipant(id, newParticipant);
     }
     @PutMapping("/participants/{id}")
-    public ParticipantDTO updateParticipant(@PathVariable long id, @RequestBody ParticipantDTO newParticipantDTO) {
+    public ParticipantDTO updateParticipantDTO(@PathVariable long id, @RequestBody ParticipantDTO newParticipantDTO) {
         return accountService.updateParticipantDTO(id, newParticipantDTO);
     }
 
