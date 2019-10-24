@@ -1,6 +1,5 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.Exceptions.GameNotFoundException;
 import YERgen2.demo.controller.GameService;
 import YERgen2.demo.model.Game;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,5 +1,6 @@
 package YERgen2.demo.api;
 
+import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.controller.AccountService;
 import YERgen2.demo.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,18 +21,22 @@ public class ParticipantEndpoint {
     }
 
     @GetMapping(value="/participants")
-    public List<Participant> getAllParticipants(){
-        return (List<Participant>) accountService.findAllParticipant();
+    public List<ParticipantDTO> getAllParticipants(){
+        return (List<ParticipantDTO>) accountService.findAllParticipant();
     }
 
     @GetMapping(value = "participants/{id}", produces = "application/json")
-    public Participant getParticipant(@PathVariable long id) {
+    public ParticipantDTO getParticipant(@PathVariable long id) {
         return accountService.findParticipantById(id);
     }
 
-    @PutMapping("/participants/{id}")
-    public Participant updateParticipant(@RequestBody Participant newParticipant, @PathVariable long id) {
+    @PutMapping("/participants/{id}/newpassword")
+    public ParticipantDTO updateParticipant(@PathVariable long id, @RequestBody Participant newParticipant) {
         return accountService.updateParticipant(id, newParticipant);
+    }
+    @PutMapping("/participants/{id}")
+    public ParticipantDTO updateParticipantDTO(@PathVariable long id, @RequestBody ParticipantDTO newParticipantDTO) {
+        return accountService.updateParticipantDTO(id, newParticipantDTO);
     }
 
     @DeleteMapping("/participants/{id}")

@@ -1,6 +1,5 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.Exceptions.TeamNotFoundException;
 import YERgen2.demo.controller.TeamService;
 import YERgen2.demo.model.Team;
 import org.springframework.beans.factory.annotation.Autowired;

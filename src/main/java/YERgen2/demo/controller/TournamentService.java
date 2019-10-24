@@ -2,6 +2,7 @@ package YERgen2.demo.controller;
 
 import YERgen2.demo.DTO.EnrolRequestWrapper;
 import YERgen2.demo.DTO.EnrolmentDTO;
+import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.Exceptions.NotModifiedException;
 import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
@@ -121,7 +122,7 @@ public class TournamentService {
         }
     }
 
-    public Participant enrolParticipantInTournament(long tournamentId, EnrolRequestWrapper enrolRequestWrapper) {
+    public ParticipantDTO enrolParticipantInTournament(long tournamentId, EnrolRequestWrapper enrolRequestWrapper) {
         Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
                 .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
         enrolRequestWrapper.getEnrolmentDTOs().forEach( enrolmentDTO -> {
@@ -131,7 +132,7 @@ public class TournamentService {
             participant.addEnrolment(enrolment);
             participantRepository.save(participant);
         });
-        return participant;
+        return new ParticipantDTO(participant);
     }
 
     public Enrolment updateEnrolment(long tournamentId, Enrolment newEnrolment){

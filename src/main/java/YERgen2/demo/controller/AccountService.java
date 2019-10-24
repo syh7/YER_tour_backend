@@ -1,15 +1,18 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.Exceptions.AdminNotFoundException;
-import YERgen2.demo.Exceptions.ParticipantNotFoundException;
+import YERgen2.demo.DTO.AdminDTO;
+import YERgen2.demo.DTO.ParticipantDTO;
+import YERgen2.demo.Exceptions.*;
 import YERgen2.demo.model.Admin;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
-import YERgen2.demo.repositories.AdminRepository;
-import YERgen2.demo.repositories.ParticipantRepository;
+import YERgen2.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,10 +22,21 @@ public class AccountService {
     private AdminRepository adminRepository;
     @Autowired
     private ParticipantRepository participantRepository;
+    @Autowired
+    private EnrolmentRepository enrolmentRepository;
+    @Autowired
+    private TeamRepository teamRepository;
+    @Autowired
+    private TournamentRepository tournamentRepository;
 
-    AccountService(AdminRepository adminRepository, ParticipantRepository participantRepository){
+    AccountService(AdminRepository adminRepository, ParticipantRepository participantRepository,
+                   EnrolmentRepository enrolmentRepository, TeamRepository teamRepository,
+                   TournamentRepository tournamentRepository){
         this.adminRepository = adminRepository;
         this.participantRepository = participantRepository;
+        this.enrolmentRepository = enrolmentRepository;
+        this.teamRepository = teamRepository;
+        this.tournamentRepository = tournamentRepository;
     }
 
     public Admin saveAdmin(Admin participant){
@@ -32,20 +46,30 @@ public class AccountService {
         return participantRepository.save(participant);
     }
 
-    public Admin findAdminById(long id){
-        return adminRepository.findById(id)
+    public AdminDTO findAdminById(long id){
+        Admin admin=  adminRepository.findById(id)
                 .orElseThrow(() -> new AdminNotFoundException(id));
+        return new AdminDTO(admin);
     }
-    public Participant findParticipantById(Long id){
-        return participantRepository.findById(id)
+    public ParticipantDTO findParticipantById(Long id){
+        Participant participant = participantRepository.findById(id)
                 .orElseThrow(() -> new ParticipantNotFoundException(id));
+        return new ParticipantDTO(participant);
     }
 
-    public Iterable <Admin> findAllAdmin(){
-        return adminRepository.findAll();
+    public Iterable <AdminDTO> findAllAdmin(){
+        List<AdminDTO> adminDTOs = new ArrayList<>();
+        adminRepository.findAll().forEach(admin -> {
+            adminDTOs.add(new AdminDTO(admin));
+        });
+        return adminDTOs;
     }
-    public Iterable <Participant> findAllParticipant(){
-        return participantRepository.findAll();
+    public Iterable <ParticipantDTO> findAllParticipant(){
+        List<ParticipantDTO> participantDTOs = new ArrayList<>();
+        participantRepository.findAll().forEach(participant -> {
+            participantDTOs.add(new ParticipantDTO(participant));
+        });
+        return participantDTOs;
     }
 
     public void deleteAdminById(long id) {
@@ -55,29 +79,40 @@ public class AccountService {
         participantRepository.deleteById(id);
     }
 
-    public Admin updateAdmin(long id, Admin newAdmin) {
+    public AdminDTO updateAdmin(long id, Admin newAdmin) {
         return adminRepository.findById(id).map(admin -> {
-            admin.setEmail(newAdmin.getEmail());
-            admin.setPassword(newAdmin.getPassword());
-            admin.setName(newAdmin.getName());
-            admin.setTournaments(newAdmin.getTournaments());
-            return adminRepository.save(admin);
+            return new AdminDTO(adminRepository.save(new Admin(admin)));
         }).orElseThrow(() -> new AdminNotFoundException(newAdmin.getId()));
     }
-    public Participant updateParticipant(long id, Participant newParticipant){
+    public AdminDTO updateAdminDTO(long id, AdminDTO newAdminDTO) {
+        Admin admin = adminRepository.findById(id)
+                .orElseThrow(() -> new AdminNotFoundException(id));
+        admin.emptyTournaments();
+        for(long tournamentId : newAdminDTO.getTournamentIds()){
+            admin.addTournament(tournamentRepository.findById(tournamentId)
+            .orElseThrow(() -> new TournamentNotFoundException(tournamentId)));
+        }
+        return new AdminDTO(adminRepository.save(new Admin(newAdminDTO, admin.getPassword(), admin.getTournaments())));
+    }
+    public ParticipantDTO updateParticipant(long id, Participant newParticipant){
         return participantRepository.findById(id).map(participant -> {
-            participant.setEmail(newParticipant.getEmail());
-            participant.setPassword(newParticipant.getPassword());
-            participant.setFirstName(newParticipant.getFirstName());
-            participant.setLastName(newParticipant.getLastName());
-            participant.setMale(newParticipant.isMale());
-            participant.setDateOfBirth(newParticipant.getDateOfBirth());
-            participant.setPlayerLevel(newParticipant.getPlayerLevel());
-            participant.setLeagueNumber(newParticipant.getLeagueNumber());
-            participant.setEnrolments(newParticipant.getEnrolments());
-            participant.setTeams(newParticipant.getTeams());
-            return participantRepository.save(participant);
+            return new ParticipantDTO(participantRepository.save(new Participant(newParticipant)));
         }).orElseThrow( ()-> new ParticipantNotFoundException(id));
+    }
+    public ParticipantDTO updateParticipantDTO(long id, ParticipantDTO newParticipantDTO) {
+        Participant participant = participantRepository.findById(id)
+                .orElseThrow( ()-> new ParticipantNotFoundException(id));
+        participant.emptyEnrolments();
+        participant.emptyTeams();
+        for(long enrolmentId : newParticipantDTO.getEnrolments()){
+            participant.addEnrolment(enrolmentRepository.findById(enrolmentId)
+                    .orElseThrow(() -> new EnrolmentNotFoundException(enrolmentId)));
+        }
+        for(long teamId : newParticipantDTO.getTeams()){
+            participant.addTeam(teamRepository.findById(teamId)
+                    .orElseThrow(() -> new TeamNotFoundException(teamId)));
+        }
+        return new ParticipantDTO(participantRepository.save(new Participant(newParticipantDTO, participant.getPassword(), participant.getEnrolments(), participant.getTeams())));
     }
 
     public boolean addTournamentToAdmin(long adminId, Tournament tournament){
@@ -90,5 +125,5 @@ public class AccountService {
             return false;
         }
     }
-    
+
 }

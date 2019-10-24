@@ -11,7 +11,6 @@ public class ParticipantDTO {
 
     private long id;
     private String email;
-    private String password;
     private String firstName;
     private String lastName;
     private boolean isMale;
@@ -26,9 +25,6 @@ public class ParticipantDTO {
     }
     public String getEmail() {
         return email;
-    }
-    public String getPassword() {
-        return password;
     }
     public String getFirstName(){
         return firstName;
@@ -45,7 +41,7 @@ public class ParticipantDTO {
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
     }
-    public long[] getEnrolment() {
+    public long[] getEnrolments() {
         return enrolmentIds;
     }
     public long[] getTeams() {
@@ -60,9 +56,6 @@ public class ParticipantDTO {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public void setPassword(String password) {
-        this.password = password;
     }
     public void setFirstName(String firstName){
         this.firstName = firstName;
@@ -79,7 +72,7 @@ public class ParticipantDTO {
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
-    public void setEnrolment(long[] enrolments) {
+    public void setEnrolments(long[] enrolments) {
         this.enrolmentIds = enrolments;
     }
     public void setTeams(long[] teams) {
@@ -92,6 +85,7 @@ public class ParticipantDTO {
     public ParticipantDTO(){}
     public ParticipantDTO(Participant participant){
         id = participant.getId();
+        email = participant.getEmail();
         firstName = participant.getFirstName();
         lastName = participant.getLastName();
         playerLevel = participant.getPlayerLevel();
