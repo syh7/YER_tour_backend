@@ -1,6 +1,6 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.DTO.EnrolRequestWrapper;
+import YERgen2.demo.DTO.NewEnrolmentWrapper;
 import YERgen2.demo.DTO.EnrolmentDTO;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.Exceptions.NotModifiedException;
@@ -122,10 +122,10 @@ public class TournamentService {
         }
     }
 
-    public ParticipantDTO enrolParticipantInTournament(long tournamentId, EnrolRequestWrapper enrolRequestWrapper) {
-        Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
-                .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
-        enrolRequestWrapper.getEnrolmentDTOs().forEach( enrolmentDTO -> {
+    public ParticipantDTO enrolParticipantInTournament(long tournamentId, NewEnrolmentWrapper newEnrolmentWrapper) {
+        Participant participant = participantRepository.findById(newEnrolmentWrapper.getParticipantId())
+                .orElseThrow(() -> new ParticipantNotFoundException(newEnrolmentWrapper.getParticipantId()));
+        newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
             Enrolment enrolment = new Enrolment(enrolmentDTO, tournamentRepository.findById(enrolmentDTO.getTournamentId())
                     .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
             enrolment = enrolmentRepository.save(enrolment);
@@ -150,11 +150,11 @@ public class TournamentService {
         }
     }
 
-    public List<EnrolmentDTO> updateEnrolments(long id, EnrolRequestWrapper enrolRequestWrapper) {
+    public List<EnrolmentDTO> updateEnrolments(long id, NewEnrolmentWrapper newEnrolmentWrapper) {
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
-        Participant participant = participantRepository.findById(enrolRequestWrapper.getParticipantId())
-                .orElseThrow(() -> new ParticipantNotFoundException(enrolRequestWrapper.getParticipantId()));
-        enrolRequestWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
+        Participant participant = participantRepository.findById(newEnrolmentWrapper.getParticipantId())
+                .orElseThrow(() -> new ParticipantNotFoundException(newEnrolmentWrapper.getParticipantId()));
+        newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
             Enrolment enrolment = new Enrolment(enrolmentDTO, tournamentRepository.findById(enrolmentDTO.getTournamentId())
                     .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
             if(participant.updateEnrolment(enrolment)){

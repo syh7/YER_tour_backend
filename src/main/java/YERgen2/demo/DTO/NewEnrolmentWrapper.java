@@ -2,7 +2,7 @@ package YERgen2.demo.DTO;
 
 import java.util.List;
 
-public class EnrolRequestWrapper {
+public class NewEnrolmentWrapper {
 
     private long participantId;
     private List<EnrolmentDTO> enrolmentDTOs;
