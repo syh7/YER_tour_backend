@@ -109,8 +109,9 @@ public class TournamentService {
     }
 
     /*
-        no check on discipline
+        no check on discipline DEPRECATED
      */
+    @Deprecated
     public boolean enrolParticipantInTournament(long tournamentId, Participant participant, Enrolment enrolment){
         if(!tournamentRepository.findById(tournamentId).isPresent()){
             throw new TournamentNotFoundException(tournamentId);
@@ -145,6 +146,7 @@ public class TournamentService {
         return new ParticipantDTO(participant);
     }
 
+    @Deprecated
     public Enrolment updateEnrolment(long tournamentId, Enrolment newEnrolment){
         if(!tournamentRepository.existsById(tournamentId)){
             throw new TournamentNotFoundException(tournamentId);
@@ -159,7 +161,6 @@ public class TournamentService {
                     }).orElseThrow(() -> new EnrolmentNotFoundException(newEnrolment.getId()));
         }
     }
-
     public List<EnrolmentDTO> updateEnrolments(long id, NewEnrolmentWrapper newEnrolmentWrapper) {
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
         Participant participant = participantRepository.findById(newEnrolmentWrapper.getParticipantId())
@@ -173,4 +174,5 @@ public class TournamentService {
         });
         return enrolmentDTOs;
     }
+
 }

@@ -52,4 +52,12 @@ public class DemoData {
         tournamentService.enrolParticipantInTournament(tournament1.getId(), part1, enrolment1);
 
     }
+
+    private void testUniqueEmailConstraint(){
+        LocalDate birth = LocalDate.of(2019,10,1);
+        Admin admin3 = new Admin("Helios", "toernooi@helios.com", "wachtwoord123");
+        Participant part3 = new Participant("toernooi@helios.com", "wachtwoord123", "Jozef", "Janssen", true, 6, birth);
+        accountService.saveAdmin(admin3);
+        accountService.saveParticipant(part3);
+    }
 }
