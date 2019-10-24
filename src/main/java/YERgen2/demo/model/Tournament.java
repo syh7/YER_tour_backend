@@ -35,10 +35,13 @@ public class Tournament {
     private List<Enrolment> enrolments;
     @OneToMany(mappedBy = "tournament")
     private List<Team> teams;
+    @OneToMany(mappedBy = "tournament")
+    private List<Game> games;
 
     public Tournament(){
         enrolments = new ArrayList<>();
         teams = new ArrayList<>();
+        games = new ArrayList<>();
     }
     public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
         this.name = name;
@@ -54,10 +57,11 @@ public class Tournament {
         this.levels = new int[]{1, 2, 3};
         enrolments = new ArrayList<>();
         teams = new ArrayList<>();
+        games = new ArrayList<>();
     }
     public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
                       @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin,
-                      List<Enrolment> enrolments, List<Team> teams) {
+                      List<Enrolment> enrolments, List<Team> teams, List<Game> games) {
         this.name = name;
         this.description = description;
         this.referee = referee;
@@ -70,6 +74,7 @@ public class Tournament {
         this.admin = admin;
         this.enrolments = enrolments;
         this.teams = teams;
+        this.games = games;
     }
     public Tournament(Tournament newTournament){
         id = newTournament.getId();
@@ -85,6 +90,7 @@ public class Tournament {
         admin = newTournament.getAdmin();
         enrolments = newTournament.getEnrolments();
         teams = newTournament.getTeams();
+        games = newTournament.getGames();
     }
 
     public long getId() {
@@ -126,6 +132,9 @@ public class Tournament {
     public List<Team> getTeams() {
         return teams;
     }
+    public List<Game> getGames() {
+        return games;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -165,6 +174,9 @@ public class Tournament {
     }
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
 
     public boolean addEnrolment(Enrolment enrolment){
