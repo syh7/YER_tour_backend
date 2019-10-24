@@ -3,6 +3,8 @@ package YERgen2.demo.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Tournament {
@@ -26,12 +28,17 @@ public class Tournament {
     @NotNull
     @ManyToOne
     private Admin admin;
+    @OneToMany(mappedBy = "tournament")
+    private List<Enrolment> enrolments;
 
-    public Tournament(){}
+    public Tournament(){
+        enrolments = new ArrayList<>();
+    }
     public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.admin = admin;
         //filler data
         this.description = "description";
         this.referee = "referee";
@@ -39,10 +46,11 @@ public class Tournament {
         this.enrolDate = LocalDate.now();
         this.maxDisciplines = 1;
         this.levels = new int[]{1, 2, 3};
-        this.admin = admin;
+        enrolments = new ArrayList<>();
     }
     public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
-                      @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin) {
+                      @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin,
+                      List<Enrolment> enrolments) {
         this.name = name;
         this.description = description;
         this.referee = referee;
@@ -53,6 +61,21 @@ public class Tournament {
         this.maxDisciplines = maxDisciplines;
         this.levels = levels;
         this.admin = admin;
+        this.enrolments = enrolments;
+    }
+    public Tournament(Tournament newTournament){
+        id = newTournament.getId();
+        name = newTournament.getName();
+        description = newTournament.getDescription();
+        referee = newTournament.getReferee();
+        location = newTournament.getLocation();
+        startDate = newTournament.getStartDate();
+        endDate = newTournament.getEndDate();
+        enrolDate = newTournament.getEnrolDate();
+        maxDisciplines = newTournament.getMaxDisciplines();
+        levels = newTournament.getLevels();
+        admin = newTournament.getAdmin();
+        enrolments = newTournament.getEnrolments();
     }
 
     public long getId() {
@@ -88,6 +111,9 @@ public class Tournament {
     public Admin getAdmin() {
         return admin;
     }
+    public List<Enrolment> getEnrolments() {
+        return enrolments;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -121,6 +147,13 @@ public class Tournament {
     }
     public void setAdmin(Admin admin) {
         this.admin = admin;
+    }
+    public void setEnrolments(List<Enrolment> enrolments) {
+        this.enrolments = enrolments;
+    }
+
+    public boolean addEnrolment(Enrolment enrolment){
+        return enrolments.add(enrolment);
     }
 
 }

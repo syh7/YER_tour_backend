@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 
 @Service
@@ -64,17 +65,7 @@ public class TournamentService {
 
     public Tournament updateTournament(long id, Tournament newTournament){
         return tournamentRepository.findById(id).map(tournament -> {
-            tournament.setName(newTournament.getName());
-            tournament.setDescription(newTournament.getDescription());
-            tournament.setReferee(newTournament.getReferee());
-            tournament.setLocation(newTournament.getLocation());
-            tournament.setStartDate(newTournament.getStartDate());
-            tournament.setEndDate(newTournament.getEndDate());
-            tournament.setEnrolDate(newTournament.getEnrolDate());
-            tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
-            tournament.setLevels(newTournament.getLevels());
-            tournament.setAdmin(newTournament.getAdmin());
-            return tournamentRepository.save(tournament);
+            return tournamentRepository.save(new Tournament(newTournament));
         }).orElseThrow(() -> new TournamentNotFoundException(id));
     }
 
@@ -100,6 +91,12 @@ public class TournamentService {
         return tournamentRepository.findByNameContaining(name);
     }
 
+    /**
+     * Should use bidirectional relationship in the future
+     * @param tournamentId tournament ID
+     * @return List of Enrolment of tournament with tournamentId
+     */
+    @Deprecated
     public List<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
         enrolmentRepository.findByTournamentId(tournamentId).forEach(enrolment -> {
@@ -134,18 +131,32 @@ public class TournamentService {
     }
 
     public ParticipantDTO enrolParticipantInTournament(long tournamentId, NewEnrolmentWrapper newEnrolmentWrapper) {
+        newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
+            if(enrolmentDTO.getTournamentId() != tournamentId){
+                throw new InputMismatchException("Tournament IDs don't match!");
+            }
+        });
         Participant participant = participantRepository.findById(newEnrolmentWrapper.getParticipantId())
                 .orElseThrow(() -> new ParticipantNotFoundException(newEnrolmentWrapper.getParticipantId()));
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
         newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
-            Enrolment enrolment = new Enrolment(enrolmentDTO, tournamentRepository.findById(enrolmentDTO.getTournamentId())
-                    .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
+            Enrolment enrolment = new Enrolment(enrolmentDTO, tournament);
             enrolment = enrolmentRepository.save(enrolment);
             participant.addEnrolment(enrolment);
             participantRepository.save(participant);
+            tournament.addEnrolment(enrolment);
+            tournamentRepository.save(tournament);
         });
         return new ParticipantDTO(participant);
     }
 
+    /**
+     * Doesn't use NewEnrolmentWrapper
+     * @param tournamentId tournament ID
+     * @param newEnrolment new enrolment
+     * @return updated enrolment
+     */
     @Deprecated
     public Enrolment updateEnrolment(long tournamentId, Enrolment newEnrolment){
         if(!tournamentRepository.existsById(tournamentId)){
@@ -163,18 +174,19 @@ public class TournamentService {
     }
     public List<EnrolmentDTO> updateEnrolments(long id, NewEnrolmentWrapper newEnrolmentWrapper) {
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
-        Participant participant = participantRepository.findById(newEnrolmentWrapper.getParticipantId())
-                .orElseThrow(() -> new ParticipantNotFoundException(newEnrolmentWrapper.getParticipantId()));
         newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
             Enrolment enrolment = new Enrolment(enrolmentDTO, tournamentRepository.findById(enrolmentDTO.getTournamentId())
                     .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
-            if(participant.updateEnrolment(enrolment)){
-                enrolmentDTOs.add(enrolmentDTO);
-            }
+            enrolmentDTOs.add(enrolmentDTO);
         });
         return enrolmentDTOs;
     }
 
+    /**
+     * Should use bidirectional Tournament <-> Enrolment
+     * @param tournamentId tournamentId
+     * @return List of made teams
+     */
     public List<Team> makeTeams(long tournamentId){
         Tournament tournament = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
