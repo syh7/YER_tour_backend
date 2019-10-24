@@ -1,5 +1,6 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.Exceptions.AdminNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
 import YERgen2.demo.model.Admin;
@@ -10,6 +11,9 @@ import YERgen2.demo.repositories.ParticipantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -36,16 +40,21 @@ public class AccountService {
         return adminRepository.findById(id)
                 .orElseThrow(() -> new AdminNotFoundException(id));
     }
-    public Participant findParticipantById(Long id){
-        return participantRepository.findById(id)
+    public ParticipantDTO findParticipantById(Long id){
+        Participant participant = participantRepository.findById(id)
                 .orElseThrow(() -> new ParticipantNotFoundException(id));
+        return new ParticipantDTO(participant);
     }
 
     public Iterable <Admin> findAllAdmin(){
         return adminRepository.findAll();
     }
-    public Iterable <Participant> findAllParticipant(){
-        return participantRepository.findAll();
+    public Iterable <ParticipantDTO> findAllParticipant(){
+        List<ParticipantDTO> participantDTOs = new ArrayList<>();
+        participantRepository.findAll().forEach(participant -> {
+            participantDTOs.add(new ParticipantDTO(participant));
+        });
+        return participantDTOs;
     }
 
     public void deleteAdminById(long id) {
@@ -64,19 +73,9 @@ public class AccountService {
             return adminRepository.save(admin);
         }).orElseThrow(() -> new AdminNotFoundException(newAdmin.getId()));
     }
-    public Participant updateParticipant(long id, Participant newParticipant){
+    public ParticipantDTO updateParticipant(long id, Participant newParticipant){
         return participantRepository.findById(id).map(participant -> {
-            participant.setEmail(newParticipant.getEmail());
-            participant.setPassword(newParticipant.getPassword());
-            participant.setFirstName(newParticipant.getFirstName());
-            participant.setLastName(newParticipant.getLastName());
-            participant.setMale(newParticipant.isMale());
-            participant.setDateOfBirth(newParticipant.getDateOfBirth());
-            participant.setPlayerLevel(newParticipant.getPlayerLevel());
-            participant.setLeagueNumber(newParticipant.getLeagueNumber());
-            participant.setEnrolments(newParticipant.getEnrolments());
-            participant.setTeams(newParticipant.getTeams());
-            return participantRepository.save(participant);
+            return new ParticipantDTO(participantRepository.save(new Participant(newParticipant)));
         }).orElseThrow( ()-> new ParticipantNotFoundException(id));
     }
 

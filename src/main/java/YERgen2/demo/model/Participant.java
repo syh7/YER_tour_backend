@@ -60,8 +60,8 @@ public class Participant extends Account {
         this.enrolments = enrolments;
         this.teams = teams;
     }
-    public Participant(ParticipantDTO participantDTO, List<Enrolment> enrolments, List<Team> teams){
-        super(participantDTO.getEmail(), participantDTO.getPassword());
+    public Participant(ParticipantDTO participantDTO, String password, List<Enrolment> enrolments, List<Team> teams){
+        super(participantDTO.getId(), participantDTO.getEmail(), password);
         this.firstName = participantDTO.getFirstName();
         this.lastName = participantDTO.getLastName();
         this.isMale = participantDTO.isMale();
@@ -70,6 +70,17 @@ public class Participant extends Account {
         this.dateOfBirth = participantDTO.getDateOfBirth();
         this.enrolments = enrolments;
         this.teams = teams;
+    }
+    public Participant(Participant copyParticipant){
+        super(copyParticipant.getId(), copyParticipant.getEmail(), copyParticipant.getPassword());
+        this.firstName = copyParticipant.getFirstName();
+        this.lastName = copyParticipant.getLastName();
+        this.isMale = copyParticipant.isMale();
+        this.playerLevel = copyParticipant.getPlayerLevel();
+        this.leagueNumber = copyParticipant.getLeagueNumber();
+        this.dateOfBirth = copyParticipant.getDateOfBirth();
+        this.enrolments = copyParticipant.getEnrolments();
+        this.teams = copyParticipant.getTeams();
     }
 
     public String getFirstName(){

@@ -23,6 +23,11 @@ public class Account {
         this.email = email;
         this.password = password;
     }
+    Account(long id, @NotNull String email, @NotNull String password) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;
