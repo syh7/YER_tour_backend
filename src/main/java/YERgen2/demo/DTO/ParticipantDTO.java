@@ -41,7 +41,7 @@ public class ParticipantDTO {
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
     }
-    public long[] getEnrolment() {
+    public long[] getEnrolments() {
         return enrolmentIds;
     }
     public long[] getTeams() {
@@ -72,7 +72,7 @@ public class ParticipantDTO {
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
-    public void setEnrolment(long[] enrolments) {
+    public void setEnrolments(long[] enrolments) {
         this.enrolmentIds = enrolments;
     }
     public void setTeams(long[] teams) {

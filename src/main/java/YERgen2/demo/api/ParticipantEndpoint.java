@@ -30,9 +30,13 @@ public class ParticipantEndpoint {
         return accountService.findParticipantById(id);
     }
 
-    @PutMapping("/participants/{id}")
-    public ParticipantDTO updateParticipant(@RequestBody Participant newParticipant, @PathVariable long id) {
+    @PutMapping("/participants/{id}/newpassword")
+    public ParticipantDTO updateParticipant(@PathVariable long id, @RequestBody Participant newParticipant) {
         return accountService.updateParticipant(id, newParticipant);
+    }
+    @PutMapping("/participants/{id}")
+    public ParticipantDTO updateParticipant(@PathVariable long id, @RequestBody ParticipantDTO newParticipantDTO) {
+        return accountService.updateParticipantDTO(id, newParticipantDTO);
     }
 
     @DeleteMapping("/participants/{id}")

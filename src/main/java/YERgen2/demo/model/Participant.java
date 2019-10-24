@@ -155,9 +155,8 @@ public class Participant extends Account {
     }
 
     public boolean addEnrolment(Enrolment enrolment){
-        return this.enrolments.add(enrolment);
+        return enrolments.add(enrolment);
     }
-
     public boolean updateEnrolment(Enrolment newEnrolment){
         for(Enrolment enrolment : enrolments){
             if(enrolment.getId() == newEnrolment.getId()){
@@ -167,18 +166,30 @@ public class Participant extends Account {
         }
         return false;
     }
+    public boolean deleteEnrolment(Enrolment enrolment){
+        return enrolments.remove(enrolment);
+    }
+    public void emptyEnrolments(){
+        enrolments.clear();
+    }
 
-    public boolean deleteEnrolmentById(long enrolmentId){
-        for(Enrolment enrolment : enrolments){
-            if(enrolment.getId() == enrolmentId){
-                return this.enrolments.remove(enrolment);
+    public boolean addTeam(Team team){
+        return teams.add(team);
+    }
+    public boolean updateTeam(Team newTeam){
+        for(Team team : teams){
+            if(team.getId() == newTeam.getId()){
+                teams.remove(team);
+                return teams.add(newTeam);
             }
         }
         return false;
     }
-
-    public boolean deleteEnrolment(Enrolment enrolment){
-        return this.enrolments.remove(enrolment);
+    public boolean deleteTeam(Team team){
+        return teams.remove(team);
+    }
+    public void emptyTeams(){
+        enrolments.clear();
     }
 
 }
