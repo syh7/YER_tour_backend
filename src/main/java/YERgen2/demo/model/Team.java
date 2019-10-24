@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 public class Team {
@@ -23,6 +24,9 @@ public class Team {
     @ManyToOne
     @JsonIgnore
     private Tournament tournament;
+    @OneToMany
+    @JsonIgnore
+    private List<Participant> participants;
 
     public Team() {}
     public Team(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
@@ -58,6 +62,9 @@ public class Team {
     public Tournament getTournament() {
         return tournament;
     }
+    public List<Participant> getParticipants() {
+        return participants;
+    }
 
     public void setId(long id){
         this.id = id;
@@ -73,6 +80,9 @@ public class Team {
     }
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 
 }
