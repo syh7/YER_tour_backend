@@ -1,5 +1,7 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.AdminDTO;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -23,6 +25,16 @@ public class Admin extends Account {
         super(email, password);
         this.name = name;
         this.tournaments = new ArrayList<>();
+    }
+    public Admin(Admin copyAdmin){
+        super(copyAdmin.getId(), copyAdmin.getEmail(), copyAdmin.getPassword());
+        name = copyAdmin.getName();
+        tournaments = copyAdmin.getTournaments();
+    }
+    public Admin(AdminDTO adminDTO, String password, List<Tournament> tournaments){
+        super(adminDTO.getId(), adminDTO.getEmail(), password);
+        this.name = adminDTO.getName();
+        this.tournaments = tournaments;
     }
 
     public String getName() {

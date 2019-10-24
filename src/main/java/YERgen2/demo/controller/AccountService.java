@@ -1,5 +1,6 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.DTO.AdminDTO;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.Exceptions.AdminNotFoundException;
 import YERgen2.demo.Exceptions.ParticipantNotFoundException;
@@ -36,9 +37,10 @@ public class AccountService {
         return participantRepository.save(participant);
     }
 
-    public Admin findAdminById(long id){
-        return adminRepository.findById(id)
+    public AdminDTO findAdminById(long id){
+        Admin admin=  adminRepository.findById(id)
                 .orElseThrow(() -> new AdminNotFoundException(id));
+        return new AdminDTO(admin);
     }
     public ParticipantDTO findParticipantById(Long id){
         Participant participant = participantRepository.findById(id)
@@ -46,8 +48,12 @@ public class AccountService {
         return new ParticipantDTO(participant);
     }
 
-    public Iterable <Admin> findAllAdmin(){
-        return adminRepository.findAll();
+    public Iterable <AdminDTO> findAllAdmin(){
+        List<AdminDTO> adminDTOs = new ArrayList<>();
+        adminRepository.findAll().forEach(admin -> {
+            adminDTOs.add(new AdminDTO(admin));
+        });
+        return adminDTOs;
     }
     public Iterable <ParticipantDTO> findAllParticipant(){
         List<ParticipantDTO> participantDTOs = new ArrayList<>();
@@ -64,13 +70,9 @@ public class AccountService {
         participantRepository.deleteById(id);
     }
 
-    public Admin updateAdmin(long id, Admin newAdmin) {
+    public AdminDTO updateAdmin(long id, Admin newAdmin) {
         return adminRepository.findById(id).map(admin -> {
-            admin.setEmail(newAdmin.getEmail());
-            admin.setPassword(newAdmin.getPassword());
-            admin.setName(newAdmin.getName());
-            admin.setTournaments(newAdmin.getTournaments());
-            return adminRepository.save(admin);
+            return new AdminDTO(adminRepository.save(new Admin(admin)));
         }).orElseThrow(() -> new AdminNotFoundException(newAdmin.getId()));
     }
     public ParticipantDTO updateParticipant(long id, Participant newParticipant){
