@@ -52,11 +52,22 @@ public class Admin extends Account {
     }
 
     public boolean addTournament(Tournament tournament){
-        return this.tournaments.add(tournament);
+        return tournaments.add(tournament);
     }
-
+    public boolean updateTournament(Tournament newTournament){
+        for(Tournament tournament : tournaments){
+            if(tournament.getId() == newTournament.getId()){
+                tournaments.remove(tournament);
+                return tournaments.add(newTournament);
+            }
+        }
+        return false;
+    }
     public boolean removeTournament(Tournament tournament){
-        return this.tournaments.remove(tournament);
+        return tournaments.remove(tournament);
+    }
+    public void emptyTournaments(){
+        tournaments.clear();
     }
 
 }

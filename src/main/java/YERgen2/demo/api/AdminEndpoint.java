@@ -30,9 +30,13 @@ public class AdminEndpoint {
         return accountService.findAdminById(id);
     }
 
-    @PutMapping("/admins/{id}")
+    @PutMapping("/admins/{id}/newpassword")
     public AdminDTO updateAdmin(@RequestBody Admin newAdmin, @PathVariable long id) {
         return accountService.updateAdmin(id, newAdmin);
+    }
+    @PutMapping("/admins/{id}")
+    public AdminDTO updateAdminDTO(@RequestBody AdminDTO newAdminDTO, @PathVariable long id) {
+        return accountService.updateAdminDTO(id, newAdminDTO);
     }
 
     @DeleteMapping("/admins/{id}")

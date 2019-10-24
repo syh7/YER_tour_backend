@@ -2,17 +2,11 @@ package YERgen2.demo.controller;
 
 import YERgen2.demo.DTO.AdminDTO;
 import YERgen2.demo.DTO.ParticipantDTO;
-import YERgen2.demo.Exceptions.AdminNotFoundException;
-import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
-import YERgen2.demo.Exceptions.ParticipantNotFoundException;
-import YERgen2.demo.Exceptions.TeamNotFoundException;
+import YERgen2.demo.Exceptions.*;
 import YERgen2.demo.model.Admin;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
-import YERgen2.demo.repositories.AdminRepository;
-import YERgen2.demo.repositories.EnrolmentRepository;
-import YERgen2.demo.repositories.ParticipantRepository;
-import YERgen2.demo.repositories.TeamRepository;
+import YERgen2.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,13 +26,17 @@ public class AccountService {
     private EnrolmentRepository enrolmentRepository;
     @Autowired
     private TeamRepository teamRepository;
+    @Autowired
+    private TournamentRepository tournamentRepository;
 
     AccountService(AdminRepository adminRepository, ParticipantRepository participantRepository,
-                   EnrolmentRepository enrolmentRepository, TeamRepository teamRepository){
+                   EnrolmentRepository enrolmentRepository, TeamRepository teamRepository,
+                   TournamentRepository tournamentRepository){
         this.adminRepository = adminRepository;
         this.participantRepository = participantRepository;
         this.enrolmentRepository = enrolmentRepository;
         this.teamRepository = teamRepository;
+        this.tournamentRepository = tournamentRepository;
     }
 
     public Admin saveAdmin(Admin participant){
@@ -85,6 +83,16 @@ public class AccountService {
         return adminRepository.findById(id).map(admin -> {
             return new AdminDTO(adminRepository.save(new Admin(admin)));
         }).orElseThrow(() -> new AdminNotFoundException(newAdmin.getId()));
+    }
+    public AdminDTO updateAdminDTO(long id, AdminDTO newAdminDTO) {
+        Admin admin = adminRepository.findById(id)
+                .orElseThrow(() -> new AdminNotFoundException(id));
+        admin.emptyTournaments();
+        for(long tournamentId : newAdminDTO.getTournamentIds()){
+            admin.addTournament(tournamentRepository.findById(tournamentId)
+            .orElseThrow(() -> new TournamentNotFoundException(tournamentId)));
+        }
+        return new AdminDTO(adminRepository.save(new Admin(newAdminDTO, admin.getPassword(), admin.getTournaments())));
     }
     public ParticipantDTO updateParticipant(long id, Participant newParticipant){
         return participantRepository.findById(id).map(participant -> {
