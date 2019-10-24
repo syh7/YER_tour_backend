@@ -184,6 +184,7 @@ public class TournamentService {
 
     /**
      * Should use bidirectional Tournament <-> Enrolment
+     * Should use bidirectional Tournament <-> Team
      * @param tournamentId tournamentId
      * @return List of made teams
      */

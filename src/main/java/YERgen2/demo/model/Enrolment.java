@@ -1,6 +1,7 @@
 package YERgen2.demo.model;
 
 import YERgen2.demo.DTO.EnrolmentDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ public class Enrolment {
     private Discipline discipline;
     @NotNull
     @ManyToOne
+    @JsonIgnore
     private Tournament tournament;
 
     public Enrolment() {}

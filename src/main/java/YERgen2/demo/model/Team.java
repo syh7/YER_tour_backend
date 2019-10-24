@@ -1,6 +1,7 @@
 package YERgen2.demo.model;
 
 import YERgen2.demo.DTO.TeamDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -20,6 +21,7 @@ public class Team {
     private Game game;
     @NotNull
     @ManyToOne
+    @JsonIgnore
     private Tournament tournament;
 
     public Team() {}

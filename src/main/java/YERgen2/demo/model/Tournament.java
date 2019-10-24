@@ -1,5 +1,7 @@
 package YERgen2.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -27,12 +29,16 @@ public class Tournament {
     private int[] levels;
     @NotNull
     @ManyToOne
+    @JsonIgnore
     private Admin admin;
     @OneToMany(mappedBy = "tournament")
     private List<Enrolment> enrolments;
+    @OneToMany(mappedBy = "tournament")
+    private List<Team> teams;
 
     public Tournament(){
         enrolments = new ArrayList<>();
+        teams = new ArrayList<>();
     }
     public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
         this.name = name;
@@ -47,10 +53,11 @@ public class Tournament {
         this.maxDisciplines = 1;
         this.levels = new int[]{1, 2, 3};
         enrolments = new ArrayList<>();
+        teams = new ArrayList<>();
     }
     public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
                       @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin,
-                      List<Enrolment> enrolments) {
+                      List<Enrolment> enrolments, List<Team> teams) {
         this.name = name;
         this.description = description;
         this.referee = referee;
@@ -62,6 +69,7 @@ public class Tournament {
         this.levels = levels;
         this.admin = admin;
         this.enrolments = enrolments;
+        this.teams = teams;
     }
     public Tournament(Tournament newTournament){
         id = newTournament.getId();
@@ -76,6 +84,7 @@ public class Tournament {
         levels = newTournament.getLevels();
         admin = newTournament.getAdmin();
         enrolments = newTournament.getEnrolments();
+        teams = newTournament.getTeams();
     }
 
     public long getId() {
@@ -114,6 +123,9 @@ public class Tournament {
     public List<Enrolment> getEnrolments() {
         return enrolments;
     }
+    public List<Team> getTeams() {
+        return teams;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -150,6 +162,9 @@ public class Tournament {
     }
     public void setEnrolments(List<Enrolment> enrolments) {
         this.enrolments = enrolments;
+    }
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
     public boolean addEnrolment(Enrolment enrolment){
