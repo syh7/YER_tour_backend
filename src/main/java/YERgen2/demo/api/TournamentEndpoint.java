@@ -1,6 +1,7 @@
 package YERgen2.demo.api;
 
 import YERgen2.demo.DTO.EnrolmentDTO;
+import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.controller.TournamentService;
 import YERgen2.demo.DTO.NewEnrolmentWrapper;
@@ -20,8 +21,8 @@ public class TournamentEndpoint {
     /////TOURNAMENTS
 
     @PostMapping("/tournaments")
-    public Tournament newTournament(@RequestBody Tournament newTournament) {
-        return tournamentService.saveTournament(newTournament);
+    public Tournament newTournament(@RequestBody NewTournamentWrapper newTournamentWrapper) {
+        return tournamentService.saveTournament(newTournamentWrapper);
     }
 
     //tournaments/?mode=foo&search=bar

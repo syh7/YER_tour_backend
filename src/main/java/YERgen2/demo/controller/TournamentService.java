@@ -2,14 +2,14 @@ package YERgen2.demo.controller;
 
 import YERgen2.demo.DTO.NewEnrolmentWrapper;
 import YERgen2.demo.DTO.EnrolmentDTO;
+import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.DTO.ParticipantDTO;
-import YERgen2.demo.Exceptions.NotModifiedException;
-import YERgen2.demo.Exceptions.EnrolmentNotFoundException;
-import YERgen2.demo.Exceptions.ParticipantNotFoundException;
-import YERgen2.demo.Exceptions.TournamentNotFoundException;
+import YERgen2.demo.Exceptions.*;
+import YERgen2.demo.model.Admin;
 import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
+import YERgen2.demo.repositories.AdminRepository;
 import YERgen2.demo.repositories.EnrolmentRepository;
 import YERgen2.demo.repositories.ParticipantRepository;
 import YERgen2.demo.repositories.TournamentRepository;
@@ -30,15 +30,25 @@ public class TournamentService {
     private EnrolmentRepository enrolmentRepository;
     @Autowired
     private ParticipantRepository participantRepository;
+    @Autowired
+    private AdminRepository adminRepository;
 
-    TournamentService(EnrolmentRepository enrolmentRepository, TournamentRepository tournamentRepository, ParticipantRepository participantRepository){
+    TournamentService(EnrolmentRepository enrolmentRepository, TournamentRepository tournamentRepository,
+                      ParticipantRepository participantRepository, AdminRepository adminRepository){
         this.enrolmentRepository = enrolmentRepository;
         this.tournamentRepository = tournamentRepository;
         this.participantRepository = participantRepository;
+        this.adminRepository = adminRepository;
     }
 
-    public Tournament saveTournament(Tournament tournament){
-        return tournamentRepository.save(tournament);
+    public Tournament saveTournament(NewTournamentWrapper newTournamentWrapper){
+        Admin admin = adminRepository.findById(newTournamentWrapper.getAdminId())
+                .orElseThrow(() -> new AdminNotFoundException(newTournamentWrapper.getAdminId()));
+        if(admin.addTournament(newTournamentWrapper.getTournament())){
+            return tournamentRepository.save(newTournamentWrapper.getTournament());
+        } else {
+            return null;
+        }
     }
     public Enrolment saveEnrolment(Enrolment enrolment){
         return enrolmentRepository.save(enrolment);
