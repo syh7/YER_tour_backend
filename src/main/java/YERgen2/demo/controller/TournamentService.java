@@ -141,7 +141,12 @@ public class TournamentService {
         Tournament tournament = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
         newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
-            Enrolment enrolment = new Enrolment(enrolmentDTO, tournament);
+            List<Participant> participants = new ArrayList<>();
+            for(int i = 0; i < enrolmentDTO.getParticipantIds().length; i++){
+                participants.add(participantRepository.findById(enrolmentDTO.getParticipantIds()[i])
+                .orElseThrow(() -> new ParticipantNotFoundException((long) 0)));
+            }
+            Enrolment enrolment = new Enrolment(enrolmentDTO, tournament, participants);
             enrolment = enrolmentRepository.save(enrolment);
             participant.addEnrolment(enrolment);
             participantRepository.save(participant);
@@ -175,8 +180,13 @@ public class TournamentService {
     public List<EnrolmentDTO> updateEnrolments(long id, NewEnrolmentWrapper newEnrolmentWrapper) {
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
         newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
+            List<Participant> participants = new ArrayList<>();
+            for(int i = 0; i < enrolmentDTO.getParticipantIds().length; i++){
+                participants.add(participantRepository.findById(enrolmentDTO.getParticipantIds()[i])
+                        .orElseThrow(() -> new ParticipantNotFoundException((long) 0)));
+            }
             Enrolment enrolment = new Enrolment(enrolmentDTO, tournamentRepository.findById(enrolmentDTO.getTournamentId())
-                    .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())));
+                    .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())), participants);
             enrolmentDTOs.add(enrolmentDTO);
         });
         return enrolmentDTOs;
