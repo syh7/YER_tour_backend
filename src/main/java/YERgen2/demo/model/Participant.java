@@ -60,8 +60,8 @@ public class Participant extends Account {
         this.enrolments = enrolments;
         this.teams = teams;
     }
-    public Participant(ParticipantDTO participantDTO, List<Enrolment> enrolments, List<Team> teams){
-        super(participantDTO.getEmail(), participantDTO.getPassword());
+    public Participant(ParticipantDTO participantDTO, String password, List<Enrolment> enrolments, List<Team> teams){
+        super(participantDTO.getId(), participantDTO.getEmail(), password);
         this.firstName = participantDTO.getFirstName();
         this.lastName = participantDTO.getLastName();
         this.isMale = participantDTO.isMale();
@@ -70,6 +70,17 @@ public class Participant extends Account {
         this.dateOfBirth = participantDTO.getDateOfBirth();
         this.enrolments = enrolments;
         this.teams = teams;
+    }
+    public Participant(Participant copyParticipant){
+        super(copyParticipant.getId(), copyParticipant.getEmail(), copyParticipant.getPassword());
+        this.firstName = copyParticipant.getFirstName();
+        this.lastName = copyParticipant.getLastName();
+        this.isMale = copyParticipant.isMale();
+        this.playerLevel = copyParticipant.getPlayerLevel();
+        this.leagueNumber = copyParticipant.getLeagueNumber();
+        this.dateOfBirth = copyParticipant.getDateOfBirth();
+        this.enrolments = copyParticipant.getEnrolments();
+        this.teams = copyParticipant.getTeams();
     }
 
     public String getFirstName(){
@@ -144,9 +155,8 @@ public class Participant extends Account {
     }
 
     public boolean addEnrolment(Enrolment enrolment){
-        return this.enrolments.add(enrolment);
+        return enrolments.add(enrolment);
     }
-
     public boolean updateEnrolment(Enrolment newEnrolment){
         for(Enrolment enrolment : enrolments){
             if(enrolment.getId() == newEnrolment.getId()){
@@ -156,18 +166,30 @@ public class Participant extends Account {
         }
         return false;
     }
+    public boolean deleteEnrolment(Enrolment enrolment){
+        return enrolments.remove(enrolment);
+    }
+    public void emptyEnrolments(){
+        enrolments.clear();
+    }
 
-    public boolean deleteEnrolmentById(long enrolmentId){
-        for(Enrolment enrolment : enrolments){
-            if(enrolment.getId() == enrolmentId){
-                return this.enrolments.remove(enrolment);
+    public boolean addTeam(Team team){
+        return teams.add(team);
+    }
+    public boolean updateTeam(Team newTeam){
+        for(Team team : teams){
+            if(team.getId() == newTeam.getId()){
+                teams.remove(team);
+                return teams.add(newTeam);
             }
         }
         return false;
     }
-
-    public boolean deleteEnrolment(Enrolment enrolment){
-        return this.enrolments.remove(enrolment);
+    public boolean deleteTeam(Team team){
+        return teams.remove(team);
+    }
+    public void emptyTeams(){
+        enrolments.clear();
     }
 
 }
