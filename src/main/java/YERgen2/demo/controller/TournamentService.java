@@ -43,6 +43,7 @@ public class TournamentService {
         Admin admin = adminRepository.findById(newTournamentWrapper.getAdminId())
                 .orElseThrow(() -> new AdminNotFoundException(newTournamentWrapper.getAdminId()));
         if(admin.addTournament(newTournamentWrapper.getTournament())){
+            adminRepository.save(admin);
             return tournamentRepository.save(newTournamentWrapper.getTournament());
         } else {
             return null;
@@ -72,6 +73,7 @@ public class TournamentService {
             tournament.setEnrolDate(newTournament.getEnrolDate());
             tournament.setMaxDisciplines(newTournament.getMaxDisciplines());
             tournament.setLevels(newTournament.getLevels());
+            tournament.setAdmin(newTournament.getAdmin());
             return tournamentRepository.save(tournament);
         }).orElseThrow(() -> new TournamentNotFoundException(id));
     }

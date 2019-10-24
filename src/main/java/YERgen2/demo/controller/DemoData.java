@@ -36,11 +36,11 @@ public class DemoData {
         accountService.saveParticipant(part2);
 
         Tournament tournament1 = new Tournament("Stuban Toernooi 2019", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1));
+                LocalDate.of(2019, 10, 1), admin1);
         Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1));
+                LocalDate.of(2019, 10, 1), admin2);
         Tournament tournament3 = new Tournament("Stuban Toernooi 2020", LocalDate.of(2020, 10, 1),
-                LocalDate.of(2020, 10, 1));
+                LocalDate.of(2020, 10, 1), admin1);
         NewTournamentWrapper newTournamentWrapper1 = new NewTournamentWrapper(admin1.getId(), tournament1);
         tournamentService.saveTournament(newTournamentWrapper1);
         NewTournamentWrapper newTournamentWrapper2 = new NewTournamentWrapper(admin2.getId(), tournament2);

@@ -23,9 +23,12 @@ public class Tournament {
     private LocalDate enrolDate;
     private int maxDisciplines;
     private int[] levels;
+    @NotNull
+    @ManyToOne
+    private Admin admin;
 
     public Tournament(){}
-    public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate) {
+    public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -36,9 +39,10 @@ public class Tournament {
         this.enrolDate = LocalDate.now();
         this.maxDisciplines = 1;
         this.levels = new int[]{1, 2, 3};
+        this.admin = admin;
     }
     public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
-                      @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels) {
+                      @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin) {
         this.name = name;
         this.description = description;
         this.referee = referee;
@@ -48,6 +52,7 @@ public class Tournament {
         this.enrolDate = enrolDate;
         this.maxDisciplines = maxDisciplines;
         this.levels = levels;
+        this.admin = admin;
     }
 
     public long getId() {
@@ -80,6 +85,9 @@ public class Tournament {
     public int[] getLevels() {
         return levels;
     }
+    public Admin getAdmin() {
+        return admin;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -111,4 +119,8 @@ public class Tournament {
     public void setLevels(int[] levels) {
         this.levels = levels;
     }
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
 }
