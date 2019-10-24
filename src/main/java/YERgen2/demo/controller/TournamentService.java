@@ -5,10 +5,7 @@ import YERgen2.demo.DTO.EnrolmentDTO;
 import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.Exceptions.*;
-import YERgen2.demo.model.Admin;
-import YERgen2.demo.model.Enrolment;
-import YERgen2.demo.model.Participant;
-import YERgen2.demo.model.Tournament;
+import YERgen2.demo.model.*;
 import YERgen2.demo.repositories.AdminRepository;
 import YERgen2.demo.repositories.EnrolmentRepository;
 import YERgen2.demo.repositories.ParticipantRepository;
@@ -16,6 +13,7 @@ import YERgen2.demo.repositories.TournamentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +98,7 @@ public class TournamentService {
         return tournamentRepository.findByNameContaining(name);
     }
 
-    public Iterable<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){
+    public List<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
         enrolmentRepository.findByTournamentId(tournamentId).forEach(enrolment -> {
             enrolmentDTOs.add(new EnrolmentDTO(enrolment));
@@ -173,6 +171,22 @@ public class TournamentService {
             }
         });
         return enrolmentDTOs;
+    }
+
+    public List<Team> makeTeams(long tournamentId){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        List<Enrolment> enrolments = (List<Enrolment>) enrolmentRepository.findByTournamentId(tournamentId);
+        List<Team> teams = new ArrayList<>();
+        List<Enrolment> trouble = new ArrayList<>();
+        for(Enrolment enrolment : enrolments){
+            if(enrolment.getDiscipline() == Discipline.MENSINGLES ||
+                enrolment.getDiscipline() == Discipline.WOMENSINGLES){
+                Team team = new Team(enrolment);
+                teams.add(team);
+            }
+        }
+        throw new NotImplementedException();
     }
 
 }

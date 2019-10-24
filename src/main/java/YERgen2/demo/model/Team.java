@@ -26,6 +26,11 @@ public class Team {
         this.discipline = discipline;
         this.tournament = tournament;
     }
+    public Team(Enrolment enrolment){
+        playerLevel = enrolment.getPlayerLevel();
+        discipline = enrolment.getDiscipline();
+        tournament = enrolment.getTournament();
+    }
 
     public long getId(){
         return id;

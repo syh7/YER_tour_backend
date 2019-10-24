@@ -61,13 +61,17 @@ public class TournamentEndpoint {
 
     @GetMapping("/tournaments/{id}/enrol")
     public List<EnrolmentDTO> getAllEnrolments(@PathVariable long id){
-        return (List<EnrolmentDTO>) tournamentService.findEnrolmentByTournamentId(id);
+        return tournamentService.findEnrolmentByTournamentId(id);
     }
 
     @PutMapping("/tournaments/{id}/enrol")
     public List<EnrolmentDTO> updateEnrolments(@PathVariable long id, @RequestBody NewEnrolmentWrapper newEnrolmentWrapper){
         return tournamentService.updateEnrolments(id, newEnrolmentWrapper);
     }
+
+    /////TOURNAMENTS/ID/TEAMS
+
+
 
 }
 
