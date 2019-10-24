@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Enrolment {
@@ -22,26 +24,35 @@ public class Enrolment {
     @ManyToOne
     @JsonIgnore
     private Tournament tournament;
+    @OneToMany
+    @JsonIgnore
+    private List<Participant> participants;
 
-    public Enrolment() {}
+    public Enrolment() {
+        participants = new ArrayList<>();
+    }
     public Enrolment(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
         this.playerLevel = playerLevel;
         this.discipline = discipline;
         this.tournament = tournament;
+        participants = new ArrayList<>();
     }
-    public Enrolment(long id, long partnerLeagueNumber, @NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+    public Enrolment(long id, long partnerLeagueNumber, @NotNull int playerLevel, @NotNull Discipline discipline,
+                     @NotNull Tournament tournament, List<Participant> participants) {
         this.id = id;
         this.partnerLeagueNumber = partnerLeagueNumber;
         this.playerLevel = playerLevel;
         this.discipline = discipline;
         this.tournament = tournament;
+        this.participants = participants;
     }
-    public Enrolment(EnrolmentDTO enrolmentDTO, Tournament tournament){
+    public Enrolment(EnrolmentDTO enrolmentDTO, Tournament tournament, List<Participant> participants){
         this.id = enrolmentDTO.getId();
         this.discipline = enrolmentDTO.getDiscipline();
         this.playerLevel = enrolmentDTO.getPlayerLevel();
         this.partnerLeagueNumber = enrolmentDTO.getPartnerLeagueNumber();
         this.tournament = tournament;
+        this.participants = participants;
     }
 
     public long getId() {
@@ -59,6 +70,9 @@ public class Enrolment {
     public Tournament getTournament() {
         return tournament;
     }
+    public List<Participant> getParticipants() {
+        return participants;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -74,6 +88,9 @@ public class Enrolment {
     }
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+    public void setParticipants(List<Participant> participants) {
+        this.participants = participants;
     }
 
 }
