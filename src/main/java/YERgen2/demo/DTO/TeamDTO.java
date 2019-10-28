@@ -15,8 +15,6 @@ public class TeamDTO {
     private Discipline discipline;
     private long gameId;
     private long tournamentId;
-    @OneToMany
-    @JsonIgnore
     private long[] participantIds;
 
     public TeamDTO(){}
