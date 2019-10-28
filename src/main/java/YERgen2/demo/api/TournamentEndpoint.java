@@ -88,7 +88,7 @@ public class TournamentEndpoint {
         return (List<GameDTO>) tournamentService.findGamesByTournamentId(id);
     }
 
-    @PostMapping()
+    @PostMapping("/tournaments/{id}/games")
     public Game addGameToTournament(@PathVariable long id, @RequestBody Game game){
         return tournamentService.saveGame(id, game);
     }
