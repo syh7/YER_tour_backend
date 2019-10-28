@@ -1,9 +1,6 @@
 package YERgen2.demo.controller;
 
-import YERgen2.demo.DTO.NewEnrolmentWrapper;
-import YERgen2.demo.DTO.EnrolmentDTO;
-import YERgen2.demo.DTO.NewTournamentWrapper;
-import YERgen2.demo.DTO.ParticipantDTO;
+import YERgen2.demo.DTO.*;
 import YERgen2.demo.Exceptions.*;
 import YERgen2.demo.model.*;
 import YERgen2.demo.repositories.*;
@@ -104,8 +101,12 @@ public class TournamentService {
         tournament.getEnrolments().forEach(enrolment -> enrolmentDTOs.add(new EnrolmentDTO(enrolment)));
         return enrolmentDTOs;
     }
-    public Iterable<Game> findGamesByTournamentId(long tournamentId) {
-        return gameRepository.findByTournamentId(tournamentId);
+    public Iterable<GameDTO> findGamesByTournamentId(long tournamentId) {
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        List<GameDTO> gameDTOs = new ArrayList<>();
+        tournament.getGames().forEach(game -> gameDTOs.add(new GameDTO(game)));
+        return gameDTOs;
     }
 
     /*

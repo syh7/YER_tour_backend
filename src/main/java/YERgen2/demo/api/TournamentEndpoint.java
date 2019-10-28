@@ -1,10 +1,7 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.DTO.EnrolmentDTO;
-import YERgen2.demo.DTO.NewTournamentWrapper;
-import YERgen2.demo.DTO.ParticipantDTO;
+import YERgen2.demo.DTO.*;
 import YERgen2.demo.controller.TournamentService;
-import YERgen2.demo.DTO.NewEnrolmentWrapper;
 import YERgen2.demo.model.Game;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,8 +84,8 @@ public class TournamentEndpoint {
     /////TOURNAMENTS/ID/GAMES
 
     @GetMapping("/tournaments/{id}/games")
-    public List<Game> getGamesByTournamentId(@PathVariable long id){
-        return (List<Game>) tournamentService.findGamesByTournamentId(id);
+    public List<GameDTO> getGamesByTournamentId(@PathVariable long id){
+        return (List<GameDTO>) tournamentService.findGamesByTournamentId(id);
     }
 
     @PostMapping()
