@@ -177,7 +177,7 @@ public class TournamentService {
                     }).orElseThrow(() -> new EnrolmentNotFoundException(newEnrolment.getId()));
         }
     }
-    public List<EnrolmentDTO> updateEnrolments(long id, NewEnrolmentWrapper newEnrolmentWrapper) {
+    public List<EnrolmentDTO> updateEnrolments(NewEnrolmentWrapper newEnrolmentWrapper) {
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
         newEnrolmentWrapper.getEnrolmentDTOs().forEach(enrolmentDTO -> {
             List<Participant> participants = new ArrayList<>();
@@ -193,25 +193,28 @@ public class TournamentService {
     }
 
     /**
-     * Should use bidirectional Tournament <-> Enrolment
-     * Should use bidirectional Tournament <-> Team
      * @param tournamentId tournamentId
      * @return List of made teams
      */
-    public List<Team> makeTeams(long tournamentId){
-        Tournament tournament = tournamentRepository.findById(tournamentId)
-                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
-        List<Enrolment> enrolments = (List<Enrolment>) enrolmentRepository.findByTournamentId(tournamentId);
-        List<Team> teams = new ArrayList<>();
-        List<Enrolment> trouble = new ArrayList<>();
-        for(Enrolment enrolment : enrolments){
-            if(enrolment.getDiscipline() == Discipline.MENSINGLES ||
-                enrolment.getDiscipline() == Discipline.WOMENSINGLES){
-                Team team = new Team(enrolment);
-                teams.add(team);
-            }
+    public List<Team> makeSingleTeams(long tournamentId){
+        if(tournamentRepository.existsById(tournamentId)){
+            throw new TournamentNotFoundException(tournamentId);
         }
-        throw new NotImplementedException();
+
+        List<Team> teams = new ArrayList<>();
+        List<Enrolment> menEnrolments = (List<Enrolment>) enrolmentRepository.findByTournamentIdAndDiscipline(tournamentId, Discipline.MENSINGLES);
+        List<Enrolment> womenEnrolments = (List<Enrolment>) enrolmentRepository.findByTournamentIdAndDiscipline(tournamentId, Discipline.WOMENSINGLES);
+
+        for(Enrolment enrolment : menEnrolments){
+            Team team = new Team(enrolment);
+            teams.add(team);
+        }
+        for(Enrolment enrolment : womenEnrolments){
+            Team team = new Team(enrolment);
+            teams.add(team);
+        }
+
+        return teams;
     }
 
 }

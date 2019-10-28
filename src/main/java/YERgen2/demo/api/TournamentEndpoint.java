@@ -66,7 +66,7 @@ public class TournamentEndpoint {
 
     @PutMapping("/tournaments/{id}/enrol")
     public List<EnrolmentDTO> updateEnrolments(@PathVariable long id, @RequestBody NewEnrolmentWrapper newEnrolmentWrapper){
-        return tournamentService.updateEnrolments(id, newEnrolmentWrapper);
+        return tournamentService.updateEnrolments(newEnrolmentWrapper);
     }
 
     /////TOURNAMENTS/ID/TEAMS
