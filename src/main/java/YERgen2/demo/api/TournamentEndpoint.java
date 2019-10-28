@@ -24,18 +24,18 @@ public class TournamentEndpoint {
 
     //tournaments/?mode=foo&search=bar
     @GetMapping(value="/tournaments")
-    public List<Tournament> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
+    public List<TournamentDTO> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
         if(mode.equals("contains")){
-            return (List<Tournament>) tournamentService.findTournamentByNameContaining(search);
+            return (List<TournamentDTO>) tournamentService.findTournamentByNameContaining(search);
         } else {
-            return (List<Tournament>) tournamentService.findAllTournament();
+            return (List<TournamentDTO>) tournamentService.findAllTournament();
         }
     }
 
     /////TOURNAMENTS/ID
 
     @GetMapping(value = "/tournaments/{id}", produces = "application/json")
-    public Tournament getTournament(@PathVariable long id) {
+    public TournamentDTO getTournament(@PathVariable long id) {
         return tournamentService.findTournamentById(id);
     }
 

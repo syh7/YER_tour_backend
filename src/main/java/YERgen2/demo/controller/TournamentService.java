@@ -77,9 +77,9 @@ public class TournamentService {
         return gameDTOs;
     }
 
-    public Tournament findTournamentById(long id){
-        return tournamentRepository.findById(id)
-                .orElseThrow(() -> new TournamentNotFoundException(id));
+    public TournamentDTO findTournamentById(long id){
+        return new TournamentDTO(tournamentRepository.findById(id)
+                .orElseThrow(() -> new TournamentNotFoundException(id)));
     }
     public Enrolment findEnrolmentById(long id){
         return enrolmentRepository.findById(id)
@@ -96,8 +96,12 @@ public class TournamentService {
         return tournamentRepository.existsById(id);
     }
 
-    public Iterable<Tournament> findAllTournament(){
-        return tournamentRepository.findAll();
+    public Iterable<TournamentDTO> findAllTournament(){
+        List<TournamentDTO> tournamentDTOs = new ArrayList<>();
+        for(Tournament tournament : tournamentRepository.findAll()){
+            tournamentDTOs.add(new TournamentDTO(tournament));
+        }
+        return tournamentDTOs;
     }
     public Iterable<Enrolment> findAllEnrolment(){
         return enrolmentRepository.findAll();
@@ -110,8 +114,12 @@ public class TournamentService {
         enrolmentRepository.deleteById(id);
     }
 
-    public Iterable<Tournament> findTournamentByNameContaining(String name){
-        return tournamentRepository.findByNameContaining(name);
+    public Iterable<TournamentDTO> findTournamentByNameContaining(String name){
+        List<TournamentDTO> tournamentDTOs = new ArrayList<>();
+        for(Tournament tournament : tournamentRepository.findByNameContaining(name)){
+            tournamentDTOs.add(new TournamentDTO(tournament));
+        }
+        return tournamentDTOs;
     }
 
     public List<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){

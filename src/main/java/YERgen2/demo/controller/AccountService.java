@@ -2,8 +2,10 @@ package YERgen2.demo.controller;
 
 import YERgen2.demo.DTO.AdminDTO;
 import YERgen2.demo.DTO.ParticipantDTO;
+import YERgen2.demo.DTO.TournamentDTO;
 import YERgen2.demo.Exceptions.*;
 import YERgen2.demo.model.Admin;
+import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
 import YERgen2.demo.model.Tournament;
 import YERgen2.demo.repositories.*;
@@ -12,7 +14,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -126,4 +130,13 @@ public class AccountService {
         }
     }
 
+    public Set<TournamentDTO> getParticipantTournaments(long participantId) {
+        Participant participant = participantRepository.findById(participantId)
+                .orElseThrow(() -> new ParticipantNotFoundException(participantId));
+        Set<TournamentDTO> tournamentDTOs = new HashSet<>();
+        for(Enrolment enrolment : participant.getEnrolments()){
+            tournamentDTOs.add(new TournamentDTO(enrolment.getTournament()));
+        }
+        return tournamentDTOs;
+    }
 }
