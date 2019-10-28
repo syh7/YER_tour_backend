@@ -1,5 +1,6 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.TournamentDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -91,6 +92,22 @@ public class Tournament {
         enrolments = newTournament.getEnrolments();
         teams = newTournament.getTeams();
         games = newTournament.getGames();
+    }
+    public Tournament(TournamentDTO tournamentDTO, Admin admin, List<Enrolment> enrolments, List<Team> teams, List<Game> games){
+        id = tournamentDTO.getId();
+        name = tournamentDTO.getName();
+        description = tournamentDTO.getDescription();
+        referee = tournamentDTO.getReferee();
+        location = tournamentDTO.getLocation();
+        startDate = tournamentDTO.getStartDate();
+        endDate = tournamentDTO.getEndDate();
+        enrolDate = tournamentDTO.getEnrolDate();
+        maxDisciplines = tournamentDTO.getMaxDisciplines();
+        levels = tournamentDTO.getLevels();
+        this.admin = admin;
+        this.enrolments = enrolments;
+        this.teams = teams;
+        this.games = games;
     }
 
     public long getId() {
@@ -191,6 +208,13 @@ public class Tournament {
     }
     public boolean removeTeam(Team team){
         return teams.remove(team);
+    }
+
+    public boolean addGame(Game game){
+        return games.add(game);
+    }
+    public boolean removeGame(Game game){
+        return games.remove(game);
     }
 
 }

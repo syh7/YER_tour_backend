@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,8 +20,8 @@ public class Team {
     private int playerLevel;
     @NotNull
     private Discipline discipline;
-    @ManyToOne
-    private Game game;
+    @ManyToMany
+    private List<Game> games;
     @NotNull
     @ManyToOne
     @JsonIgnore
@@ -35,6 +33,7 @@ public class Team {
 
     public Team() {
         participants = new ArrayList<>();
+        games = new ArrayList<>();
     }
     public Team(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament,
                 @NotNull List<Participant> participants) {
@@ -51,11 +50,11 @@ public class Team {
         participants = enrolment.getParticipants().stream().map(
                 Participant::new).collect(Collectors.toList());
     }
-    public Team(TeamDTO teamDTO, Game game, Tournament tournament){
+    public Team(TeamDTO teamDTO, List<Game> games, Tournament tournament){
         id = teamDTO.getId();
         playerLevel = teamDTO.getPlayerLevel();
         discipline = teamDTO.getDiscipline();
-        this.game = game;
+        this.games = games;
         this.tournament = tournament;
     }
 
@@ -68,8 +67,8 @@ public class Team {
     public Discipline getDiscipline() {
         return discipline;
     }
-    public Game getGame() {
-        return game;
+    public List<Game> getGames() {
+        return games;
     }
     public Tournament getTournament() {
         return tournament;
@@ -87,14 +86,21 @@ public class Team {
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
+    }
+
+    public boolean addGame(Game game) {
+        return games.add(game);
+    }
+    public boolean removeGame(Game game){
+        return games.remove(game);
     }
 
 }

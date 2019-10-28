@@ -1,10 +1,7 @@
 package YERgen2.demo.api;
 
-import YERgen2.demo.DTO.EnrolmentDTO;
-import YERgen2.demo.DTO.NewTournamentWrapper;
-import YERgen2.demo.DTO.ParticipantDTO;
+import YERgen2.demo.DTO.*;
 import YERgen2.demo.controller.TournamentService;
-import YERgen2.demo.DTO.NewEnrolmentWrapper;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -27,18 +24,18 @@ public class TournamentEndpoint {
 
     //tournaments/?mode=foo&search=bar
     @GetMapping(value="/tournaments")
-    public List<Tournament> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
+    public List<TournamentDTO> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
         if(mode.equals("contains")){
-            return (List<Tournament>) tournamentService.findTournamentByNameContaining(search);
+            return (List<TournamentDTO>) tournamentService.findTournamentByNameContaining(search);
         } else {
-            return (List<Tournament>) tournamentService.findAllTournament();
+            return (List<TournamentDTO>) tournamentService.findAllTournament();
         }
     }
 
     /////TOURNAMENTS/ID
 
     @GetMapping(value = "/tournaments/{id}", produces = "application/json")
-    public Tournament getTournament(@PathVariable long id) {
+    public TournamentDTO getTournament(@PathVariable long id) {
         return tournamentService.findTournamentById(id);
     }
 
@@ -81,6 +78,18 @@ public class TournamentEndpoint {
     @GetMapping("/tournaments/{id}/teams/{discipline}")
     public List<EnrolmentDTO> getEnrolmentByDiscipline(@PathVariable long id, @PathVariable int discipline){
         return (List<EnrolmentDTO>) tournamentService.findEnrolmentByTournamentIdAndDiscipline(id, discipline);
+    }
+
+    /////TOURNAMENTS/ID/GAMES
+
+    @GetMapping("/tournaments/{id}/games")
+    public List<GameDTO> getGamesByTournamentId(@PathVariable long id){
+        return (List<GameDTO>) tournamentService.findGamesByTournamentId(id);
+    }
+
+    @PostMapping("/tournaments/{id}/games")
+    public List<GameDTO> addGameToTournament(@PathVariable long id, @RequestBody List<GameDTO> gameDTOs){
+        return tournamentService.saveGames(id, gameDTOs);
     }
 
 }

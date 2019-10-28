@@ -1,5 +1,6 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.DTO.GameDTO;
 import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.model.*;
 import YERgen2.demo.repositories.*;
@@ -59,7 +60,11 @@ public class DemoData {
         Enrolment enrolment2 = new Enrolment(9, Discipline.MENSINGLES, tournament1, participantList2);
         tournamentService.enrolParticipantInTournament(tournament1.getId(), part2, enrolment2);
 
-        List<Team> singlesTeams = tournamentService.makeSingleTeams(tournament1.getId());
+        List<Team> singleTeams = tournamentService.makeSingleTeams(tournament1.getId());
+
+        List<GameDTO> gameDTOs = new ArrayList<>();
+        gameDTOs.add(new GameDTO(new Game(Stage.GROUPSTAGE, Discipline.MENSINGLES, tournament1, singleTeams)));
+        tournamentService.saveGames(tournament1.getId(), gameDTOs);
 
     }
 
