@@ -94,12 +94,11 @@ public class TournamentService {
      * @param tournamentId tournament ID
      * @return List of Enrolment of tournament with tournamentId
      */
-    @Deprecated
     public List<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
-        enrolmentRepository.findByTournamentId(tournamentId).forEach(enrolment -> {
-            enrolmentDTOs.add(new EnrolmentDTO(enrolment));
-        });
+        tournament.getEnrolments().forEach(enrolment -> enrolmentDTOs.add(new EnrolmentDTO(enrolment)));
         return enrolmentDTOs;
     }
 
@@ -187,6 +186,13 @@ public class TournamentService {
                     .orElseThrow(() -> new TournamentNotFoundException(enrolmentDTO.getTournamentId())), participants);
             enrolmentDTOs.add(enrolmentDTO);
         });
+        return enrolmentDTOs;
+    }
+
+    public Iterable<EnrolmentDTO> findEnrolmentByTournamentIdAndDiscipline(long tournamentId, int discipline){
+        List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
+        enrolmentRepository.findByTournamentIdAndDiscipline(tournamentId, Discipline.values()[discipline])
+                .forEach(enrolment -> enrolmentDTOs.add(new EnrolmentDTO(enrolment)));
         return enrolmentDTOs;
     }
 
