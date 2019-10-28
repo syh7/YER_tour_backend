@@ -53,8 +53,28 @@ public class TournamentService {
     public Enrolment saveEnrolment(Enrolment enrolment){
         return enrolmentRepository.save(enrolment);
     }
-    public Game saveGame(long id, Game game) {
-        return gameRepository.save(game);
+    public List<GameDTO> saveGames(long tournamentId, List<GameDTO> gameDTOs) {
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+
+        for(GameDTO gameDTO : gameDTOs){
+            List<Team> teams = new ArrayList<>();
+            for(long teamId : gameDTO.getTeamIds()){
+                teams.add(teamRepository.findById(teamId)
+                .orElseThrow(() -> new TeamNotFoundException(teamId)));
+            }
+            Game game = new Game(gameDTO, tournament, teams);
+            tournament.addGame(game);
+            for(Team team : teams){
+                team.addGame(game);
+                game = gameRepository.save(game);
+                teamRepository.save(team);
+            }
+            gameRepository.save(game);
+        }
+        tournamentRepository.save(tournament);
+
+        return gameDTOs;
     }
 
     public Tournament findTournamentById(long id){

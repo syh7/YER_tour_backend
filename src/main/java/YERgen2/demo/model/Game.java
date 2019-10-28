@@ -1,10 +1,13 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.GameDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Game {
@@ -26,15 +29,23 @@ public class Game {
     @ManyToOne
     @JsonIgnore
     private Tournament tournament;
+    @NotNull
+    @ManyToMany
+    private List<Team> teams;
 
-    public Game() {}
-    public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+    public Game() {
+        teams = new ArrayList<>();
+    }
+    public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,
+                @NotNull List<Team> teams) {
         this.stage = stage;
         this.discipline = discipline;
         this.tournament = tournament;
+        this.teams = teams;
     }
     public Game(long id, @NotNull Stage stage, int[][] result, @NotNull Discipline discipline, LocalTime startTime,
-                LocalTime endTime, String location, String judge, @NotNull Tournament tournament) {
+                LocalTime endTime, String location, String judge, @NotNull Tournament tournament,
+                @NotNull List<Team> teams) {
         this.id = id;
         this.stage = stage;
         this.result = result;
@@ -44,6 +55,19 @@ public class Game {
         this.location = location;
         this.judge = judge;
         this.tournament = tournament;
+        this.teams = teams;
+    }
+    public Game(GameDTO gameDTO, Tournament tournament, List<Team> teams){
+        id = gameDTO.getId();
+        stage = gameDTO.getStage();
+        result = gameDTO.getResult();
+        discipline = gameDTO.getDiscipline();
+        startTime = gameDTO.getStartTime();
+        endTime = gameDTO.getEndTime();
+        location = gameDTO.getLocation();
+        judge = gameDTO.getJudge();
+        this.tournament = tournament;
+        this.teams = teams;
     }
 
     public void setId(long id) {
@@ -73,6 +97,9 @@ public class Game {
     public Tournament getTournament() {
         return tournament;
     }
+    public List<Team> getTeams() {
+        return teams;
+    }
 
     public long getId() {
         return id;
@@ -100,6 +127,9 @@ public class Game {
     }
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 
 }

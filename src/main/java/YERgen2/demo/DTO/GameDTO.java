@@ -3,8 +3,10 @@ package YERgen2.demo.DTO;
 import YERgen2.demo.model.Discipline;
 import YERgen2.demo.model.Game;
 import YERgen2.demo.model.Stage;
+import YERgen2.demo.model.Team;
 
 import java.time.LocalTime;
+import java.util.List;
 
 public class GameDTO {
     private long id;
@@ -16,6 +18,7 @@ public class GameDTO {
     private String location;
     private String judge;
     private long tournamentId;
+    private long[] teamIds;
 
     public long getId() {
         return id;
@@ -43,6 +46,9 @@ public class GameDTO {
     }
     public long getTournamentId() {
         return tournamentId;
+    }
+    public long[] getTeamIds() {
+        return teamIds;
     }
 
     public void setId(long id) {
@@ -72,6 +78,9 @@ public class GameDTO {
     public void setTournamentId(long tournamentId) {
         this.tournamentId = tournamentId;
     }
+    public void setTeamIds(long[] teamIds) {
+        this.teamIds = teamIds;
+    }
 
     public GameDTO(){
         result = new int[3][2];
@@ -86,6 +95,11 @@ public class GameDTO {
         location = game.getLocation();
         judge = game.getJudge();
         tournamentId = game.getTournament().getId();
+        List<Team> teams = game.getTeams();
+        teamIds = new long[teams.size()];
+        for(int i = 0; i < teams.size(); i++){
+            teamIds[i] = teams.get(i).getId();
+        }
     }
 
 }

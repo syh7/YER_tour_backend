@@ -2,7 +2,6 @@ package YERgen2.demo.api;
 
 import YERgen2.demo.DTO.*;
 import YERgen2.demo.controller.TournamentService;
-import YERgen2.demo.model.Game;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -89,8 +88,8 @@ public class TournamentEndpoint {
     }
 
     @PostMapping("/tournaments/{id}/games")
-    public Game addGameToTournament(@PathVariable long id, @RequestBody Game game){
-        return tournamentService.saveGame(id, game);
+    public List<GameDTO> addGameToTournament(@PathVariable long id, @RequestBody List<GameDTO> gameDTOs){
+        return tournamentService.saveGames(id, gameDTOs);
     }
 
 }
