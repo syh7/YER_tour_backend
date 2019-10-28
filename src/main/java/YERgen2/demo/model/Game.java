@@ -15,7 +15,7 @@ public class Game {
 
     @NotNull
     private Stage stage;
-    private int[] result;
+    private int[][] result;
     @NotNull
     private Discipline discipline;
     private LocalTime startTime;
@@ -33,7 +33,7 @@ public class Game {
         this.discipline = discipline;
         this.tournament = tournament;
     }
-    public Game(long id, @NotNull Stage stage, int[] result, @NotNull Discipline discipline, LocalTime startTime,
+    public Game(long id, @NotNull Stage stage, int[][] result, @NotNull Discipline discipline, LocalTime startTime,
                 LocalTime endTime, String location, String judge, @NotNull Tournament tournament) {
         this.id = id;
         this.stage = stage;
@@ -61,7 +61,7 @@ public class Game {
     public Discipline getDiscipline() {
         return discipline;
     }
-    public int[] getResult() {
+    public int[][] getResult() {
         return result;
     }
     public Stage getStage() {
@@ -89,7 +89,7 @@ public class Game {
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
-    public void setResult(int[] result) {
+    public void setResult(int[][] result) {
         this.result = result;
     }
     public void setStage(Stage stage) {
