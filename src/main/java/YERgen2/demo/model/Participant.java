@@ -26,7 +26,7 @@ public class Participant extends Account {
     private int leagueNumber;
     @NotNull
     private LocalDate dateOfBirth;
-    @OneToMany
+    @ManyToMany
     private List<Enrolment> enrolments;
     @ManyToMany
     private List<Team> teams;

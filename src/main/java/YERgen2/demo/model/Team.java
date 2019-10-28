@@ -5,7 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Team {
@@ -24,20 +28,28 @@ public class Team {
     @ManyToOne
     @JsonIgnore
     private Tournament tournament;
+    @NotNull
     @OneToMany
     @JsonIgnore
     private List<Participant> participants;
 
-    public Team() {}
-    public Team(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+    public Team() {
+        participants = new ArrayList<>();
+    }
+    public Team(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament,
+                @NotNull List<Participant> participants) {
         this.playerLevel = playerLevel;
         this.discipline = discipline;
         this.tournament = tournament;
+        this.participants = participants.stream().map(
+                Participant::new).collect(Collectors.toList());
     }
     public Team(Enrolment enrolment){
         playerLevel = enrolment.getPlayerLevel();
         discipline = enrolment.getDiscipline();
         tournament = enrolment.getTournament();
+        participants = enrolment.getParticipants().stream().map(
+                Participant::new).collect(Collectors.toList());
     }
     public Team(TeamDTO teamDTO, Game game, Tournament tournament){
         id = teamDTO.getId();

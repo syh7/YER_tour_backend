@@ -182,5 +182,15 @@ public class Tournament {
     public boolean addEnrolment(Enrolment enrolment){
         return enrolments.add(enrolment);
     }
+    public boolean removeEnrolment(Enrolment enrolment){
+        return enrolments.remove(enrolment);
+    }
+
+    public boolean addTeam(Team team){
+        return teams.add(team);
+    }
+    public boolean removeTeam(Team team){
+        return teams.remove(team);
+    }
 
 }

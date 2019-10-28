@@ -9,6 +9,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 
@@ -48,8 +50,16 @@ public class DemoData {
         NewTournamentWrapper newTournamentWrapper3 = new NewTournamentWrapper(admin1.getId(), tournament3);
         tournamentService.saveTournament(newTournamentWrapper3);
 
-        Enrolment enrolment1 = new Enrolment(9, Discipline.MENSINGLES, tournament1);
+        List<Participant> participantList1 = new ArrayList<>();
+        participantList1.add(part1);
+        List<Participant> participantList2 = new ArrayList<>();
+        participantList2.add(part2);
+        Enrolment enrolment1 = new Enrolment(9, Discipline.MENSINGLES, tournament1, participantList1);
         tournamentService.enrolParticipantInTournament(tournament1.getId(), part1, enrolment1);
+        Enrolment enrolment2 = new Enrolment(9, Discipline.MENSINGLES, tournament1, participantList2);
+        tournamentService.enrolParticipantInTournament(tournament1.getId(), part2, enrolment2);
+
+        List<Team> singlesTeams = tournamentService.makeSingleTeams(tournament1.getId());
 
     }
 

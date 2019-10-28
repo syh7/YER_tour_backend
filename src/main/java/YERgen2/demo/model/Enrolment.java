@@ -24,21 +24,23 @@ public class Enrolment {
     @ManyToOne
     @JsonIgnore
     private Tournament tournament;
-    @OneToMany
+    @NotNull
+    @ManyToMany
     @JsonIgnore
     private List<Participant> participants;
 
     public Enrolment() {
         participants = new ArrayList<>();
     }
-    public Enrolment(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament) {
+    public Enrolment(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament,
+                     @NotNull List<Participant> participants) {
         this.playerLevel = playerLevel;
         this.discipline = discipline;
         this.tournament = tournament;
-        participants = new ArrayList<>();
+        this.participants = participants;
     }
     public Enrolment(long id, long partnerLeagueNumber, @NotNull int playerLevel, @NotNull Discipline discipline,
-                     @NotNull Tournament tournament, List<Participant> participants) {
+                     @NotNull Tournament tournament, @NotNull List<Participant> participants) {
         this.id = id;
         this.partnerLeagueNumber = partnerLeagueNumber;
         this.playerLevel = playerLevel;

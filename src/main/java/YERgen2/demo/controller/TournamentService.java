@@ -6,14 +6,10 @@ import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.Exceptions.*;
 import YERgen2.demo.model.*;
-import YERgen2.demo.repositories.AdminRepository;
-import YERgen2.demo.repositories.EnrolmentRepository;
-import YERgen2.demo.repositories.ParticipantRepository;
-import YERgen2.demo.repositories.TournamentRepository;
+import YERgen2.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -31,6 +27,8 @@ public class TournamentService {
     private ParticipantRepository participantRepository;
     @Autowired
     private AdminRepository adminRepository;
+    @Autowired
+    private TeamRepository teamRepository;
 
     TournamentService(EnrolmentRepository enrolmentRepository, TournamentRepository tournamentRepository,
                       ParticipantRepository participantRepository, AdminRepository adminRepository){
@@ -157,7 +155,7 @@ public class TournamentService {
     }
 
     /**
-     * Doesn't use NewEnrolmentWrapper
+     * Doesn't use NewEnrolmentWrapper, which we want it to
      * @param tournamentId tournament ID
      * @param newEnrolment new enrolment
      * @return updated enrolment
@@ -194,12 +192,11 @@ public class TournamentService {
 
     /**
      * @param tournamentId tournamentId
-     * @return List of made teams
+     * @return List of made singles teams
      */
     public List<Team> makeSingleTeams(long tournamentId){
-        if(tournamentRepository.existsById(tournamentId)){
-            throw new TournamentNotFoundException(tournamentId);
-        }
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
 
         List<Team> teams = new ArrayList<>();
         List<Enrolment> menEnrolments = (List<Enrolment>) enrolmentRepository.findByTournamentIdAndDiscipline(tournamentId, Discipline.MENSINGLES);
@@ -208,11 +205,22 @@ public class TournamentService {
         for(Enrolment enrolment : menEnrolments){
             Team team = new Team(enrolment);
             teams.add(team);
+            teamRepository.save(team);
         }
         for(Enrolment enrolment : womenEnrolments){
             Team team = new Team(enrolment);
             teams.add(team);
+            teamRepository.save(team);
         }
+
+        for(Team team : teams){
+            tournament.addTeam(team);
+            for(Participant participant : team.getParticipants()){
+                participant.addTeam(team);
+                participantRepository.save(participant);
+            }
+        }
+        tournamentRepository.save(tournament);
 
         return teams;
     }
