@@ -29,13 +29,18 @@ public class TournamentService {
     private AdminRepository adminRepository;
     @Autowired
     private TeamRepository teamRepository;
+    @Autowired
+    private GameRepository gameRepository;
 
     TournamentService(EnrolmentRepository enrolmentRepository, TournamentRepository tournamentRepository,
-                      ParticipantRepository participantRepository, AdminRepository adminRepository){
+                      ParticipantRepository participantRepository, AdminRepository adminRepository,
+                      TeamRepository teamRepository, GameRepository gameRepository){
         this.enrolmentRepository = enrolmentRepository;
         this.tournamentRepository = tournamentRepository;
         this.participantRepository = participantRepository;
         this.adminRepository = adminRepository;
+        this.teamRepository = teamRepository;
+        this.gameRepository = gameRepository;
     }
 
     public Tournament saveTournament(NewTournamentWrapper newTournamentWrapper){
@@ -50,6 +55,9 @@ public class TournamentService {
     }
     public Enrolment saveEnrolment(Enrolment enrolment){
         return enrolmentRepository.save(enrolment);
+    }
+    public Game saveGame(long id, Game game) {
+        return gameRepository.save(game);
     }
 
     public Tournament findTournamentById(long id){
@@ -89,17 +97,15 @@ public class TournamentService {
         return tournamentRepository.findByNameContaining(name);
     }
 
-    /**
-     * Should use bidirectional relationship in the future
-     * @param tournamentId tournament ID
-     * @return List of Enrolment of tournament with tournamentId
-     */
     public List<EnrolmentDTO> findEnrolmentByTournamentId(long tournamentId){
         Tournament tournament = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
         List<EnrolmentDTO> enrolmentDTOs = new ArrayList<>();
         tournament.getEnrolments().forEach(enrolment -> enrolmentDTOs.add(new EnrolmentDTO(enrolment)));
         return enrolmentDTOs;
+    }
+    public Iterable<Game> findGamesByTournamentId(long tournamentId) {
+        return gameRepository.findByTournamentId(tournamentId);
     }
 
     /*

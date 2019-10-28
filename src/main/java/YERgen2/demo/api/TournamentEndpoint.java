@@ -5,6 +5,7 @@ import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.controller.TournamentService;
 import YERgen2.demo.DTO.NewEnrolmentWrapper;
+import YERgen2.demo.model.Game;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -81,6 +82,18 @@ public class TournamentEndpoint {
     @GetMapping("/tournaments/{id}/teams/{discipline}")
     public List<EnrolmentDTO> getEnrolmentByDiscipline(@PathVariable long id, @PathVariable int discipline){
         return (List<EnrolmentDTO>) tournamentService.findEnrolmentByTournamentIdAndDiscipline(id, discipline);
+    }
+
+    /////TOURNAMENTS/ID/GAMES
+
+    @GetMapping("/tournaments/{id}/games")
+    public List<Game> getGamesByTournamentId(@PathVariable long id){
+        return (List<Game>) tournamentService.findGamesByTournamentId(id);
+    }
+
+    @PostMapping()
+    public Game addGameToTournament(@PathVariable long id, @RequestBody Game game){
+        return tournamentService.saveGame(id, game);
     }
 
 }
