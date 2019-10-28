@@ -1,5 +1,7 @@
 package YERgen2.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
@@ -22,6 +24,7 @@ public class Game {
     private String judge;
     @NotNull
     @ManyToOne
+    @JsonIgnore
     private Tournament tournament;
 
     public Game() {}

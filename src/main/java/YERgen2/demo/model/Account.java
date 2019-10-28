@@ -14,6 +14,7 @@ public class Account {
     private long id;
 
     @NotNull
+    @Column(unique=true)
     private String email;
     @NotNull
     private String password;

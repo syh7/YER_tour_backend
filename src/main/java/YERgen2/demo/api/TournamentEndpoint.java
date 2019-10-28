@@ -1,9 +1,10 @@
 package YERgen2.demo.api;
 
 import YERgen2.demo.DTO.EnrolmentDTO;
+import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.controller.TournamentService;
-import YERgen2.demo.DTO.EnrolRequestWrapper;
+import YERgen2.demo.DTO.NewEnrolmentWrapper;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +21,8 @@ public class TournamentEndpoint {
     /////TOURNAMENTS
 
     @PostMapping("/tournaments")
-    public Tournament newTournament(@RequestBody Tournament newTournament) {
-        return tournamentService.saveTournament(newTournament);
+    public Tournament newTournament(@RequestBody NewTournamentWrapper newTournamentWrapper) {
+        return tournamentService.saveTournament(newTournamentWrapper);
     }
 
     //tournaments/?mode=foo&search=bar
@@ -54,18 +55,32 @@ public class TournamentEndpoint {
     /////TOURNAMENTS/ID/ENROLL
 
     @PostMapping("/tournaments/{id}/enrol")
-    public ParticipantDTO enrol(@PathVariable long id, @RequestBody EnrolRequestWrapper enrolRequestWrapper){
-        return tournamentService.enrolParticipantInTournament(id, enrolRequestWrapper);
+    public ParticipantDTO enrol(@PathVariable long id, @RequestBody NewEnrolmentWrapper newEnrolmentWrapper){
+        return tournamentService.enrolParticipantInTournament(id, newEnrolmentWrapper);
     }
 
     @GetMapping("/tournaments/{id}/enrol")
     public List<EnrolmentDTO> getAllEnrolments(@PathVariable long id){
-        return (List<EnrolmentDTO>) tournamentService.findEnrolmentByTournamentId(id);
+        return tournamentService.findEnrolmentByTournamentId(id);
     }
 
     @PutMapping("/tournaments/{id}/enrol")
-    public List<EnrolmentDTO> updateEnrolments(@PathVariable long id, @RequestBody EnrolRequestWrapper enrolRequestWrapper){
-        return tournamentService.updateEnrolments(id, enrolRequestWrapper);
+    public List<EnrolmentDTO> updateEnrolments(@PathVariable long id, @RequestBody NewEnrolmentWrapper newEnrolmentWrapper){
+        return tournamentService.updateEnrolments(newEnrolmentWrapper);
+    }
+
+    /////TOURNAMENTS/ID/TEAMS
+
+    @GetMapping("/tournaments/{id}/teams")
+    public List<EnrolmentDTO> getEnrolmentByTournament(@PathVariable long id){
+        return (List<EnrolmentDTO>) tournamentService.findEnrolmentByTournamentId(id);
+    }
+
+    /////TOURNAMENTS/ID/TEAMS/DISCIPLINE
+
+    @GetMapping("/tournaments/{id}/teams/{discipline}")
+    public List<EnrolmentDTO> getEnrolmentByDiscipline(@PathVariable long id, @PathVariable int discipline){
+        return (List<EnrolmentDTO>) tournamentService.findEnrolmentByTournamentIdAndDiscipline(id, discipline);
     }
 
 }
