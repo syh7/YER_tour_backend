@@ -1,30 +1,32 @@
 package YERgen2.demo.DTO;
 
 import YERgen2.demo.model.Discipline;
-import YERgen2.demo.model.Enrolment;
 import YERgen2.demo.model.Participant;
+import YERgen2.demo.model.Team;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.OneToMany;
 import java.util.List;
 
-public class EnrolmentDTO  {
+public class TeamDTO {
 
     private long id;
-    private long partnerLeagueNumber;
     private int playerLevel;
     private Discipline discipline;
+    private long gameId;
     private long tournamentId;
+    @OneToMany
+    @JsonIgnore
     private long[] participantIds;
 
-    public EnrolmentDTO(){
-        participantIds = new long[2];
-    }
-    public EnrolmentDTO(Enrolment enrolment){
-        id = enrolment.getId();
-        playerLevel = enrolment.getPlayerLevel();
-        partnerLeagueNumber = enrolment.getPartnerLeagueNumber();
-        discipline = enrolment.getDiscipline();
-        tournamentId = enrolment.getTournament().getId();
-        List<Participant> participants = enrolment.getParticipants();
+    public TeamDTO(){}
+    public TeamDTO(Team team){
+        id = team.getId();
+        playerLevel = team.getPlayerLevel();
+        discipline = team.getDiscipline();
+        gameId = team.getGame().getId();
+        tournamentId = team.getTournament().getId();
+        List<Participant> participants = team.getParticipants();
         participantIds = new long[participants.size()];
         for(int i = 0; i < participants.size(); i++){
             participantIds[i] = participants.get(i).getId();
@@ -34,14 +36,14 @@ public class EnrolmentDTO  {
     public long getId() {
         return id;
     }
-    public long getPartnerLeagueNumber() {
-        return partnerLeagueNumber;
-    }
     public int getPlayerLevel() {
         return playerLevel;
     }
     public Discipline getDiscipline() {
         return discipline;
+    }
+    public long getGameId() {
+        return gameId;
     }
     public long getTournamentId() {
         return tournamentId;
@@ -53,14 +55,14 @@ public class EnrolmentDTO  {
     public void setId(long id) {
         this.id = id;
     }
-    public void setPartnerLeagueNumber(long partnerLeagueNumber) {
-        this.partnerLeagueNumber = partnerLeagueNumber;
-    }
     public void setPlayerLevel(int playerLevel) {
         this.playerLevel = playerLevel;
     }
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
+    }
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
     }
     public void setTournamentId(long tournamentId) {
         this.tournamentId = tournamentId;

@@ -15,7 +15,7 @@ public class Admin extends Account {
 
     @NotNull
     private String name;
-    @OneToMany
+    @OneToMany(mappedBy = "admin")
     private List<Tournament> tournaments;
 
     public Admin(){
