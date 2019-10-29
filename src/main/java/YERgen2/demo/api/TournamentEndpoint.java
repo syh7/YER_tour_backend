@@ -92,6 +92,11 @@ public class TournamentEndpoint {
         return tournamentService.saveGames(id, gameDTOs);
     }
 
+    @PutMapping("/tournaments/{id}/games/")
+    public GameDTO updateGame(@PathVariable long id, @RequestBody GameDTO gameDTO){
+        return tournamentService.updateGame(gameDTO);
+    }
+
 }
 
 

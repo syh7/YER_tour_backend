@@ -91,6 +91,16 @@ public class TournamentService {
             return tournamentRepository.save(new Tournament(newTournament));
         }).orElseThrow(() -> new TournamentNotFoundException(id));
     }
+    public GameDTO updateGame(GameDTO gameDTO) {
+        Tournament tournament = tournamentRepository.findById(gameDTO.getTournamentId())
+                .orElseThrow(() -> new TournamentNotFoundException(gameDTO.getTournamentId()));
+        List<Team> teams = new ArrayList<>();
+        for(long teamId : gameDTO.getTeamIds()){
+            teams.add(teamRepository.findById(teamId)
+            .orElseThrow(() -> new TeamNotFoundException(teamId)));
+        }
+        return new GameDTO(gameRepository.save(new Game(gameDTO, tournament, teams)));
+    }
 
     public boolean existsTournamentById(long id){
         return tournamentRepository.existsById(id);
@@ -135,6 +145,13 @@ public class TournamentService {
         List<GameDTO> gameDTOs = new ArrayList<>();
         tournament.getGames().forEach(game -> gameDTOs.add(new GameDTO(game)));
         return gameDTOs;
+    }
+    public Iterable<TeamDTO> findTeamsByTournamentId(long tournamentId){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        List<TeamDTO> teamDTOs = new ArrayList<>();
+        tournament.getTeams().forEach(team -> teamDTOs.add(new TeamDTO(team)));
+        return teamDTOs;
     }
 
     /*
