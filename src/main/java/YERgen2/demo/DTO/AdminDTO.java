@@ -38,7 +38,6 @@ public class AdminDTO {
         this.tournamentIds = tournamentIds;
     }
 
-    public AdminDTO(){}
     public AdminDTO(Admin admin){
         this.id = admin.getId();
         this.email = admin.getEmail();

@@ -16,7 +16,6 @@ public class TeamDTO {
     private long tournamentId;
     private long[] participantIds;
 
-    public TeamDTO(){}
     public TeamDTO(Team team){
         id = team.getId();
         playerLevel = team.getPlayerLevel();

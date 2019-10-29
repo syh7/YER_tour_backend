@@ -21,8 +21,8 @@ public class TournamentDTO {
     private long[] enrolmentIds;
     private long[] teamIds;
     private long[] gameIds;
-
-    public TournamentDTO() {}
+    private ResultDTO[] resultDTOs;
+    
     public TournamentDTO(Tournament tournament){
         id = tournament.getId();
         name = tournament.getName();
@@ -49,6 +49,11 @@ public class TournamentDTO {
         gameIds = new long[games.size()];
         for(int i = 0; i < games.size(); i++){
             gameIds[i] = games.get(i).getId();
+        }
+        Result[] results = tournament.getResults();
+        resultDTOs = new ResultDTO[results.length];
+        for(int i = 0; i < results.length; i++){
+            resultDTOs[i] = new ResultDTO(results[i]);
         }
     }
 
@@ -94,6 +99,9 @@ public class TournamentDTO {
     public long[] getGameIds() {
         return gameIds;
     }
+    public ResultDTO[] getResultDTOs() {
+        return resultDTOs;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -136,6 +144,9 @@ public class TournamentDTO {
     }
     public void setGameIds(long[] gameIds) {
         this.gameIds = gameIds;
+    }
+    public void setResultDTOs(ResultDTO[] resultDTOs) {
+        this.resultDTOs = resultDTOs;
     }
 
 }
