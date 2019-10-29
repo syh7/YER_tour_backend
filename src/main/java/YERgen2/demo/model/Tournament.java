@@ -4,6 +4,7 @@ import YERgen2.demo.DTO.TournamentDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
+    @NotBlank
     private String name;
     private String description;
     private String referee;
@@ -44,7 +45,7 @@ public class Tournament {
         teams = new ArrayList<>();
         games = new ArrayList<>();
     }
-    public Tournament(@NotNull String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
+    public Tournament(@NotBlank String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -60,7 +61,7 @@ public class Tournament {
         teams = new ArrayList<>();
         games = new ArrayList<>();
     }
-    public Tournament(@NotNull String name, String description, String referee, String location, @NotNull LocalDate startDate,
+    public Tournament(@NotBlank String name, String description, String referee, String location, @NotNull LocalDate startDate,
                       @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin,
                       List<Enrolment> enrolments, List<Team> teams, List<Game> games) {
         this.name = name;

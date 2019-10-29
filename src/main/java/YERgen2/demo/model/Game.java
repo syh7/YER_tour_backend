@@ -25,7 +25,6 @@ public class Game {
     private String judge;
     @NotNull
     @ManyToOne
-    @JsonIgnore
     private Tournament tournament;
     @NotNull
     @ManyToOne
