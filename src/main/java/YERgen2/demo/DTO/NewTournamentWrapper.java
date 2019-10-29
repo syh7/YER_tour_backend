@@ -6,8 +6,7 @@ public class NewTournamentWrapper {
 
     private long adminId;
     private Tournament tournament;
-
-    public NewTournamentWrapper(){}
+    
     public NewTournamentWrapper(long adminId, Tournament tournament) {
         this.adminId = adminId;
         this.tournament = tournament;
