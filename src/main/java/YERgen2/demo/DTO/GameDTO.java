@@ -4,26 +4,33 @@ import YERgen2.demo.model.Discipline;
 import YERgen2.demo.model.Game;
 import YERgen2.demo.model.Stage;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class GameDTO {
     private long id;
     private Stage stage;
-    private int[][] result;
+    private ResultDTO resultDTO;
     private Discipline discipline;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    private int playerLevel;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String location;
     private String judge;
     private long tournamentId;
     private long teamAId;
     private long teamBId;
+    private int[][] score;
 
     public GameDTO(Game game){
         id = game.getId();
         stage = game.getStage();
-        result = game.getResult();
+        if(game.getResult() != null){
+            resultDTO = new ResultDTO(game.getResult());
+        } else {
+            resultDTO = null;
+        }
         discipline = game.getDiscipline();
+        playerLevel = game.getPlayerLevel();
         startTime = game.getStartTime();
         endTime = game.getEndTime();
         location = game.getLocation();
@@ -39,16 +46,19 @@ public class GameDTO {
     public Stage getStage() {
         return stage;
     }
-    public int[][] getResult() {
-        return result;
+    public ResultDTO getResultDTO() {
+        return resultDTO;
     }
     public Discipline getDiscipline() {
         return discipline;
     }
-    public LocalTime getStartTime() {
+    public int getPlayerLevel() {
+        return playerLevel;
+    }
+    public LocalDateTime getStartTime() {
         return startTime;
     }
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
     public String getLocation() {
@@ -66,6 +76,9 @@ public class GameDTO {
     public long getTeamBId() {
         return teamBId;
     }
+    public int[][] getScore() {
+        return score;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -73,16 +86,19 @@ public class GameDTO {
     public void setStage(Stage stage) {
         this.stage = stage;
     }
-    public void setResult(int[][] result) {
-        this.result = result;
+    public void setResultDTO(ResultDTO result) {
+        this.resultDTO = result;
     }
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
-    public void setStartTime(LocalTime startTime) {
+    public void setPlayerLevel(int playerLevel) {
+        this.playerLevel = playerLevel;
+    }
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
     public void setLocation(String location) {
@@ -99,6 +115,9 @@ public class GameDTO {
     }
     public void setTeamBId(long teamBId) {
         this.teamBId = teamBId;
+    }
+    public void setScore(int[][] score) {
+        this.score = score;
     }
 
 }

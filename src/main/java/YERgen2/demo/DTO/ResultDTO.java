@@ -42,5 +42,5 @@ public class ResultDTO {
     public void setLoseTeamId(long loseTeamId) {
         this.loseTeamId = loseTeamId;
     }
-    
+
 }

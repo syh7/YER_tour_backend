@@ -67,9 +67,8 @@ public class DemoData {
         gameDTOs.add(new GameDTO(game));
         tournamentService.saveGames(tournament1.getId(), gameDTOs);
 
-        game.setResult(new int[][]{{21,10}, {21, 40}});
-        tournamentService.updateGame(new GameDTO(game));
-
+        int[][] score = new int[][]{{10,21}, {21,10}, {10,21}};
+        game.finishGame(score);
         Team winningteam = game.getWinningTeam();
         System.out.println(winningteam.getParticipants().get(0).getFirstName());
     }

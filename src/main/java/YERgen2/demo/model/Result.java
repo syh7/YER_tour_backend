@@ -1,12 +1,21 @@
 package YERgen2.demo.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Result {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
     private int playerLevel;
     private Discipline discipline;
+    @ManyToOne
     private Team winners;
+    @ManyToOne
     private Team losers;
 
+    public Result(){}
     public Result(int playerLevel, Discipline discipline, Team winners, Team losers){
         this.playerLevel = playerLevel;
         this.discipline = discipline;
@@ -14,6 +23,9 @@ public class Result {
         this.losers = losers;
     }
 
+    public long getId() {
+        return id;
+    }
     public int getPlayerLevel() {
         return playerLevel;
     }
@@ -27,6 +39,9 @@ public class Result {
         return losers;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
     public void setPlayerLevel(int playerLevel) {
         this.playerLevel = playerLevel;
     }

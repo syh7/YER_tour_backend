@@ -37,12 +37,14 @@ public class Tournament {
     private List<Team> teams;
     @OneToMany(mappedBy = "tournament")
     private List<Game> games;
-    private Result[] results;
+    @OneToMany
+    private List<Result> results;
 
     public Tournament(){
         enrolments = new ArrayList<>();
         teams = new ArrayList<>();
         games = new ArrayList<>();
+        results = new ArrayList<>();
     }
     public Tournament(@NotBlank String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
         this.name = name;
@@ -59,10 +61,11 @@ public class Tournament {
         enrolments = new ArrayList<>();
         teams = new ArrayList<>();
         games = new ArrayList<>();
+        results = new ArrayList<>();
     }
     public Tournament(@NotBlank String name, String description, String referee, String location, @NotNull LocalDate startDate,
                       @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin,
-                      List<Enrolment> enrolments, List<Team> teams, List<Game> games, Result[] results) {
+                      List<Enrolment> enrolments, List<Team> teams, List<Game> games, List<Result> results) {
         this.name = name;
         this.description = description;
         this.referee = referee;
@@ -96,7 +99,7 @@ public class Tournament {
         results = newTournament.getResults();
     }
     public Tournament(TournamentDTO tournamentDTO, Admin admin, List<Enrolment> enrolments, List<Team> teams,
-                      List<Game> games, Result[] results){
+                      List<Game> games, List<Result> results){
         id = tournamentDTO.getId();
         name = tournamentDTO.getName();
         description = tournamentDTO.getDescription();
@@ -156,7 +159,7 @@ public class Tournament {
     public List<Game> getGames() {
         return games;
     }
-    public Result[] getResults() {
+    public List<Result> getResults() {
         return results;
     }
 
@@ -202,7 +205,7 @@ public class Tournament {
     public void setGames(List<Game> games) {
         this.games = games;
     }
-    public void setResults(Result[] results) {
+    public void setResults(List<Result> results) {
         this.results = results;
     }
 

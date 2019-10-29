@@ -22,7 +22,7 @@ public class TournamentDTO {
     private long[] teamIds;
     private long[] gameIds;
     private ResultDTO[] resultDTOs;
-    
+
     public TournamentDTO(Tournament tournament){
         id = tournament.getId();
         name = tournament.getName();
@@ -50,10 +50,10 @@ public class TournamentDTO {
         for(int i = 0; i < games.size(); i++){
             gameIds[i] = games.get(i).getId();
         }
-        Result[] results = tournament.getResults();
-        resultDTOs = new ResultDTO[results.length];
-        for(int i = 0; i < results.length; i++){
-            resultDTOs[i] = new ResultDTO(results[i]);
+        List<Result> results = tournament.getResults();
+        resultDTOs = new ResultDTO[results.size()];
+        for(int i = 0; i < results.size(); i++){
+            resultDTOs[i] = new ResultDTO(results.get(i));
         }
     }
 

@@ -62,7 +62,7 @@ public class TournamentService {
                     .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamAId()));
             Team teamB = teamRepository.findById(gameDTO.getTeamBId())
                     .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamBId()));
-            Game game = new Game(gameDTO, tournament, teamA, teamB);
+            Game game = new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB);
             tournament.addGame(game);
             teamA.addGame(game);
             teamB.addGame(game);
@@ -96,8 +96,7 @@ public class TournamentService {
                 .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamAId()));
         Team teamB = teamRepository.findById(gameDTO.getTeamBId())
                 .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamBId()));
-        Game game = new Game(gameDTO, tournament, teamA, teamB);
-        return new GameDTO(gameRepository.save(new Game(gameDTO, tournament, teamA, teamB)));
+        return new GameDTO(gameRepository.save(new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB)));
     }
 
     public boolean existsTournamentById(long id){

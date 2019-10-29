@@ -1,11 +1,10 @@
 package YERgen2.demo.model;
 
 import YERgen2.demo.DTO.GameDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Entity
 public class Game {
@@ -16,11 +15,14 @@ public class Game {
 
     @NotNull
     private Stage stage;
-    private int[][] result;
+    @OneToOne
+    private Result result;
     @NotNull
     private Discipline discipline;
-    private LocalTime startTime;
-    private LocalTime endTime;
+    @NotNull
+    private int playerLevel;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private String location;
     private String judge;
     @NotNull
@@ -32,6 +34,7 @@ public class Game {
     @NotNull
     @ManyToOne
     private Team teamB;
+    private int[][] score;
 
     public Game() {}
     public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,
@@ -42,13 +45,14 @@ public class Game {
         this.teamA = teamA;
         this.teamB = teamB;
     }
-    public Game(long id, @NotNull Stage stage, int[][] result, @NotNull Discipline discipline, LocalTime startTime,
-                LocalTime endTime, String location, String judge, @NotNull Tournament tournament,
-                @NotNull Team teamA, @NotNull Team teamB) {
+    public Game(long id, @NotNull Stage stage, Result result, @NotNull Discipline discipline, LocalDateTime startTime,
+                LocalDateTime endTime, String location, String judge, @NotNull Tournament tournament,
+                @NotNull Team teamA, @NotNull Team teamB, @NotNull int playerLevel, int[][] score) {
         this.id = id;
         this.stage = stage;
         this.result = result;
         this.discipline = discipline;
+        this.playerLevel = playerLevel;
         this.startTime = startTime;
         this.endTime = endTime;
         this.location = location;
@@ -56,12 +60,15 @@ public class Game {
         this.tournament = tournament;
         this.teamA = teamA;
         this.teamB = teamB;
+        this.score = score;
     }
-    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB){
+    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB,
+                Result result){
         id = gameDTO.getId();
         stage = gameDTO.getStage();
-        result = gameDTO.getResult();
+        this.result = result;
         discipline = gameDTO.getDiscipline();
+        playerLevel = gameDTO.getPlayerLevel();
         startTime = gameDTO.getStartTime();
         endTime = gameDTO.getEndTime();
         location = gameDTO.getLocation();
@@ -69,6 +76,7 @@ public class Game {
         this.tournament = tournament;
         this.teamA = teamA;
         this.teamB = teamB;
+        this.score = gameDTO.getScore();
     }
 
     public void setId(long id) {
@@ -77,16 +85,19 @@ public class Game {
     public String getLocation() {
         return location;
     }
-    public LocalTime getEndTime() {
+    public LocalDateTime getEndTime() {
         return endTime;
     }
-    public LocalTime getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
     public Discipline getDiscipline() {
         return discipline;
     }
-    public int[][] getResult() {
+    public int getPlayerLevel() {
+        return playerLevel;
+    }
+    public Result getResult() {
         return result;
     }
     public Stage getStage() {
@@ -104,6 +115,9 @@ public class Game {
     public Team getTeamB() {
         return teamB;
     }
+    public int[][] getScore() {
+        return score;
+    }
 
     public long getId() {
         return id;
@@ -111,16 +125,19 @@ public class Game {
     public void setLocation(String location) {
         this.location = location;
     }
-    public void setEndTime(LocalTime endTime) {
+    public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
     }
-    public void setStartTime(LocalTime startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
     public void setDiscipline(Discipline discipline) {
         this.discipline = discipline;
     }
-    public void setResult(int[][] result) {
+    public void setPlayerLevel(int playerLevel) {
+        this.playerLevel = playerLevel;
+    }
+    public void setResult(Result result) {
         this.result = result;
     }
     public void setStage(Stage stage) {
@@ -138,17 +155,34 @@ public class Game {
     public void setTeamB(Team teamB) {
         this.teamB = teamB;
     }
+    public void setScore(int[][] score) {
+        this.score = score;
+    }
 
     public Team getWinningTeam(){
+        return result.getWinners();
+    }
+    public Team getLosingTeam(){
+        return result.getLosers();
+    }
+
+    public Team finishGame(int[][] score){
+        this.score = score;
         int a = 0, b = 0;
-        for(int[] row : result){
+        for(int[] row : score){
             if(row[0] > row[1]){
                 a++;
             } else {
                 b++;
             }
         }
-        return a > b ? teamA : teamB ;
+        if(a > b){
+            result = new Result(playerLevel, discipline, teamA, teamB);
+            return teamA;
+        } else {
+            result = new Result(playerLevel, discipline, teamB, teamA);
+            return teamB;
+        }
     }
 
 }
