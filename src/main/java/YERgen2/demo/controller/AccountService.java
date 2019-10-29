@@ -4,11 +4,9 @@ import YERgen2.demo.DTO.AdminDTO;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.DTO.TournamentDTO;
 import YERgen2.demo.Exceptions.*;
-import YERgen2.demo.model.Admin;
-import YERgen2.demo.model.Enrolment;
-import YERgen2.demo.model.Participant;
-import YERgen2.demo.model.Tournament;
+import YERgen2.demo.model.*;
 import YERgen2.demo.repositories.*;
+import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -138,5 +136,22 @@ public class AccountService {
             tournamentDTOs.add(new TournamentDTO(enrolment.getTournament()));
         }
         return tournamentDTOs;
+    }
+
+    public int[] getAllResults(long participantId) {
+        Participant participant = participantRepository.findById(participantId)
+                .orElseThrow(() -> new ParticipantNotFoundException(participantId));
+        int total = 0, won = 0, lost = 0;
+        for(Team team : participant.getTeams()){
+            for(Game game : team.getGames()){
+                total++;
+                if(team == game.getWinningTeam()){
+                    won++;
+                } else {
+                    lost++;
+                }
+            }
+        }
+        return new int[]{total, won, lost};
     }
 }

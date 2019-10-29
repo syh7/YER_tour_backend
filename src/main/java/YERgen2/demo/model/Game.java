@@ -6,8 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Game {
@@ -30,22 +28,24 @@ public class Game {
     @JsonIgnore
     private Tournament tournament;
     @NotNull
-    @ManyToMany
-    private List<Team> teams;
+    @ManyToOne
+    private Team teamA;
+    @NotNull
+    @ManyToOne
+    private Team teamB;
 
-    public Game() {
-        teams = new ArrayList<>();
-    }
+    public Game() {}
     public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,
-                @NotNull List<Team> teams) {
+                @NotNull Team teamA, @NotNull Team teamB) {
         this.stage = stage;
         this.discipline = discipline;
         this.tournament = tournament;
-        this.teams = teams;
+        this.teamA = teamA;
+        this.teamB = teamB;
     }
     public Game(long id, @NotNull Stage stage, int[][] result, @NotNull Discipline discipline, LocalTime startTime,
                 LocalTime endTime, String location, String judge, @NotNull Tournament tournament,
-                @NotNull List<Team> teams) {
+                @NotNull Team teamA, @NotNull Team teamB) {
         this.id = id;
         this.stage = stage;
         this.result = result;
@@ -55,9 +55,10 @@ public class Game {
         this.location = location;
         this.judge = judge;
         this.tournament = tournament;
-        this.teams = teams;
+        this.teamA = teamA;
+        this.teamB = teamB;
     }
-    public Game(GameDTO gameDTO, Tournament tournament, List<Team> teams){
+    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB){
         id = gameDTO.getId();
         stage = gameDTO.getStage();
         result = gameDTO.getResult();
@@ -67,7 +68,8 @@ public class Game {
         location = gameDTO.getLocation();
         judge = gameDTO.getJudge();
         this.tournament = tournament;
-        this.teams = teams;
+        this.teamA = teamA;
+        this.teamB = teamB;
     }
 
     public void setId(long id) {
@@ -97,8 +99,11 @@ public class Game {
     public Tournament getTournament() {
         return tournament;
     }
-    public List<Team> getTeams() {
-        return teams;
+    public Team getTeamA() {
+        return teamA;
+    }
+    public Team getTeamB() {
+        return teamB;
     }
 
     public long getId() {
@@ -128,8 +133,23 @@ public class Game {
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
     }
-    public void setTeams(List<Team> teams) {
-        this.teams = teams;
+    public void setTeamA(Team teamA) {
+        this.teamA = teamA;
+    }
+    public void setTeamB(Team teamB) {
+        this.teamB = teamB;
+    }
+
+    public Team getWinningTeam(){
+        int a = 0, b = 0;
+        for(int[] row : result){
+            if(row[0] > row[1]){
+                a++;
+            } else {
+                b++;
+            }
+        }
+        return a > b ? teamA : teamB ;
     }
 
 }

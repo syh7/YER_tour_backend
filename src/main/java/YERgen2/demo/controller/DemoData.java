@@ -63,7 +63,7 @@ public class DemoData {
         List<Team> singleTeams = tournamentService.makeSingleTeams(tournament1.getId());
 
         List<GameDTO> gameDTOs = new ArrayList<>();
-        gameDTOs.add(new GameDTO(new Game(Stage.GROUPSTAGE, Discipline.MENSINGLES, tournament1, singleTeams)));
+        gameDTOs.add(new GameDTO(new Game(Stage.GROUPSTAGE, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1))));
         tournamentService.saveGames(tournament1.getId(), gameDTOs);
 
     }
