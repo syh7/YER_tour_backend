@@ -63,9 +63,15 @@ public class DemoData {
         List<Team> singleTeams = tournamentService.makeSingleTeams(tournament1.getId());
 
         List<GameDTO> gameDTOs = new ArrayList<>();
-        gameDTOs.add(new GameDTO(new Game(Stage.GROUPSTAGE, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1))));
+        Game game = new Game(Stage.GROUPSTAGE, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1));
+        gameDTOs.add(new GameDTO(game));
         tournamentService.saveGames(tournament1.getId(), gameDTOs);
 
+        game.setResult(new int[][]{{21,10}, {21, 40}});
+        tournamentService.updateGame(new GameDTO(game));
+
+        Team winningteam = game.getWinningTeam();
+        System.out.println(winningteam.getParticipants().get(0).getFirstName());
     }
 
     private void testUniqueEmailConstraint(){
