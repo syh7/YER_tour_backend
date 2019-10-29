@@ -1,12 +1,14 @@
 package YERgen2.demo.api;
 
 import YERgen2.demo.DTO.ParticipantDTO;
+import YERgen2.demo.DTO.TournamentDTO;
 import YERgen2.demo.controller.AccountService;
 import YERgen2.demo.model.Participant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping
@@ -14,6 +16,8 @@ public class ParticipantEndpoint {
 
     @Autowired
     private AccountService accountService;
+
+    /////PARTICIPANTS
 
     @PostMapping("/participants")
     public Participant newParticipant(@RequestBody Participant newParticipant) {
@@ -24,6 +28,8 @@ public class ParticipantEndpoint {
     public List<ParticipantDTO> getAllParticipants(){
         return (List<ParticipantDTO>) accountService.findAllParticipant();
     }
+
+    /////PARTICIPANTS/ID
 
     @GetMapping(value = "participants/{id}", produces = "application/json")
     public ParticipantDTO getParticipant(@PathVariable long id) {
@@ -42,6 +48,13 @@ public class ParticipantEndpoint {
     @DeleteMapping("/participants/{id}")
     public void deleteParticipant(@PathVariable long id) {
         accountService.deleteParticipantById(id);
+    }
+
+    /////PARTICIPANTS/ID/TOURNAMENTS
+
+    @GetMapping("/participants/{id}/tournaments")
+    public Set<TournamentDTO> getTournaments(@PathVariable long id){
+        return accountService.getParticipantTournaments(id);
     }
 
 }
