@@ -1,19 +1,24 @@
 package YERgen2.demo.model;
 
 public class Result {
+
     private int playerLevel;
+    private Discipline discipline;
     private Team winners;
     private Team losers;
 
-    public Result(){}
-    public Result(int playerLevel, Team winners, Team losers){
+    public Result(int playerLevel, Discipline discipline, Team winners, Team losers){
         this.playerLevel = playerLevel;
+        this.discipline = discipline;
         this.winners = winners;
         this.losers = losers;
     }
 
     public int getPlayerLevel() {
         return playerLevel;
+    }
+    public Discipline getDiscipline() {
+        return discipline;
     }
     public Team getWinners() {
         return winners;
@@ -24,6 +29,9 @@ public class Result {
 
     public void setPlayerLevel(int playerLevel) {
         this.playerLevel = playerLevel;
+    }
+    public void setDiscipline(Discipline discipline) {
+        this.discipline = discipline;
     }
     public void setWinners(Team winners) {
         this.winners = winners;
