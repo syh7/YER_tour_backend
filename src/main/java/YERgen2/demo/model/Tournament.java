@@ -1,7 +1,6 @@
 package YERgen2.demo.model;
 
 import YERgen2.demo.DTO.TournamentDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,7 +30,6 @@ public class Tournament {
     private int[] levels;
     @NotNull
     @ManyToOne
-    @JsonIgnore
     private Admin admin;
     @OneToMany(mappedBy = "tournament")
     private List<Enrolment> enrolments;
