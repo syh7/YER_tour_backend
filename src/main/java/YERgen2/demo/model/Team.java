@@ -45,8 +45,7 @@ public class Team {
         playerLevel = enrolment.getPlayerLevel();
         discipline = enrolment.getDiscipline();
         tournament = enrolment.getTournament();
-        participants = enrolment.getParticipants().stream().map(
-                Participant::new).collect(Collectors.toList());
+        participants = enrolment.getParticipants().stream().map(Participant::new).collect(Collectors.toList());
     }
     public Team(TeamDTO teamDTO, List<Game> games, Tournament tournament){
         id = teamDTO.getId();
