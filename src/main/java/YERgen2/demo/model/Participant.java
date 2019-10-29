@@ -5,7 +5,7 @@ import YERgen2.demo.DTO.ParticipantDTO;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ import java.util.List;
 @DiscriminatorValue("2")
 public class Participant extends Account {
 
-    @NotNull
+    @NotBlank
     private String firstName;
-    @NotNull
+    @NotBlank
     private String lastName;
     @NotNull
     private boolean isMale;
@@ -35,8 +35,8 @@ public class Participant extends Account {
         this.teams = new ArrayList<>();
         this.enrolments = new ArrayList<>();
     }
-    public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
-                       @NotNull String lastName, @NotNull boolean isMale, @NotNull int playerLevel,
+    public Participant(@NotBlank String email, @NotBlank String password, @NotBlank String firstName,
+                       @NotBlank String lastName, @NotNull boolean isMale, @NotNull int playerLevel,
                        @NotNull LocalDate dateOfBirth) {
         super(email, password);
         this.firstName = firstName;
@@ -47,8 +47,8 @@ public class Participant extends Account {
         this.teams = new ArrayList<>();
         this.enrolments = new ArrayList<>();
     }
-    public Participant(@NotNull String email, @NotNull String password, @NotNull String firstName,
-                       @NotNull String lastName, @NotNull boolean isMale, @NotNull int playerLevel, int leagueNumber,
+    public Participant(@NotBlank String email, @NotBlank String password, @NotBlank String firstName,
+                       @NotBlank String lastName, @NotNull boolean isMale, @NotNull int playerLevel, int leagueNumber,
                        @NotNull LocalDate dateOfBirth, List<Enrolment> enrolments, List<Team> teams) {
         super(email, password);
         this.firstName = firstName;

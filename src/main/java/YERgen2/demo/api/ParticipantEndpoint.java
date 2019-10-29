@@ -57,4 +57,11 @@ public class ParticipantEndpoint {
         return accountService.getParticipantTournaments(id);
     }
 
+    /////PARTICIPANTS/ID/RESULTS
+
+    @GetMapping("/participants/{id}/results/all")
+    public int[] getAllResults(@PathVariable long id){
+        return accountService.getAllResults(id);
+    }
+
 }

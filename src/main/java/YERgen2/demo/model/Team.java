@@ -24,11 +24,9 @@ public class Team {
     private List<Game> games;
     @NotNull
     @ManyToOne
-    @JsonIgnore
     private Tournament tournament;
     @NotNull
     @OneToMany
-    @JsonIgnore
     private List<Participant> participants;
 
     public Team() {
