@@ -25,12 +25,14 @@ public class Bettor extends Account {
     public Bettor(@NotBlank String userName, @NotBlank String email, @NotBlank String password){
         super(email, password);
         this.userName = userName;
+        this.bets = new ArrayList<Bet>();
     }
 
     public Bettor(@NotBlank String userName, @NotBlank String email, @NotBlank String password, double wallet){
         super(email, password);
         this.userName = userName;
         this.wallet = wallet;
+        this.bets = new ArrayList<Bet>();
     }
 
     public String getUserName() {

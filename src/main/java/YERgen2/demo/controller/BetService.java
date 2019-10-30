@@ -16,8 +16,9 @@ public class BetService {
     @Autowired
     private BetRepository betRepository;
 
-    public BetService(BettorRepository bettorRepository){
+    public BetService(BettorRepository bettorRepository, BetRepository betRepository){
         this.bettorRepository = bettorRepository;
+        this.betRepository = betRepository;
     }
 
     //methods
@@ -25,6 +26,7 @@ public class BetService {
         Bettor bettor = bettorRepository.findById(bettorId)
                 .orElseThrow(() -> new BettorNotFoundException(bettorId));
         if(bettor.addBet(bet)){
+            betRepository.save(bet);
             bettorRepository.save(bettor);
             return true;
         } else {
