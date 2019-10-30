@@ -5,6 +5,7 @@ import YERgen2.demo.DTO.AdminDTO;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +14,7 @@ import java.util.List;
 @DiscriminatorValue("1")
 public class Admin extends Account {
 
-
-    @NotNull
+    @NotBlank
     private String name;
     @OneToMany(mappedBy = "admin")
     private List<Tournament> tournaments;

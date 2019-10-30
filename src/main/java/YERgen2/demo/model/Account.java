@@ -1,7 +1,7 @@
 package YERgen2.demo.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -13,18 +13,18 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @NotNull
+    @NotBlank
     @Column(unique=true)
     private String email;
-    @NotNull
+    @NotBlank
     private String password;
 
     Account() {}
-    Account(@NotNull String email, @NotNull String password) {
+    Account(@NotBlank String email, @NotBlank String password) {
         this.email = email;
         this.password = password;
     }
-    Account(long id, @NotNull String email, @NotNull String password) {
+    Account(long id, @NotBlank String email, @NotBlank String password) {
         this.id = id;
         this.email = email;
         this.password = password;

@@ -18,7 +18,8 @@ public class GameDTO {
     private String location;
     private String judge;
     private long tournamentId;
-    private long[] teamIds;
+    private long teamAId;
+    private long teamBId;
 
     public long getId() {
         return id;
@@ -47,8 +48,11 @@ public class GameDTO {
     public long getTournamentId() {
         return tournamentId;
     }
-    public long[] getTeamIds() {
-        return teamIds;
+    public long getTeamAId() {
+        return teamAId;
+    }
+    public long getTeamBId() {
+        return teamBId;
     }
 
     public void setId(long id) {
@@ -78,8 +82,11 @@ public class GameDTO {
     public void setTournamentId(long tournamentId) {
         this.tournamentId = tournamentId;
     }
-    public void setTeamIds(long[] teamIds) {
-        this.teamIds = teamIds;
+    public void setTeamAId(long teamAId) {
+        this.teamAId = teamAId;
+    }
+    public void setTeamBId(long teamBId) {
+        this.teamBId = teamBId;
     }
 
     public GameDTO(){
@@ -95,11 +102,8 @@ public class GameDTO {
         location = game.getLocation();
         judge = game.getJudge();
         tournamentId = game.getTournament().getId();
-        List<Team> teams = game.getTeams();
-        teamIds = new long[teams.size()];
-        for(int i = 0; i < teams.size(); i++){
-            teamIds[i] = teams.get(i).getId();
-        }
+        teamAId = game.getTeamA().getId();
+        teamBId = game.getTeamB().getId();
     }
 
 }
