@@ -324,4 +324,25 @@ public class TournamentService {
         return tournamentRepository.save(tournament);
     }
 
+    public List<ResultDTO> getTournamentResults(long tournamentId){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        List<ResultDTO> resultDTOs = new ArrayList<>();
+        for(Result result : tournament.getResults()){
+            resultDTOs.add(new ResultDTO(result));
+        }
+        return resultDTOs;
+    }
+
+    public ResultDTO getTournamentResultByDisciplineAndPlayerLevel(long tournamentId, Discipline discipline, int playerLevel){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        for(Result result : tournament.getResults()){
+            if(result.getDiscipline() == discipline && result.getPlayerLevel() == playerLevel){
+                return new ResultDTO(result);
+            }
+        }
+        throw new ResultNotFoundException(tournamentId, discipline, playerLevel);
+    }
+
 }

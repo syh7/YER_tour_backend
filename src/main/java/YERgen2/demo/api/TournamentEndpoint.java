@@ -2,6 +2,7 @@ package YERgen2.demo.api;
 
 import YERgen2.demo.DTO.*;
 import YERgen2.demo.controller.TournamentService;
+import YERgen2.demo.model.Discipline;
 import YERgen2.demo.model.Tournament;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -95,6 +96,19 @@ public class TournamentEndpoint {
     @PutMapping("/tournaments/{id}/games/")
     public GameDTO updateGame(@PathVariable long id, @RequestBody GameDTO gameDTO){
         return tournamentService.updateGame(gameDTO);
+    }
+
+    /////TOURNAMENT/ID/RESULTS
+
+    @GetMapping("/tournaments/{id}/result/all")
+    public List<ResultDTO> getTournamentResults(@PathVariable long id){
+        return tournamentService.getTournamentResults(id);
+    }
+
+    @GetMapping("/tournaments/{id}/result")
+    public ResultDTO getTournamentResult(@PathVariable long id, @RequestParam(value = "discipline") Discipline discipline,
+                                         @RequestParam(value = "playerlevel") int playerLevel){
+        return tournamentService.getTournamentResultByDisciplineAndPlayerLevel(id, discipline, playerLevel);
     }
 
 }
