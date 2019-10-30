@@ -3,7 +3,7 @@ package YERgen2.demo.model;
 import javax.persistence.*;
 
 @Entity
-public class Bet {
+public class Bet implements Comparable<Bet>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -61,5 +61,10 @@ public class Bet {
     public String toString(){
         return bettor.getUserName() + " has bet " + amount + " on " + game.getTeamA() + " versus " + game.getTeamB() +
                 "and thinks " + team + " will win";
+    }
+
+    @Override
+    public int compareTo(Bet o) {
+        return (int) (amount - o.amount);
     }
 }
