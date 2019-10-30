@@ -1,7 +1,6 @@
 package YERgen2.demo.model;
 
 import YERgen2.demo.DTO.TournamentDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -31,7 +30,6 @@ public class Tournament {
     private int[] levels;
     @NotNull
     @ManyToOne
-    @JsonIgnore
     private Admin admin;
     @OneToMany(mappedBy = "tournament")
     private List<Enrolment> enrolments;
@@ -39,11 +37,14 @@ public class Tournament {
     private List<Team> teams;
     @OneToMany(mappedBy = "tournament")
     private List<Game> games;
+    @OneToMany
+    private List<Result> results;
 
     public Tournament(){
         enrolments = new ArrayList<>();
         teams = new ArrayList<>();
         games = new ArrayList<>();
+        results = new ArrayList<>();
     }
     public Tournament(@NotBlank String name, @NotNull LocalDate startDate, @NotNull LocalDate endDate, @NotNull Admin admin) {
         this.name = name;
@@ -60,10 +61,11 @@ public class Tournament {
         enrolments = new ArrayList<>();
         teams = new ArrayList<>();
         games = new ArrayList<>();
+        results = new ArrayList<>();
     }
     public Tournament(@NotBlank String name, String description, String referee, String location, @NotNull LocalDate startDate,
                       @NotNull LocalDate endDate, LocalDate enrolDate, int maxDisciplines, int[] levels, @NotNull Admin admin,
-                      List<Enrolment> enrolments, List<Team> teams, List<Game> games) {
+                      List<Enrolment> enrolments, List<Team> teams, List<Game> games, List<Result> results) {
         this.name = name;
         this.description = description;
         this.referee = referee;
@@ -77,6 +79,7 @@ public class Tournament {
         this.enrolments = enrolments;
         this.teams = teams;
         this.games = games;
+        this.results = results;
     }
     public Tournament(Tournament newTournament){
         id = newTournament.getId();
@@ -93,8 +96,10 @@ public class Tournament {
         enrolments = newTournament.getEnrolments();
         teams = newTournament.getTeams();
         games = newTournament.getGames();
+        results = newTournament.getResults();
     }
-    public Tournament(TournamentDTO tournamentDTO, Admin admin, List<Enrolment> enrolments, List<Team> teams, List<Game> games){
+    public Tournament(TournamentDTO tournamentDTO, Admin admin, List<Enrolment> enrolments, List<Team> teams,
+                      List<Game> games, List<Result> results){
         id = tournamentDTO.getId();
         name = tournamentDTO.getName();
         description = tournamentDTO.getDescription();
@@ -109,6 +114,7 @@ public class Tournament {
         this.enrolments = enrolments;
         this.teams = teams;
         this.games = games;
+        this.results = results;
     }
 
     public long getId() {
@@ -153,6 +159,9 @@ public class Tournament {
     public List<Game> getGames() {
         return games;
     }
+    public List<Result> getResults() {
+        return results;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -196,6 +205,9 @@ public class Tournament {
     public void setGames(List<Game> games) {
         this.games = games;
     }
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
 
     public boolean addEnrolment(Enrolment enrolment){
         return enrolments.add(enrolment);
@@ -216,6 +228,13 @@ public class Tournament {
     }
     public boolean removeGame(Game game){
         return games.remove(game);
+    }
+
+    public boolean addResult(Result result){
+        return results.add(result);
+    }
+    public boolean removeResult(Result result){
+        return results.remove(result);
     }
 
 }

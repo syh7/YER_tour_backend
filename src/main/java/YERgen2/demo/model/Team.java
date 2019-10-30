@@ -1,7 +1,6 @@
 package YERgen2.demo.model;
 
 import YERgen2.demo.DTO.TeamDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +25,7 @@ public class Team {
     @ManyToOne
     private Tournament tournament;
     @NotNull
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Participant> participants;
 
     public Team() {
@@ -45,8 +44,7 @@ public class Team {
         playerLevel = enrolment.getPlayerLevel();
         discipline = enrolment.getDiscipline();
         tournament = enrolment.getTournament();
-        participants = enrolment.getParticipants().stream().map(
-                Participant::new).collect(Collectors.toList());
+        participants = enrolment.getParticipants().stream().map(Participant::new).collect(Collectors.toList());
     }
     public Team(TeamDTO teamDTO, List<Game> games, Tournament tournament){
         id = teamDTO.getId();
