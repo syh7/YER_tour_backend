@@ -2,6 +2,7 @@ package YERgen2.demo.model;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ public class Bettor extends Account {
     @NotBlank
     private String userName;
     private double wallet;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "bettor")
     private List<Bet> bets;
 
     public Bettor(){
@@ -54,5 +55,9 @@ public class Bettor extends Account {
 
     public void setBets(List<Bet> bets) {
         this.bets = bets;
+    }
+
+    public boolean addBet(Bet bet){
+        return bets.add(bet);
     }
 }

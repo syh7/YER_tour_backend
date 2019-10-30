@@ -20,6 +20,8 @@ public class DemoData {
     private TournamentService tournamentService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private BetService betService;
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
@@ -76,6 +78,12 @@ public class DemoData {
 
         Team winningteam = game.getWinningTeam();
         System.out.println(winningteam.getParticipants().get(0).getFirstName());
+
+        //=Betting=
+        Bet bet1 = new Bet(20, bettor1, game);
+        betService.saveBet(bet1);
+        betService.addBetToBettor(bettor1.getId(), bet1);
+        System.out.println("Added bet \"" + bet1.toString() + "\" to " + bettor1.getUserName());
 
         tournament1 = tournamentService.finishDiscipline(tournament1.getId(), Discipline.MENSINGLES);
         List<Result> tournamentResults = tournament1.getResults();

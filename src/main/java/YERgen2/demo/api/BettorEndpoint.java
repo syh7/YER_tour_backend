@@ -17,7 +17,7 @@ public class BettorEndpoint {
     private BetService betService;
 
     @GetMapping("/bettors")
-    public List<BettorDTO> getAllBettor(){
+    public List<BettorDTO> getAllBettors(){
         return (List<BettorDTO>) accountservice.findAllBettor();
     }
 }
