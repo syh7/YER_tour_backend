@@ -14,10 +14,12 @@ public class Game {
     private long id;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Stage stage;
     @OneToOne
     private Result result;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Discipline discipline;
     @NotNull
     private int playerLevel;

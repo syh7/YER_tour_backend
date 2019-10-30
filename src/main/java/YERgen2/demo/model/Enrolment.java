@@ -18,6 +18,7 @@ public class Enrolment {
     @NotNull
     private int playerLevel;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Discipline discipline;
     @NotNull
     @ManyToOne

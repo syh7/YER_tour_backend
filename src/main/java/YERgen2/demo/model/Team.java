@@ -18,6 +18,7 @@ public class Team {
     @NotNull
     private int playerLevel;
     @NotNull
+    @Enumerated(EnumType.STRING)
     private Discipline discipline;
     @ManyToMany
     private List<Game> games;
