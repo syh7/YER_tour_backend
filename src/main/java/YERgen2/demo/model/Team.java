@@ -1,7 +1,6 @@
 package YERgen2.demo.model;
 
 import YERgen2.demo.DTO.TeamDTO;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -26,7 +25,7 @@ public class Team {
     @ManyToOne
     private Tournament tournament;
     @NotNull
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Participant> participants;
 
     public Team() {

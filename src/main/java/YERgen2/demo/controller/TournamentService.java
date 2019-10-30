@@ -28,16 +28,20 @@ public class TournamentService {
     private TeamRepository teamRepository;
     @Autowired
     private GameRepository gameRepository;
+    @Autowired
+    private ResultRepository resultRepository;
 
     TournamentService(EnrolmentRepository enrolmentRepository, TournamentRepository tournamentRepository,
                       ParticipantRepository participantRepository, AdminRepository adminRepository,
-                      TeamRepository teamRepository, GameRepository gameRepository){
+                      TeamRepository teamRepository, GameRepository gameRepository,
+                      ResultRepository resultRepository){
         this.enrolmentRepository = enrolmentRepository;
         this.tournamentRepository = tournamentRepository;
         this.participantRepository = participantRepository;
         this.adminRepository = adminRepository;
         this.teamRepository = teamRepository;
         this.gameRepository = gameRepository;
+        this.resultRepository = resultRepository;
     }
 
     public Tournament saveTournament(NewTournamentWrapper newTournamentWrapper){
@@ -73,6 +77,23 @@ public class TournamentService {
         tournamentRepository.save(tournament);
 
         return gameDTOs;
+    }
+    public GameDTO saveGame(long tournamentId, GameDTO gameDTO){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        Team teamA = teamRepository.findById(gameDTO.getTeamAId())
+                .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamAId()));
+        Team teamB = teamRepository.findById(gameDTO.getTeamBId())
+                .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamBId()));
+        Game game = new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB);
+        tournament.addGame(game);
+        teamA.addGame(game);
+        teamB.addGame(game);
+        game = gameRepository.save(game);
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+        tournamentRepository.save(tournament);
+        return new GameDTO(game);
     }
 
     public TournamentDTO findTournamentById(long id){
@@ -278,6 +299,29 @@ public class TournamentService {
         tournamentRepository.save(tournament);
 
         return teams;
+    }
+
+    public Game finishGame(long tournamentId, long gameId, int[][] score){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        Game game = gameRepository.findById(gameId)
+                .orElseThrow(() -> new GameNotFoundException(gameId));
+        Result result = game.finishGame(score);
+        resultRepository.save(result);
+        game = gameRepository.save(game);
+        tournamentRepository.save(tournament);
+        return game;
+    }
+
+    public Tournament finishDiscipline(long tournamentId, Discipline discipline){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        for(Game game : tournament.getGames()){
+            if(game.getStage() == Stage.FINAL && game.getDiscipline() == discipline){
+                tournament.addResult(game.getResult());
+            }
+        }
+        return tournamentRepository.save(tournament);
     }
 
 }

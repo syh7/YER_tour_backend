@@ -3,7 +3,6 @@ package YERgen2.demo.controller;
 import YERgen2.demo.DTO.GameDTO;
 import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.model.*;
-import YERgen2.demo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -62,15 +61,20 @@ public class DemoData {
 
         List<Team> singleTeams = tournamentService.makeSingleTeams(tournament1.getId());
 
-        List<GameDTO> gameDTOs = new ArrayList<>();
-        Game game = new Game(Stage.GROUPSTAGE, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1));
-        gameDTOs.add(new GameDTO(game));
-        tournamentService.saveGames(tournament1.getId(), gameDTOs);
+        Game game = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1));
+        GameDTO gameDTO = tournamentService.saveGame(tournament1.getId(), new GameDTO(game));
+        game = new Game(gameDTO, tournament1, singleTeams.get(0), singleTeams.get(1));
 
         int[][] score = new int[][]{{10,21}, {21,10}, {10,21}};
-        game.finishGame(score);
+        game = tournamentService.finishGame(tournament1.getId(), game.getId(), score);
+
         Team winningteam = game.getWinningTeam();
         System.out.println(winningteam.getParticipants().get(0).getFirstName());
+
+        tournament1 = tournamentService.finishDiscipline(tournament1.getId(), Discipline.MENSINGLES);
+        List<Result> tournamentResults = tournament1.getResults();
+        Team winners = tournamentResults.get(0).getWinners();
+        System.out.println(winners.getParticipants().get(0).getFirstName());
     }
 
     private void testUniqueEmailConstraint(){

@@ -230,4 +230,11 @@ public class Tournament {
         return games.remove(game);
     }
 
+    public boolean addResult(Result result){
+        return results.add(result);
+    }
+    public boolean removeResult(Result result){
+        return results.remove(result);
+    }
+
 }

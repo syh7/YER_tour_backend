@@ -78,6 +78,20 @@ public class Game {
         this.teamB = teamB;
         this.score = gameDTO.getScore();
     }
+    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB){
+        id = gameDTO.getId();
+        stage = gameDTO.getStage();
+        discipline = gameDTO.getDiscipline();
+        playerLevel = gameDTO.getPlayerLevel();
+        startTime = gameDTO.getStartTime();
+        endTime = gameDTO.getEndTime();
+        location = gameDTO.getLocation();
+        judge = gameDTO.getJudge();
+        this.tournament = tournament;
+        this.teamA = teamA;
+        this.teamB = teamB;
+        this.score = gameDTO.getScore();
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -166,7 +180,7 @@ public class Game {
         return result.getLosers();
     }
 
-    public Team finishGame(int[][] score){
+    public Result finishGame(int[][] score){
         this.score = score;
         int a = 0, b = 0;
         for(int[] row : score){
@@ -178,11 +192,10 @@ public class Game {
         }
         if(a > b){
             result = new Result(playerLevel, discipline, teamA, teamB);
-            return teamA;
         } else {
             result = new Result(playerLevel, discipline, teamB, teamA);
-            return teamB;
         }
+        return result;
     }
 
 }
