@@ -19,12 +19,12 @@ public class Account {
     @NotBlank
     private String password;
 
-    Account() {}
-    Account(@NotBlank String email, @NotBlank String password) {
+    public Account() {}
+    public Account(@NotBlank String email, @NotBlank String password) {
         this.email = email;
         this.password = password;
     }
-    Account(long id, @NotBlank String email, @NotBlank String password) {
+    public Account(long id, @NotBlank String email, @NotBlank String password) {
         this.id = id;
         this.email = email;
         this.password = password;
