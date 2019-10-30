@@ -12,7 +12,7 @@ import java.util.List;
 public class Bettor extends Account {
 
     @NotBlank
-    private String name;
+    private String userName;
     private double wallet;
     @OneToMany
     private List<Bet> bets;
@@ -21,23 +21,23 @@ public class Bettor extends Account {
         this.bets = new ArrayList<Bet>();
     }
 
-    public Bettor(@NotBlank String name, @NotBlank String email, @NotBlank String password){
+    public Bettor(@NotBlank String userName, @NotBlank String email, @NotBlank String password){
         super(email, password);
-        this.name = name;
+        this.userName = userName;
     }
 
-    public Bettor(@NotBlank String name, @NotBlank String email, @NotBlank String password, double wallet){
+    public Bettor(@NotBlank String userName, @NotBlank String email, @NotBlank String password, double wallet){
         super(email, password);
-        this.name = name;
+        this.userName = userName;
         this.wallet = wallet;
     }
 
-    public String getName() {
-        return name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public double getWallet() {

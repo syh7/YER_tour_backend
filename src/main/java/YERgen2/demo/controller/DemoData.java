@@ -37,6 +37,12 @@ public class DemoData {
         accountService.saveParticipant(part1);
         accountService.saveParticipant(part2);
 
+        //=Betting=
+        Bettor bettor1 = new Bettor("Sjaak", "sjaak@hotmail.com", "wachtwoord123", 100);
+        accountService.saveBettor(bettor1);
+        Bettor bettor2 = new Bettor("Gart", "gart@aol.com", "wachtwoord123", 20);
+        accountService.saveBettor(bettor2);
+
         Tournament tournament1 = new Tournament("Stuban Toernooi 2019", LocalDate.of(2019, 10, 1),
                 LocalDate.of(2019, 10, 1), admin1);
         Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),

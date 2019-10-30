@@ -1,6 +1,7 @@
 package YERgen2.demo.controller;
 
 import YERgen2.demo.DTO.AdminDTO;
+import YERgen2.demo.DTO.BettorDTO;
 import YERgen2.demo.DTO.ParticipantDTO;
 import YERgen2.demo.DTO.TournamentDTO;
 import YERgen2.demo.Exceptions.*;
@@ -8,6 +9,7 @@ import YERgen2.demo.model.*;
 import YERgen2.demo.repositories.*;
 import com.fasterxml.jackson.databind.deser.DataFormatReaders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,15 +32,18 @@ public class AccountService {
     private TeamRepository teamRepository;
     @Autowired
     private TournamentRepository tournamentRepository;
+    @Autowired
+    private BettorRepository bettorRepository;
 
     AccountService(AdminRepository adminRepository, ParticipantRepository participantRepository,
                    EnrolmentRepository enrolmentRepository, TeamRepository teamRepository,
-                   TournamentRepository tournamentRepository){
+                   TournamentRepository tournamentRepository, BettorRepository bettorRepository){
         this.adminRepository = adminRepository;
         this.participantRepository = participantRepository;
         this.enrolmentRepository = enrolmentRepository;
         this.teamRepository = teamRepository;
         this.tournamentRepository = tournamentRepository;
+        this.bettorRepository = bettorRepository;
     }
 
     public Admin saveAdmin(Admin participant){
@@ -46,6 +51,9 @@ public class AccountService {
     }
     public Participant saveParticipant(Participant participant){
         return participantRepository.save(participant);
+    }
+    public Bettor saveBettor(Bettor bettor){
+        return bettorRepository.save(bettor);
     }
 
     public AdminDTO findAdminById(long id){
@@ -72,6 +80,15 @@ public class AccountService {
             participantDTOs.add(new ParticipantDTO(participant));
         });
         return participantDTOs;
+    }
+
+    //=Betting=
+    public Iterable <BettorDTO> findAllBettor(){
+        List<BettorDTO> bettorDTOs = new ArrayList<>();
+        bettorRepository.findAll().forEach(bettor -> {
+            bettorDTOs.add(new BettorDTO(bettor));
+        });
+        return bettorDTOs;
     }
 
     public void deleteAdminById(long id) {
