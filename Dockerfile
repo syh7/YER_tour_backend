@@ -7,5 +7,4 @@ COPY pom.xml .
 COPY src src
 
 RUN ./mvnw install -DskipTests
-ENV JAVA_OPTS=-Dspring.profiles.active=prod
-RUN java -jar target/*.jar
+RUN java -jar -Dspring.profiles.active=prod target/*.jar
