@@ -95,6 +95,9 @@ public class Participant extends Account {
     public int getLeagueNumber() {
         return leagueNumber;
     }
+    public boolean isMale() {
+        return isMale;
+    }
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
     }
@@ -103,9 +106,6 @@ public class Participant extends Account {
     }
     public List<Team> getTeams() {
         return teams;
-    }
-    public boolean isMale() {
-        return isMale;
     }
 
     public void setFirstName(String firstName){
@@ -120,6 +120,9 @@ public class Participant extends Account {
     public void setLeagueNumber(int leagueNumber) {
         this.leagueNumber = leagueNumber;
     }
+    public void setMale(boolean male) {
+        isMale = male;
+    }
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;
     }
@@ -128,9 +131,6 @@ public class Participant extends Account {
     }
     public void setTeams(List<Team> teams) {
         this.teams = teams;
-    }
-    public void setMale(boolean male) {
-        isMale = male;
     }
 
     @Override
@@ -166,7 +166,7 @@ public class Participant extends Account {
         }
         return false;
     }
-    public boolean deleteEnrolment(Enrolment enrolment){
+    public boolean removeEnrolment(Enrolment enrolment){
         return enrolments.remove(enrolment);
     }
     public void emptyEnrolments(){
@@ -185,7 +185,7 @@ public class Participant extends Account {
         }
         return false;
     }
-    public boolean deleteTeam(Team team){
+    public boolean removeTeam(Team team){
         return teams.remove(team);
     }
     public void emptyTeams(){

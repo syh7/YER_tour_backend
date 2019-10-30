@@ -22,8 +22,13 @@ public class Admin extends Account {
     public Admin(){
         this.tournaments = new ArrayList<>();
     }
-    public Admin(@NotNull String name, @NotNull String email, @NotNull String password) {
+    public Admin(@NotBlank String name, @NotBlank String email, @NotBlank String password) {
         super(email, password);
+        this.name = name;
+        this.tournaments = new ArrayList<>();
+    }
+    public Admin(long id, @NotBlank String name, @NotBlank String email, @NotBlank String password) {
+        super(id, email, password);
         this.name = name;
         this.tournaments = new ArrayList<>();
     }
