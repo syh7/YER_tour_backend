@@ -12,15 +12,18 @@ public class Bet {
     private Bettor bettor;
     @ManyToOne
     private Game game;
+    @ManyToOne
+    private Team team;
 
     public Bet(){
 
     }
 
-    public Bet(double amount, Bettor bettor, Game game){
+    public Bet(double amount, Bettor bettor, Game game, Team team){
         this.amount = amount;
         this.bettor = bettor;
         this.game = game;
+        this.team = team;
     }
 
     public long getId() {
@@ -56,6 +59,7 @@ public class Bet {
     }
 
     public String toString(){
-        return bettor.getUserName() + " had bet " + amount + " on " + game.getTeamA() + " versus " + game.getTeamB();
+        return bettor.getUserName() + " has bet " + amount + " on " + game.getTeamA() + " versus " + game.getTeamB() +
+                "and thinks " + team + " will win";
     }
 }

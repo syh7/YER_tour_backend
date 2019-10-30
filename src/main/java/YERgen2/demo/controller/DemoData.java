@@ -80,8 +80,7 @@ public class DemoData {
         System.out.println(winningteam.getParticipants().get(0).getFirstName());
 
         //=Betting=
-        Bet bet1 = new Bet(20, bettor1, game);
-        betService.saveBet(bet1);
+        Bet bet1 = new Bet(20, bettor1, game, singleTeams.get(0));
         betService.addBetToBettor(bettor1.getId(), bet1);
         System.out.println("Added bet \"" + bet1.toString() + "\" to " + bettor1.getUserName());
 
