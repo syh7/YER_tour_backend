@@ -67,6 +67,13 @@ public class AccountService {
         return new ParticipantDTO(participant);
     }
 
+    //=Betting=
+    public BettorDTO findBettorById(Long id){
+        Bettor bettor = bettorRepository.findById(id)
+                .orElseThrow(() -> new BettorNotFoundException(id));
+        return new BettorDTO(bettor);
+    }
+
     public Iterable <AdminDTO> findAllAdmin(){
         List<AdminDTO> adminDTOs = new ArrayList<>();
         adminRepository.findAll().forEach(admin -> {
