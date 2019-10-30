@@ -20,6 +20,27 @@ public class ParticipantDTO {
     private long[] enrolmentIds;
     private long[] teamIds;
 
+    public ParticipantDTO(Participant participant){
+        id = participant.getId();
+        email = participant.getEmail();
+        firstName = participant.getFirstName();
+        lastName = participant.getLastName();
+        playerLevel = participant.getPlayerLevel();
+        leagueNumber = participant.getLeagueNumber();
+        dateOfBirth = participant.getDateOfBirth();
+        List<Enrolment> enrolments = participant.getEnrolments();
+        enrolmentIds = new long[enrolments.size()];
+        for(int i = 0; i < enrolments.size(); i++){
+            enrolmentIds[i] = enrolments.get(i).getId();
+        }
+        List<Team> teams = participant.getTeams();
+        teamIds = new long[teams.size()];
+        for(int i = 0; i < teams.size(); i++){
+            teamIds[i] = teams.get(i).getId();
+        }
+        isMale = participant.isMale();
+    }
+
     public long getId(){
         return id;
     }
@@ -80,28 +101,6 @@ public class ParticipantDTO {
     }
     public void setMale(boolean male) {
         isMale = male;
-    }
-
-    public ParticipantDTO(){}
-    public ParticipantDTO(Participant participant){
-        id = participant.getId();
-        email = participant.getEmail();
-        firstName = participant.getFirstName();
-        lastName = participant.getLastName();
-        playerLevel = participant.getPlayerLevel();
-        leagueNumber = participant.getLeagueNumber();
-        dateOfBirth = participant.getDateOfBirth();
-        List<Enrolment> enrolments = participant.getEnrolments();
-        enrolmentIds = new long[enrolments.size()];
-        for(int i = 0; i < enrolments.size(); i++){
-            enrolmentIds[i] = enrolments.get(i).getId();
-        }
-        List<Team> teams = participant.getTeams();
-        teamIds = new long[teams.size()];
-        for(int i = 0; i < teams.size(); i++){
-            teamIds[i] = teams.get(i).getId();
-        }
-        isMale = participant.isMale();
     }
 
 }
