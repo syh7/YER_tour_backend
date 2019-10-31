@@ -27,6 +27,11 @@ public class Admin extends Account {
         this.name = name;
         this.tournaments = new ArrayList<>();
     }
+    public Admin(long id, @NotBlank String name, @NotBlank String email, @NotBlank String password) {
+        super(id, email, password);
+        this.name = name;
+        this.tournaments = new ArrayList<>();
+    }
     public Admin(Admin copyAdmin){
         super(copyAdmin.getId(), copyAdmin.getEmail(), copyAdmin.getPassword());
         name = copyAdmin.getName();

@@ -1,7 +1,8 @@
 package YERgen2.demo.model;
 
 public enum Stage {
-    GROUPSTAGE,
+    R32,
+    R16,
     QUARTERFINAL,
     SEMIFINAL,
     FINAL

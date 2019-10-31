@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping
 public class ParticipantEndpoint {
 
     @Autowired
