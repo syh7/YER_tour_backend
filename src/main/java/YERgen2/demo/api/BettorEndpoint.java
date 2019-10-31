@@ -35,4 +35,9 @@ public class BettorEndpoint {
     public BettorDTO updateBettor(@RequestBody Bettor newBettor, @PathVariable long id) {
         return accountService.updateBettor(id, newBettor);
     }
+
+    @DeleteMapping("bettors/{id}")
+    public void deleteBettor(@PathVariable long id) {
+        accountService.deleteBettorById(id);
+    }
 }

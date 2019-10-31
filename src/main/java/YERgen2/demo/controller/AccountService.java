@@ -149,6 +149,7 @@ public class AccountService {
         return new ParticipantDTO(participantRepository.save(new Participant(newParticipantDTO, participant.getPassword(), participant.getEnrolments(), participant.getTeams())));
     }
 
+    //=Betting=
     public BettorDTO updateBettor(long id, Bettor newBettor) {
         return bettorRepository.findById(id).map(bettor -> {
             return new BettorDTO(bettorRepository.save(new Bettor(bettor)));
