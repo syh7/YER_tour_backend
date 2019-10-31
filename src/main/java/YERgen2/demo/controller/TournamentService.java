@@ -267,10 +267,6 @@ public class TournamentService {
         return enrolmentDTOs;
     }
 
-    /**
-     * @param tournamentId tournamentId
-     * @return List of made singles teams
-     */
     public List<Team> makeSingleTeams(long tournamentId){
         Tournament tournament = tournamentRepository.findById(tournamentId)
                 .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
@@ -281,16 +277,18 @@ public class TournamentService {
 
         for(Enrolment enrolment : menEnrolments){
             Team team = new Team(enrolment);
+            team = teamRepository.save(team);
             teams.add(team);
-            teamRepository.save(team);
+            tournament.addTeam(team);
+            for(Participant participant : team.getParticipants()){
+                participant.addTeam(team);
+                participantRepository.save(participant);
+            }
         }
         for(Enrolment enrolment : womenEnrolments){
             Team team = new Team(enrolment);
+            team = teamRepository.save(team);
             teams.add(team);
-            teamRepository.save(team);
-        }
-
-        for(Team team : teams){
             tournament.addTeam(team);
             for(Participant participant : team.getParticipants()){
                 participant.addTeam(team);
@@ -298,8 +296,79 @@ public class TournamentService {
             }
         }
         tournamentRepository.save(tournament);
-
         return teams;
+    }
+
+    /**
+     *
+     * @param tournamentId tournament ID
+     * @return List of troublemaker enrolments
+     */
+    public List<Enrolment> makeDoubleTeams(long tournamentId){
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+
+        List<Enrolment> trouble = new ArrayList<>();
+        List<Enrolment> menDoubles = (List<Enrolment>) enrolmentRepository.findByTournamentIdAndDiscipline(tournamentId, Discipline.MENDOUBLES);
+        List<Enrolment> womenDoubles = (List<Enrolment>) enrolmentRepository.findByTournamentIdAndDiscipline(tournamentId, Discipline.WOMENDOUBLES);
+        List<Enrolment> mixedDoubles = (List<Enrolment>) enrolmentRepository.findByTournamentIdAndDiscipline(tournamentId, Discipline.MIXEDDOUBLES);
+
+        for(Enrolment enrolment : menDoubles){
+            Enrolment match = findPartner(enrolment, menDoubles);
+            if(match == null){
+                trouble.add(enrolment);
+                menDoubles.remove(enrolment);
+            } else {
+                Team team = new Team();
+                team = teamRepository.save(team);
+                tournament.addTeam(team);
+                for(Participant participant : team.getParticipants()){
+                    participant.addTeam(team);
+                    participantRepository.save(participant);
+                }
+            }
+        }
+        for(Enrolment enrolment : womenDoubles){
+            Enrolment match = findPartner(enrolment, womenDoubles);
+            if(match == null){
+                trouble.add(enrolment);
+                womenDoubles.remove(enrolment);
+            } else {
+                Team team = new Team();
+                team = teamRepository.save(team);
+                tournament.addTeam(team);
+                for(Participant participant : team.getParticipants()){
+                    participant.addTeam(team);
+                    participantRepository.save(participant);
+                }
+            }
+        }
+        for(Enrolment enrolment : mixedDoubles){
+            Enrolment match = findPartner(enrolment, mixedDoubles);
+            if(match == null){
+                trouble.add(enrolment);
+                mixedDoubles.remove(enrolment);
+            } else {
+                Team team = new Team();
+                team = teamRepository.save(team);
+                tournament.addTeam(team);
+                for(Participant participant : team.getParticipants()){
+                    participant.addTeam(team);
+                    participantRepository.save(participant);
+                }
+            }
+        }
+        tournamentRepository.save(tournament);
+        return trouble;
+    }
+    private Enrolment findPartner(Enrolment enrolment, List<Enrolment> enrolments){
+        for(Enrolment possibleMatch : enrolments){
+            if(possibleMatch.getParticipants().get(0).getLeagueNumber() == enrolment.getPartnerLeagueNumber() &&
+                    possibleMatch.getPartnerLeagueNumber() == enrolment.getParticipants().get(0).getLeagueNumber()){
+                return possibleMatch;
+            }
+        }
+        return null;
     }
 
     public Game finishGame(long tournamentId, long gameId, int[][] score){
