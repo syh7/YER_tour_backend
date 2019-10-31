@@ -39,7 +39,7 @@ public class Game {
     private Team teamB;
     private int[][] score;
     @OneToMany(mappedBy = "game")
-    private List<Bet> bet;
+    private List<Bet> bets;
 
     public Game() {}
     public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,
@@ -84,7 +84,8 @@ public class Game {
         this.teamB = teamB;
         this.score = gameDTO.getScore();
     }
-    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB){
+    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB,
+                List<Bet> bets){
         id = gameDTO.getId();
         stage = gameDTO.getStage();
         discipline = gameDTO.getDiscipline();
@@ -97,6 +98,7 @@ public class Game {
         this.teamA = teamA;
         this.teamB = teamB;
         this.score = gameDTO.getScore();
+        this.bets = bets;
     }
 
     public void setId(long id) {
@@ -138,6 +140,9 @@ public class Game {
     public int[][] getScore() {
         return score;
     }
+    public List<Bet> getBets() {
+        return bets;
+    }
 
     public long getId() {
         return id;
@@ -177,6 +182,9 @@ public class Game {
     }
     public void setScore(int[][] score) {
         this.score = score;
+    }
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
     }
 
     public Team getWinningTeam(){

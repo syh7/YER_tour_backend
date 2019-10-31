@@ -72,7 +72,7 @@ public class DemoData {
         Game game = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1),
                 singleTeams.get(0).getPlayerLevel());
         GameDTO gameDTO = tournamentService.saveGame(tournament1.getId(), new GameDTO(game));
-        game = new Game(gameDTO, tournament1, singleTeams.get(0), singleTeams.get(1));
+        game = new Game(gameDTO, tournament1, singleTeams.get(0), singleTeams.get(1), new ArrayList<>());
 
         int[][] score = new int[][]{{10,21}, {21,10}, {10,21}};
         game = tournamentService.finishGame(tournament1.getId(), game.getId(), score);
