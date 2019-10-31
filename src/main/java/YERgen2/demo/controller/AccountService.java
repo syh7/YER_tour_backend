@@ -34,16 +34,20 @@ public class AccountService {
     private TournamentRepository tournamentRepository;
     @Autowired
     private BettorRepository bettorRepository;
+    @Autowired
+    private BetRepository betRepository;
 
     AccountService(AdminRepository adminRepository, ParticipantRepository participantRepository,
                    EnrolmentRepository enrolmentRepository, TeamRepository teamRepository,
-                   TournamentRepository tournamentRepository, BettorRepository bettorRepository){
+                   TournamentRepository tournamentRepository, BettorRepository bettorRepository,
+                   BetRepository betRepository){
         this.adminRepository = adminRepository;
         this.participantRepository = participantRepository;
         this.enrolmentRepository = enrolmentRepository;
         this.teamRepository = teamRepository;
         this.tournamentRepository = tournamentRepository;
         this.bettorRepository = bettorRepository;
+        this.betRepository = betRepository;
     }
 
     public Admin saveAdmin(Admin participant){
@@ -104,6 +108,9 @@ public class AccountService {
     public void deleteParticipantById(Long id) {
         participantRepository.deleteById(id);
     }
+    public void deleteBettorById(Long id) {
+        bettorRepository.deleteById(id);
+    }
 
     public AdminDTO updateAdmin(long id, Admin newAdmin) {
         return adminRepository.findById(id).map(admin -> {
@@ -120,6 +127,7 @@ public class AccountService {
         }
         return new AdminDTO(adminRepository.save(new Admin(newAdminDTO, admin.getPassword(), admin.getTournaments())));
     }
+
     public ParticipantDTO updateParticipant(long id, Participant newParticipant){
         return participantRepository.findById(id).map(participant -> {
             return new ParticipantDTO(participantRepository.save(new Participant(newParticipant)));
@@ -139,6 +147,22 @@ public class AccountService {
                     .orElseThrow(() -> new TeamNotFoundException(teamId)));
         }
         return new ParticipantDTO(participantRepository.save(new Participant(newParticipantDTO, participant.getPassword(), participant.getEnrolments(), participant.getTeams())));
+    }
+
+    public BettorDTO updateBettor(long id, Bettor newBettor) {
+        return bettorRepository.findById(id).map(bettor -> {
+            return new BettorDTO(bettorRepository.save(new Bettor(bettor)));
+        }).orElseThrow(() -> new BettorNotFoundException(newBettor.getId()));
+    }
+    public BettorDTO updateBettorDTO(long id, BettorDTO newBettorDTO) {
+        Bettor bettor = bettorRepository.findById(id)
+                .orElseThrow(() -> new BettorNotFoundException(id));
+        bettor.clearBets();
+        for(long betId : newBettorDTO.getBetIds()){
+            bettor.addBet(betRepository.findById(betId)
+                    .orElseThrow(() -> new BetNotFoundException(betId)));
+        }
+        return new BettorDTO(bettorRepository.save(new Bettor(newBettorDTO, bettor.getPassword(), bettor.getBets())));
     }
 
     public boolean addTournamentToAdmin(long adminId, Tournament tournament){

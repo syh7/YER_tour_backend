@@ -12,22 +12,27 @@ import java.util.List;
 @RestController
 public class BettorEndpoint {
     @Autowired
-    private AccountService accountservice;
+    private AccountService accountService;
     @Autowired
     private BetService betService;
 
     @GetMapping("/bettors")
     public List<BettorDTO> getAllBettors(){
-        return (List<BettorDTO>) accountservice.findAllBettor();
+        return (List<BettorDTO>) accountService.findAllBettor();
     }
 
     @GetMapping("/bettors/{id}")
     public BettorDTO getBettor(@PathVariable long id){
-        return accountservice.findBettorById(id);
+        return accountService.findBettorById(id);
     }
 
     @PostMapping("/bettors")
     public Bettor newBettor(@RequestBody Bettor newBettor){
-        return accountservice.saveBettor(newBettor);
+        return accountService.saveBettor(newBettor);
+    }
+
+    @PutMapping("bettors/")
+    public BettorDTO updateBettor(@RequestBody Bettor newBettor, @PathVariable long id) {
+        return accountService.updateBettor(id, newBettor);
     }
 }

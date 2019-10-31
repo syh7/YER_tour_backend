@@ -1,5 +1,7 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.BettorDTO;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,6 +37,21 @@ public class Bettor extends Account {
         this.bets = new ArrayList<Bet>();
     }
 
+    public Bettor(Bettor copyBettor){
+        super(copyBettor.getId(), copyBettor.getEmail(), copyBettor.getPassword());
+        userName = copyBettor.getUserName();
+        wallet = copyBettor.getWallet();
+        bets = copyBettor.getBets();
+    }
+
+    public Bettor(BettorDTO bettorDTO, String password, List<Bet> bets){
+        super(bettorDTO.getId(), bettorDTO.getEmail(), password);
+        this.userName = bettorDTO.getUserName();
+        this.wallet = bettorDTO.getWallet();
+        this.bets = bets;
+    }
+
+
     public String getUserName() {
         return userName;
     }
@@ -61,5 +78,9 @@ public class Bettor extends Account {
 
     public boolean addBet(Bet bet){
         return bets.add(bet);
+    }
+
+    public void clearBets() {
+        bets.clear();
     }
 }
