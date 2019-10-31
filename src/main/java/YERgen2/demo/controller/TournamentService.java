@@ -345,4 +345,19 @@ public class TournamentService {
         throw new ResultNotFoundException(tournamentId, discipline, playerLevel);
     }
 
+    public List<Integer> getTournamentResultByPlayerId(long tournamentId, long playerId) {
+        Tournament tournament = tournamentRepository.findById(tournamentId)
+                .orElseThrow(() -> new TournamentNotFoundException(tournamentId));
+        Participant participant = participantRepository.findById(playerId)
+                .orElseThrow(() -> new ParticipantNotFoundException(playerId));
+        List<Integer> placements = new ArrayList<>();
+        for(Result result : tournament.getResults()){
+            if(participant.getTeams().contains(result.getWinners())){
+                placements.add(1);
+            } else if(participant.getTeams().contains(result.getLosers())){
+                placements.add(2);
+            }
+        }
+        return placements;
+    }
 }
