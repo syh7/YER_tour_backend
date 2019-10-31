@@ -31,7 +31,7 @@ public class BettorEndpoint {
         return accountService.saveBettor(newBettor);
     }
 
-    @PutMapping("bettors/")
+    @PutMapping("/bettors/{id}")
     public BettorDTO updateBettor(@RequestBody Bettor newBettor, @PathVariable long id) {
         return accountService.updateBettor(id, newBettor);
     }
