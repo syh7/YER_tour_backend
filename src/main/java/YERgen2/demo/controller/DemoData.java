@@ -69,7 +69,8 @@ public class DemoData {
 
         List<Team> singleTeams = tournamentService.makeSingleTeams(tournament1.getId());
 
-        Game game = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1));
+        Game game = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1),
+                singleTeams.get(0).getPlayerLevel());
         GameDTO gameDTO = tournamentService.saveGame(tournament1.getId(), new GameDTO(game));
         game = new Game(gameDTO, tournament1, singleTeams.get(0), singleTeams.get(1));
 

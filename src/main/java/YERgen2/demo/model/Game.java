@@ -43,9 +43,10 @@ public class Game {
 
     public Game() {}
     public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,
-                @NotNull Team teamA, @NotNull Team teamB) {
+                @NotNull Team teamA, @NotNull Team teamB, @NotNull int playerLevel) {
         this.stage = stage;
         this.discipline = discipline;
+        this.playerLevel = playerLevel;
         this.tournament = tournament;
         this.teamA = teamA;
         this.teamB = teamB;
@@ -196,8 +197,10 @@ public class Game {
             }
         }
         if(a > b){
+            System.out.println("made new result in game with playerlevel: " + playerLevel);
             result = new Result(playerLevel, discipline, teamA, teamB);
         } else {
+            System.out.println("made new result in game with playerlevel: " + playerLevel);
             result = new Result(playerLevel, discipline, teamB, teamA);
         }
         return result;

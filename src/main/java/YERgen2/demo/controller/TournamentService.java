@@ -66,7 +66,7 @@ public class TournamentService {
                     .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamAId()));
             Team teamB = teamRepository.findById(gameDTO.getTeamBId())
                     .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamBId()));
-            Game game = new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB);
+            Game game = new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB, gameDTO.getPlayerLevel());
             tournament.addGame(game);
             teamA.addGame(game);
             teamB.addGame(game);
@@ -85,7 +85,7 @@ public class TournamentService {
                 .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamAId()));
         Team teamB = teamRepository.findById(gameDTO.getTeamBId())
                 .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamBId()));
-        Game game = new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB);
+        Game game = new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB, gameDTO.getPlayerLevel());
         tournament.addGame(game);
         teamA.addGame(game);
         teamB.addGame(game);
@@ -117,7 +117,8 @@ public class TournamentService {
                 .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamAId()));
         Team teamB = teamRepository.findById(gameDTO.getTeamBId())
                 .orElseThrow(() -> new TeamNotFoundException(gameDTO.getTeamBId()));
-        return new GameDTO(gameRepository.save(new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament, teamA, teamB)));
+        return new GameDTO(gameRepository.save(new Game(gameDTO.getStage(), gameDTO.getDiscipline(), tournament,
+                teamA, teamB, gameDTO.getPlayerLevel())));
     }
 
     public boolean existsTournamentById(long id){
