@@ -5,6 +5,7 @@ import YERgen2.demo.DTO.GameDTO;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Game {
@@ -37,6 +38,8 @@ public class Game {
     @ManyToOne
     private Team teamB;
     private int[][] score;
+    @OneToMany(mappedBy = "game")
+    private List<Bet> bet;
 
     public Game() {}
     public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,

@@ -28,6 +28,8 @@ public class Team {
     @NotNull
     @OneToMany(fetch = FetchType.EAGER)
     private List<Participant> participants;
+    @OneToMany(mappedBy = "team")
+    private List<Bet> bets;
 
     public Team() {
         participants = new ArrayList<>();

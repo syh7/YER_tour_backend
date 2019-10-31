@@ -6,7 +6,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +21,7 @@ public class Admin extends Account {
     public Admin(){
         this.tournaments = new ArrayList<>();
     }
+
     public Admin(@NotBlank String name, @NotBlank String email, @NotBlank String password) {
         super(email, password);
         this.name = name;
