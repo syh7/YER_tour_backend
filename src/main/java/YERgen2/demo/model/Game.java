@@ -5,6 +5,7 @@ import YERgen2.demo.DTO.GameDTO;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -41,7 +42,9 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private List<Bet> bets;
 
-    public Game() {}
+    public Game() {
+        List<Bet> bets = new ArrayList<>();
+    }
     public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,
                 @NotNull Team teamA, @NotNull Team teamB, @NotNull int playerLevel) {
         this.stage = stage;
@@ -50,6 +53,7 @@ public class Game {
         this.tournament = tournament;
         this.teamA = teamA;
         this.teamB = teamB;
+        this.bets = new ArrayList<>();
     }
     public Game(long id, @NotNull Stage stage, Result result, @NotNull Discipline discipline, LocalDateTime startTime,
                 LocalDateTime endTime, String location, String judge, @NotNull Tournament tournament,
@@ -67,9 +71,10 @@ public class Game {
         this.teamA = teamA;
         this.teamB = teamB;
         this.score = score;
+        this.bets = new ArrayList<>();
     }
     public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB,
-                Result result){
+                Result result, List<Bet> bets){
         id = gameDTO.getId();
         stage = gameDTO.getStage();
         this.result = result;
@@ -83,6 +88,7 @@ public class Game {
         this.teamA = teamA;
         this.teamB = teamB;
         this.score = gameDTO.getScore();
+        this.bets = bets;
     }
     public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB,
                 List<Bet> bets){
