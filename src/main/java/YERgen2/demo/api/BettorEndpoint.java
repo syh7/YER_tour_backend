@@ -36,6 +36,11 @@ public class BettorEndpoint {
         return accountService.updateBettor(id, newBettor);
     }
 
+    @PutMapping("/bettors/{id}/addWallet")
+    public BettorDTO updateBettorWallet(@RequestBody double amount, @PathVariable long id){
+        return betService.addToWallet(id, amount);
+    }
+
     @DeleteMapping("bettors/{id}")
     public void deleteBettor(@PathVariable long id) {
         accountService.deleteBettorById(id);

@@ -83,4 +83,8 @@ public class Bettor extends Account {
     public void clearBets() {
         bets.clear();
     }
+
+    public void addToWallet(double amount){
+        wallet += amount;
+    }
 }

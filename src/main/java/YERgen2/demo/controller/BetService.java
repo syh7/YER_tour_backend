@@ -1,5 +1,6 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.DTO.BettorDTO;
 import YERgen2.demo.Exceptions.BettorNotFoundException;
 import YERgen2.demo.model.Bet;
 import YERgen2.demo.model.Bettor;
@@ -21,7 +22,6 @@ public class BetService {
         this.betRepository = betRepository;
     }
 
-    //methods
     public boolean addBetToBettor(long bettorId, Bet bet){
         Bettor bettor = bettorRepository.findById(bettorId)
                 .orElseThrow(() -> new BettorNotFoundException(bettorId));
@@ -44,4 +44,12 @@ public class BetService {
             return null;
         }
     }
+
+    public BettorDTO addToWallet(long bettorID, double amount){
+        Bettor bettor = bettorRepository.findById(bettorID)
+                .orElseThrow(() -> new BettorNotFoundException(bettorID));
+        bettor.addToWallet(amount);
+        return new BettorDTO(bettorRepository.save(bettor));
+    }
+
 }
