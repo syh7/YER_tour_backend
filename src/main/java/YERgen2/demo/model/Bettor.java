@@ -44,7 +44,7 @@ public class Bettor extends Account {
         bets = copyBettor.getBets();
     }
 
-    public Bettor(BettorDTO bettorDTO, String password, List<Bet> bets){
+    public Bettor(BettorDTO bettorDTO, @NotBlank String password, List<Bet> bets){
         super(bettorDTO.getId(), bettorDTO.getEmail(), password);
         this.userName = bettorDTO.getUserName();
         this.wallet = bettorDTO.getWallet();

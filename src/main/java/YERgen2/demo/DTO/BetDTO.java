@@ -9,6 +9,8 @@ public class BetDTO {
     private long gameId;
     private long teamId;
 
+    public BetDTO(){}
+
     public BetDTO(Bet bet){
         this.id = bet.getId();
         this.amount = bet.getAmount();

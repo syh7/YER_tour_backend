@@ -1,8 +1,10 @@
 package YERgen2.demo.api;
 
+import YERgen2.demo.DTO.BetDTO;
 import YERgen2.demo.DTO.BettorDTO;
 import YERgen2.demo.controller.AccountService;
 import YERgen2.demo.controller.BetService;
+import YERgen2.demo.model.Bet;
 import YERgen2.demo.model.Bettor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +41,16 @@ public class BettorEndpoint {
     @PutMapping("/bettors/{id}/addWallet/{amount}")
     public BettorDTO updateBettorWallet(@PathVariable double amount, @PathVariable long id){
         return betService.addToWallet(id, amount);
+    }
+
+    @GetMapping("/bettors/{id}/bets")
+    public List<BetDTO> getBets(@PathVariable long id){
+        return betService.findBets(id);
+    }
+
+    @PostMapping("/bettors/{id}/placeBet")
+    public BetDTO placeBet(@PathVariable long id, @RequestBody BetDTO betDTO){
+        return betService.addBetToBettor(id, betDTO);
     }
 
     @DeleteMapping("bettors/{id}")

@@ -1,6 +1,11 @@
 package YERgen2.demo.model;
 
+import YERgen2.demo.DTO.BetDTO;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.util.Optional;
 
 @Entity
 public class Bet implements Comparable<Bet>{
@@ -9,10 +14,13 @@ public class Bet implements Comparable<Bet>{
     private long id;
     private double amount;
     private double odds = 2;
+    @NotNull
     @ManyToOne
     private Bettor bettor;
     @ManyToOne
+    @NotNull
     private Game game;
+    @NotNull
     @ManyToOne
     private Team team;
 
@@ -22,6 +30,13 @@ public class Bet implements Comparable<Bet>{
 
     public Bet(double amount, Bettor bettor, Game game, Team team){
         this.amount = amount;
+        this.bettor = bettor;
+        this.game = game;
+        this.team = team;
+    }
+
+    public Bet(BetDTO betDTO, Bettor bettor, Game game, Team team) {
+        amount = betDTO.getAmount();
         this.bettor = bettor;
         this.game = game;
         this.team = team;

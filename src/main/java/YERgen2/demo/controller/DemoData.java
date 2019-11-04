@@ -1,5 +1,6 @@
 package YERgen2.demo.controller;
 
+import YERgen2.demo.DTO.BetDTO;
 import YERgen2.demo.DTO.GameDTO;
 import YERgen2.demo.DTO.NewTournamentWrapper;
 import YERgen2.demo.model.*;
@@ -81,8 +82,8 @@ public class DemoData {
 
         //=Betting=
         Bet bet1 = new Bet(20, bettor1, game, singleTeams.get(0));
-        betService.addBetToBettor(bettor1.getId(), bet1);
-        System.out.println("Added bet \"" + bet1.toString() + "\" to " + bettor1.getUserName());
+        betService.addBetToBettor(bettor1.getId(), new BetDTO(bet1));
+
 
         tournament1 = tournamentService.finishDiscipline(tournament1.getId(), Discipline.MENSINGLES);
         List<Result> tournamentResults = tournament1.getResults();
