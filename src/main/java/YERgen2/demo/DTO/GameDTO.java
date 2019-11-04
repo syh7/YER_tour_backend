@@ -24,6 +24,7 @@ public class GameDTO {
     private int[][] score;
     private long[] betIds;
 
+    public GameDTO(){}
     public GameDTO(Game game){
         id = game.getId();
         stage = game.getStage();

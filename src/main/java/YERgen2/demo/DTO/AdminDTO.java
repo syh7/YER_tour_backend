@@ -12,6 +12,18 @@ public class AdminDTO {
     private String name;
     private long[] tournamentIds;
 
+    public AdminDTO(){}
+    public AdminDTO(Admin admin){
+        this.id = admin.getId();
+        this.email = admin.getEmail();
+        this.name = admin.getName();
+        List<Tournament> tournaments = admin.getTournaments();
+        tournamentIds = new long[tournaments.size()];
+        for(int i = 0; i < tournaments.size(); i++){
+            tournamentIds[i] = tournaments.get(i).getId();
+        }
+    }
+
     public long getId() {
         return id;
     }
@@ -37,16 +49,5 @@ public class AdminDTO {
     public void setTournamentIds(long[] tournamentIds) {
         this.tournamentIds = tournamentIds;
     }
-
-    public AdminDTO(Admin admin){
-        this.id = admin.getId();
-        this.email = admin.getEmail();
-        this.name = admin.getName();
-        List<Tournament> tournaments = admin.getTournaments();
-        tournamentIds = new long[tournaments.size()];
-        for(int i = 0; i < tournaments.size(); i++){
-            tournamentIds[i] = tournaments.get(i).getId();
-        }
-    }
-
+    
 }

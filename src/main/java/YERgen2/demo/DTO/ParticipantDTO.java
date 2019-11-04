@@ -20,6 +20,7 @@ public class ParticipantDTO {
     private long[] enrolmentIds;
     private long[] teamIds;
 
+    public ParticipantDTO(){}
     public ParticipantDTO(Participant participant){
         id = participant.getId();
         email = participant.getEmail();
