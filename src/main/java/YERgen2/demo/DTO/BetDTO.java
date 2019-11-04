@@ -8,6 +8,7 @@ public class BetDTO {
     private long bettorId;
     private long gameId;
 
+    public BetDTO(){}
     public BetDTO(Bet bet){
         this.id = bet.getId();
         this.amount = bet.getAmount();
@@ -18,32 +19,27 @@ public class BetDTO {
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public double getAmount() {
         return amount;
     }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
     public long getBettorId() {
         return bettorId;
     }
-
-    public void setBettorId(long bettorId) {
-        this.bettorId = bettorId;
-    }
-
     public long getGameId() {
         return gameId;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+    public void setBettorId(long bettorId) {
+        this.bettorId = bettorId;
+    }
     public void setGameId(long gameId) {
         this.gameId = gameId;
     }
+
 }
