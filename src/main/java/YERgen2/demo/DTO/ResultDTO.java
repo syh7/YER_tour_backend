@@ -10,6 +10,7 @@ public class ResultDTO {
     private long winTeamId;
     private long loseTeamId;
 
+    public ResultDTO(){}
     public ResultDTO(Result result){
         playerLevel = result.getPlayerLevel();
         discipline = result.getDiscipline();

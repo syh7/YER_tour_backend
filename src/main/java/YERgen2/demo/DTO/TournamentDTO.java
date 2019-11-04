@@ -23,6 +23,7 @@ public class TournamentDTO {
     private long[] gameIds;
     private ResultDTO[] resultDTOs;
 
+    public TournamentDTO(){}
     public TournamentDTO(Tournament tournament){
         id = tournament.getId();
         name = tournament.getName();

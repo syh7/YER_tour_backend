@@ -20,7 +20,7 @@ public class Participant extends Account {
     @NotBlank
     private String lastName;
     @NotNull
-    private boolean isMale;
+    private boolean male;
     @NotNull
     private int playerLevel;
     private int leagueNumber;
@@ -36,24 +36,24 @@ public class Participant extends Account {
         this.enrolments = new ArrayList<>();
     }
     public Participant(@NotBlank String email, @NotBlank String password, @NotBlank String firstName,
-                       @NotBlank String lastName, @NotNull boolean isMale, @NotNull int playerLevel,
+                       @NotBlank String lastName, @NotNull boolean male, @NotNull int playerLevel,
                        @NotNull LocalDate dateOfBirth) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isMale = isMale;
+        this.male = male;
         this.playerLevel = playerLevel;
         this.dateOfBirth = dateOfBirth;
         this.teams = new ArrayList<>();
         this.enrolments = new ArrayList<>();
     }
     public Participant(@NotBlank String email, @NotBlank String password, @NotBlank String firstName,
-                       @NotBlank String lastName, @NotNull boolean isMale, @NotNull int playerLevel, int leagueNumber,
+                       @NotBlank String lastName, @NotNull boolean male, @NotNull int playerLevel, int leagueNumber,
                        @NotNull LocalDate dateOfBirth, List<Enrolment> enrolments, List<Team> teams) {
         super(email, password);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.isMale = isMale;
+        this.male = male;
         this.playerLevel = playerLevel;
         this.leagueNumber = leagueNumber;
         this.dateOfBirth = dateOfBirth;
@@ -64,7 +64,7 @@ public class Participant extends Account {
         super(participantDTO.getId(), participantDTO.getEmail(), password);
         this.firstName = participantDTO.getFirstName();
         this.lastName = participantDTO.getLastName();
-        this.isMale = participantDTO.isMale();
+        this.male = participantDTO.isMale();
         this.playerLevel = participantDTO.getPlayerLevel();
         this.leagueNumber = participantDTO.getLeagueNumber();
         this.dateOfBirth = participantDTO.getDateOfBirth();
@@ -75,7 +75,7 @@ public class Participant extends Account {
         super(copyParticipant.getId(), copyParticipant.getEmail(), copyParticipant.getPassword());
         this.firstName = copyParticipant.getFirstName();
         this.lastName = copyParticipant.getLastName();
-        this.isMale = copyParticipant.isMale();
+        this.male = copyParticipant.isMale();
         this.playerLevel = copyParticipant.getPlayerLevel();
         this.leagueNumber = copyParticipant.getLeagueNumber();
         this.dateOfBirth = copyParticipant.getDateOfBirth();
@@ -96,7 +96,7 @@ public class Participant extends Account {
         return leagueNumber;
     }
     public boolean isMale() {
-        return isMale;
+        return male;
     }
     public LocalDate getDateOfBirth(){
         return dateOfBirth;
@@ -120,8 +120,8 @@ public class Participant extends Account {
     public void setLeagueNumber(int leagueNumber) {
         this.leagueNumber = leagueNumber;
     }
-    public void setMale(boolean male) {
-        isMale = male;
+    public void setMale(boolean isMale) {
+        this.male = isMale;
     }
     public void setDateOfBirth(LocalDate dateOfBirth){
         this.dateOfBirth = dateOfBirth;

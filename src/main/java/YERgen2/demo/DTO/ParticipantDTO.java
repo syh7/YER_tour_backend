@@ -13,13 +13,14 @@ public class ParticipantDTO {
     private String email;
     private String firstName;
     private String lastName;
-    private boolean isMale;
+    private boolean male;
     private int playerLevel;
     private int leagueNumber;
     private LocalDate dateOfBirth;
     private long[] enrolmentIds;
     private long[] teamIds;
 
+    public ParticipantDTO(){}
     public ParticipantDTO(Participant participant){
         id = participant.getId();
         email = participant.getEmail();
@@ -38,7 +39,7 @@ public class ParticipantDTO {
         for(int i = 0; i < teams.size(); i++){
             teamIds[i] = teams.get(i).getId();
         }
-        isMale = participant.isMale();
+        male = participant.isMale();
     }
 
     public long getId(){
@@ -69,7 +70,7 @@ public class ParticipantDTO {
         return teamIds;
     }
     public boolean isMale() {
-        return isMale;
+        return male;
     }
 
     public void setId(long id) {
@@ -100,7 +101,7 @@ public class ParticipantDTO {
         this.teamIds = teams;
     }
     public void setMale(boolean male) {
-        isMale = male;
+        this.male = male;
     }
 
 }

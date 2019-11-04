@@ -12,6 +12,7 @@ public class BettorDTO {
     private double wallet;
     private long[] betIds;
 
+    public BettorDTO(){}
     public BettorDTO(Bettor bettor){
         this.id = bettor.getId();
         this.email = bettor.getEmail();
@@ -27,40 +28,33 @@ public class BettorDTO {
     public long getId() {
         return id;
     }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
     }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getUserName() {
         return userName;
     }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
     public double getWallet() {
         return wallet;
     }
-
-    public void setWallet(double wallet) {
-        this.wallet = wallet;
-    }
-
     public long[] getBetIds() {
         return betIds;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+    public void setWallet(double wallet) {
+        this.wallet = wallet;
+    }
     public void setBetIds(long[] betIds) {
         this.betIds = betIds;
     }
+
 }

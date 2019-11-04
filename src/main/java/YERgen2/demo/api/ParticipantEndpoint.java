@@ -58,7 +58,7 @@ public class ParticipantEndpoint {
 
     /////PARTICIPANTS/ID/RESULTS
 
-    @GetMapping("/participants/{id}/results/all")
+    @GetMapping("/participants/{id}/results")
     public int[] getAllResults(@PathVariable long id){
         return accountService.getAllResults(id);
     }

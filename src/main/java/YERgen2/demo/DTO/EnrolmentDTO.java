@@ -15,6 +15,7 @@ public class EnrolmentDTO  {
     private long tournamentId;
     private long[] participantIds;
 
+    public EnrolmentDTO(){}
     public EnrolmentDTO(Enrolment enrolment){
         id = enrolment.getId();
         playerLevel = enrolment.getPlayerLevel();

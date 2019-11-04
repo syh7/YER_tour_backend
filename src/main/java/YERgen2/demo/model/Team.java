@@ -34,27 +34,31 @@ public class Team {
     public Team() {
         participants = new ArrayList<>();
         games = new ArrayList<>();
+        bets = new ArrayList<>();
     }
     public Team(@NotNull int playerLevel, @NotNull Discipline discipline, @NotNull Tournament tournament,
                 @NotNull List<Participant> participants) {
         this.playerLevel = playerLevel;
         this.discipline = discipline;
         this.tournament = tournament;
-        this.participants = participants.stream().map(
-                Participant::new).collect(Collectors.toList());
+        this.participants = participants.stream().map(Participant::new).collect(Collectors.toList());
+        bets = new ArrayList<>();
     }
     public Team(Enrolment enrolment){
         playerLevel = enrolment.getPlayerLevel();
         discipline = enrolment.getDiscipline();
         tournament = enrolment.getTournament();
         participants = enrolment.getParticipants().stream().map(Participant::new).collect(Collectors.toList());
+        bets = new ArrayList<>();
     }
-    public Team(TeamDTO teamDTO, List<Game> games, Tournament tournament){
+    public Team(TeamDTO teamDTO, List<Bet> bets, List<Participant> participants, List<Game> games, Tournament tournament){
         id = teamDTO.getId();
         playerLevel = teamDTO.getPlayerLevel();
         discipline = teamDTO.getDiscipline();
         this.games = games;
         this.tournament = tournament;
+        this.participants = participants;
+        this.bets = bets;
     }
 
     public long getId(){
@@ -75,6 +79,9 @@ public class Team {
     public List<Participant> getParticipants() {
         return participants;
     }
+    public List<Bet> getBets() {
+        return bets;
+    }
 
     public void setId(long id){
         this.id = id;
@@ -94,12 +101,22 @@ public class Team {
     public void setParticipants(List<Participant> participants) {
         this.participants = participants;
     }
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
 
     public boolean addGame(Game game) {
         return games.add(game);
     }
     public boolean removeGame(Game game){
         return games.remove(game);
+    }
+
+    public boolean addBet(Bet bet){
+        return bets.add(bet);
+    }
+    public boolean removeBet(Bet bet){
+        return bets.remove(bet);
     }
 
 }
