@@ -5,6 +5,7 @@ import YERgen2.demo.DTO.GameDTO;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -39,16 +40,20 @@ public class Game {
     private Team teamB;
     private int[][] score;
     @OneToMany(mappedBy = "game")
-    private List<Bet> bet;
+    private List<Bet> bets;
 
-    public Game() {}
+    public Game() {
+        List<Bet> bets = new ArrayList<>();
+    }
     public Game(@NotNull Stage stage, @NotNull Discipline discipline, @NotNull Tournament tournament,
-                @NotNull Team teamA, @NotNull Team teamB) {
+                @NotNull Team teamA, @NotNull Team teamB, @NotNull int playerLevel) {
         this.stage = stage;
         this.discipline = discipline;
+        this.playerLevel = playerLevel;
         this.tournament = tournament;
         this.teamA = teamA;
         this.teamB = teamB;
+        this.bets = new ArrayList<>();
     }
     public Game(long id, @NotNull Stage stage, Result result, @NotNull Discipline discipline, LocalDateTime startTime,
                 LocalDateTime endTime, String location, String judge, @NotNull Tournament tournament,
@@ -66,9 +71,10 @@ public class Game {
         this.teamA = teamA;
         this.teamB = teamB;
         this.score = score;
+        this.bets = new ArrayList<>();
     }
     public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB,
-                Result result){
+                Result result, List<Bet> bets){
         id = gameDTO.getId();
         stage = gameDTO.getStage();
         this.result = result;
@@ -82,8 +88,10 @@ public class Game {
         this.teamA = teamA;
         this.teamB = teamB;
         this.score = gameDTO.getScore();
+        this.bets = bets;
     }
-    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB){
+    public Game(@NotNull GameDTO gameDTO, @NotNull Tournament tournament, @NotNull Team teamA, @NotNull Team teamB,
+                List<Bet> bets){
         id = gameDTO.getId();
         stage = gameDTO.getStage();
         discipline = gameDTO.getDiscipline();
@@ -96,6 +104,7 @@ public class Game {
         this.teamA = teamA;
         this.teamB = teamB;
         this.score = gameDTO.getScore();
+        this.bets = bets;
     }
 
     public void setId(long id) {
@@ -137,6 +146,9 @@ public class Game {
     public int[][] getScore() {
         return score;
     }
+    public List<Bet> getBets() {
+        return bets;
+    }
 
     public long getId() {
         return id;
@@ -177,6 +189,9 @@ public class Game {
     public void setScore(int[][] score) {
         this.score = score;
     }
+    public void setBets(List<Bet> bets) {
+        this.bets = bets;
+    }
 
     public Team getWinningTeam(){
         return result.getWinners();
@@ -196,8 +211,10 @@ public class Game {
             }
         }
         if(a > b){
+            System.out.println("made new result in game with playerlevel: " + playerLevel);
             result = new Result(playerLevel, discipline, teamA, teamB);
         } else {
+            System.out.println("made new result in game with playerlevel: " + playerLevel);
             result = new Result(playerLevel, discipline, teamB, teamA);
         }
         return result;

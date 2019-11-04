@@ -1,10 +1,12 @@
 package YERgen2.demo.DTO;
 
+import YERgen2.demo.model.Bet;
 import YERgen2.demo.model.Discipline;
 import YERgen2.demo.model.Game;
 import YERgen2.demo.model.Stage;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class GameDTO {
     private long id;
@@ -20,6 +22,7 @@ public class GameDTO {
     private long teamAId;
     private long teamBId;
     private int[][] score;
+    private long[] betIds;
 
     public GameDTO(Game game){
         id = game.getId();
@@ -38,6 +41,11 @@ public class GameDTO {
         tournamentId = game.getTournament().getId();
         teamAId = game.getTeamA().getId();
         teamBId = game.getTeamB().getId();
+        List<Bet> bets = game.getBets();
+        betIds = new long[bets.size()];
+        for(int i = 0; i < bets.size(); i++){
+            betIds[i] = bets.get(i).getId();
+        }
     }
 
     public long getId() {
@@ -79,6 +87,9 @@ public class GameDTO {
     public int[][] getScore() {
         return score;
     }
+    public long[] getBetIds() {
+        return betIds;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -118,6 +129,9 @@ public class GameDTO {
     }
     public void setScore(int[][] score) {
         this.score = score;
+    }
+    public void setBetIds(long[] betIds) {
+        this.betIds = betIds;
     }
 
 }

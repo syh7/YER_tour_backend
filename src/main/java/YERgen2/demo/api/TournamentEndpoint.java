@@ -24,7 +24,8 @@ public class TournamentEndpoint {
 
     //tournaments/?mode=foo&search=bar
     @GetMapping(value="/tournaments")
-    public List<TournamentDTO> getAllTournaments(@RequestParam(value = "mode") String mode, @RequestParam(value = "search") String search){
+    public List<TournamentDTO> getAllTournaments(@RequestParam(value = "mode", defaultValue = "all") String mode,
+                                                 @RequestParam(value = "search", defaultValue = "") String search){
         if(mode.equals("contains")){
             return (List<TournamentDTO>) tournamentService.findTournamentByNameContaining(search);
         } else {
@@ -99,15 +100,22 @@ public class TournamentEndpoint {
 
     /////TOURNAMENT/ID/RESULTS
 
-    @GetMapping("/tournaments/{id}/result/all")
+    @GetMapping("/tournaments/{id}/results/all")
     public List<ResultDTO> getTournamentResults(@PathVariable long id){
         return tournamentService.getTournamentResults(id);
     }
 
-    @GetMapping("/tournaments/{id}/result")
+    //tournament/id/results/?discipline=DISCIPLINE&playerlevel=int
+    @GetMapping("/tournaments/{id}/results")
     public ResultDTO getTournamentResult(@PathVariable long id, @RequestParam(value = "discipline") Discipline discipline,
                                          @RequestParam(value = "playerlevel") int playerLevel){
         return tournamentService.getTournamentResultByDisciplineAndPlayerLevel(id, discipline, playerLevel);
+    }
+
+    //tournament/id/playerresults/playerid
+    @GetMapping("/tournaments/{id}/playerresults/{playerid}")
+    public List<Integer> getPlayerResult(@PathVariable long id, @PathVariable long playerid){
+        return tournamentService.getTournamentResultByPlayerId(id, playerid);
     }
 
 }
