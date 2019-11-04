@@ -71,7 +71,7 @@ public class TournamentEndpoint {
 
     @GetMapping("/tournaments/{id}/teams")
     public List<EnrolmentDTO> getEnrolmentByTournament(@PathVariable long id){
-        return (List<EnrolmentDTO>) tournamentService.findEnrolmentByTournamentId(id);
+        return tournamentService.findEnrolmentByTournamentId(id);
     }
 
     /////TOURNAMENTS/ID/TEAMS/DISCIPLINE
