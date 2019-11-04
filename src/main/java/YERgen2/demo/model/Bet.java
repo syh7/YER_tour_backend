@@ -8,6 +8,7 @@ public class Bet implements Comparable<Bet>{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private double amount;
+    private double odds = 2;
     @ManyToOne
     private Bettor bettor;
     @ManyToOne
@@ -42,6 +43,14 @@ public class Bet implements Comparable<Bet>{
         this.amount = amount;
     }
 
+    public double getOdds() {
+        return odds;
+    }
+
+    public void setOdds(double odds) {
+        this.odds = odds;
+    }
+
     public Bettor getBettor() {
         return bettor;
     }
@@ -56,6 +65,14 @@ public class Bet implements Comparable<Bet>{
 
     public void setGame(Game game) {
         this.game = game;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public String toString(){
