@@ -18,6 +18,7 @@ public class Tournament {
 
     @NotBlank
     private String name;
+    @Column(columnDefinition = "text")
     private String description;
     private String referee;
     private String location;
