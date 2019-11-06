@@ -48,6 +48,7 @@ public class DemoData {
 
         Tournament tournament1 = new Tournament("Stuban Toernooi 2019", LocalDate.of(2019, 10, 1),
                 LocalDate.of(2019, 10, 1), admin1);
+        tournament1.setMaxDisciplines(3);
         Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),
                 LocalDate.of(2019, 10, 1), admin2);
         Tournament tournament3 = new Tournament("Stuban Toernooi 2020", LocalDate.of(2020, 10, 1),
@@ -70,19 +71,38 @@ public class DemoData {
 
         List<Team> singleTeams = tournamentService.makeSingleTeams(tournament1.getId());
 
-        Game game = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1),
+        //Make game1
+        Game game1 = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1),
                 singleTeams.get(0).getPlayerLevel());
-        GameDTO gameDTO = tournamentService.saveGame(tournament1.getId(), new GameDTO(game));
-        game = new Game(gameDTO, tournament1, singleTeams.get(0), singleTeams.get(1), new ArrayList<>());
+        GameDTO gameDTO1 = tournamentService.saveGame(tournament1.getId(), new GameDTO(game1));
+        game1 = new Game(gameDTO1, tournament1, singleTeams.get(0), singleTeams.get(1), new ArrayList<>());
 
         int[][] score = new int[][]{{10,21}, {21,10}, {10,21}};
-        game = tournamentService.finishGame(tournament1.getId(), game.getId(), score);
+        game1 = tournamentService.finishGame(tournament1.getId(), game1.getId(), score);
 
-        Team winningteam = game.getWinningTeam();
+        //make game2
+        Game game2 = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1),
+                singleTeams.get(0).getPlayerLevel());
+        GameDTO gameDTO2 = tournamentService.saveGame(tournament1.getId(), new GameDTO(game2));
+        game2 = new Game(gameDTO2, tournament1, singleTeams.get(0), singleTeams.get(1), new ArrayList<>());
+
+        score = new int[][]{{21,10}, {21,10}};
+        game2 = tournamentService.finishGame(tournament1.getId(), game2.getId(), score);
+
+        //make game3
+        Game game3 = new Game(Stage.FINAL, Discipline.MENSINGLES, tournament1, singleTeams.get(0), singleTeams.get(1),
+                singleTeams.get(0).getPlayerLevel());
+        GameDTO gameDTO3 = tournamentService.saveGame(tournament1.getId(), new GameDTO(game3));
+        game3 = new Game(gameDTO3, tournament1, singleTeams.get(0), singleTeams.get(1), new ArrayList<>());
+
+        score = new int[][]{{10,21}, {21,10}, {10,21}};
+        game3 = tournamentService.finishGame(tournament1.getId(), game3.getId(), score);
+
+        Team winningteam = game3.getWinningTeam();
         System.out.println(winningteam.getParticipants().get(0).getFirstName());
 
         //=Betting=
-        Bet bet1 = new Bet(20, bettor1, game, singleTeams.get(0));
+        Bet bet1 = new Bet(20, bettor1, game3, singleTeams.get(0));
         betService.addBetToBettor(bettor1.getId(), new BetDTO(bet1));
 
 
