@@ -3,6 +3,7 @@ package YERgen2.demo.DTO;
 import YERgen2.demo.model.*;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 public class TournamentDTO {
@@ -150,4 +151,26 @@ public class TournamentDTO {
         this.resultDTOs = resultDTOs;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(super.equals(obj)){
+            return true;
+        }
+        if(obj instanceof TournamentDTO){
+            return name.equals(((TournamentDTO) obj).getName()) && description.equals(((TournamentDTO) obj).getDescription())
+                    && referee.equals(((TournamentDTO) obj).getReferee())  && location.equals(((TournamentDTO) obj).getLocation())
+                    && startDate.equals(((TournamentDTO) obj).getStartDate()) && endDate.equals(((TournamentDTO) obj).getEndDate())
+                    && enrolDate.equals(((TournamentDTO) obj).getEnrolDate())  && Arrays.equals(levels, ((TournamentDTO) obj).getLevels())
+                    && adminId == ((TournamentDTO) obj).getAdminId() && Arrays.equals(enrolmentIds, ((TournamentDTO) obj).getEnrolmentIds())
+                    && Arrays.equals(teamIds, ((TournamentDTO) obj).getTeamIds()) && Arrays.equals(gameIds, ((TournamentDTO) obj).getGameIds())
+                    && Arrays.equals(resultDTOs, ((TournamentDTO) obj).getResultDTOs());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        System.out.println("hashcode");
+        return (int) id;
+    }
 }
