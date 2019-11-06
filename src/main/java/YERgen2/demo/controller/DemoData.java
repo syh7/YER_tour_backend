@@ -46,11 +46,19 @@ public class DemoData {
         Bettor bettor2 = new Bettor("Gart", "gart@aol.com", "wachtwoord123", 20);
         accountService.saveBettor(bettor2);
 
-        Tournament tournament1 = new Tournament("Stuban Toernooi 2019", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1), admin1);
+        Tournament tournament1 = new Tournament("Stuban Toernooi 2019", LocalDate.of(2019, 12, 3),
+                LocalDate.of(2019, 12, 3), admin1);
         tournament1.setMaxDisciplines(3);
-        Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 10, 1),
-                LocalDate.of(2019, 10, 1), admin2);
+        tournament1.setEnrolDate(LocalDate.of(2019, 11, 12));
+        tournament1.setLocation("Zwolle");
+        tournament1.setReferee("Felix van Loenen");
+        tournament1.setDescription("Ieder jaar, vroeg in het toernooiseizoen, wordt het jaarlijkse Stubantoernooi " +
+                "gespeeld. Dit jaar zal het toernooi plaatsvinden op donderdag 3 december. Er zal gespeeld worden in de" +
+                " categoriën 1-2-3, volgens afvalsysteem. " +
+                "Je kunt je nu inschrijven!");
+
+        Tournament tournament2 = new Tournament("Helios Toernooi", LocalDate.of(2019, 11, 1),
+                LocalDate.of(2019, 12, 1), admin2);
         Tournament tournament3 = new Tournament("Stuban Toernooi 2020", LocalDate.of(2020, 10, 1),
                 LocalDate.of(2020, 10, 1), admin1);
         NewTournamentWrapper newTournamentWrapper1 = new NewTournamentWrapper(admin1.getId(), tournament1);
