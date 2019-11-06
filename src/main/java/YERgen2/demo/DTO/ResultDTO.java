@@ -44,4 +44,15 @@ public class ResultDTO {
         this.loseTeamId = loseTeamId;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(super.equals(obj)){
+            return true;
+        }
+        if(obj instanceof ResultDTO){
+            return playerLevel==((ResultDTO) obj).getPlayerLevel() && discipline.equals(((ResultDTO) obj).getDiscipline())
+                    && winTeamId == ((ResultDTO) obj).getWinTeamId() && loseTeamId == ((ResultDTO) obj).getLoseTeamId();
+        }
+        return false;
+    }
 }
