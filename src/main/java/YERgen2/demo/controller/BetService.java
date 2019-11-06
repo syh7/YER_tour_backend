@@ -54,6 +54,7 @@ public class BetService {
         return betDTOs;
     }
 
+    //Does not check for wallet value
     public BetDTO addBetToBettor(long bettorId, BetDTO betDTO){
         Bettor bettor = bettorRepository.findById(bettorId)
                 .orElseThrow(() -> new BettorNotFoundException(bettorId));
